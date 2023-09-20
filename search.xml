@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>finalshell屏蔽更新</title>
+    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>#禁止finalshell更新</p>
+<p>127.0.0.1 <a href="http://www.youtusoft.com/">www.youtusoft.com</a></p>
+<p>127.0.0.1 youtusoft.com</p>
+<p>127.0.0.1 hostbuf.com</p>
+<p>127.0.0.1 <a href="http://www.hostbuf.com/">www.hostbuf.com</a></p>
+<p>127.0.0.1 dkys.org</p>
+<p>127.0.0.1 tcpspeed.com</p>
+<p>127.0.0.1 <a href="http://www.wn1998.com/">www.wn1998.com</a></p>
+<p>127.0.0.1 wn1998.com</p>
+<p>127.0.0.1 pwlt.wn1998.com</p>
+<p>127.0.0.1 backup.<a href="http://www.hostbuf.com/">www.hostbuf.com</a></p>
+<p>本机host添加以上配置即可</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo友情链接</title>
+    <url>/2023/09/19/hexo%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<p>友情链接</p>
+<p>创建友情链接页面<br>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page link</p>
+<p>你会找到 source&#x2F;link&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “link”</p>
+<hr>
+<p>title: 友情链接<br>date: 2018-06-07 22:17:49<br>type: “link”</p>
+<hr>
+<p>在Hexo博客目录中的 source&#x2F;_data（如果没有 _data 文件夹，请自行创建），创建一个文件 link.yml</p>
+<p>例：</p>
+<ul>
+<li><p><code>class_name: 友情链接</code><br><code>class_desc: 那些人，那些事</code><br><code>link_list:</code></p>
+<ul>
+<li><code>name: Hexo</code><br><code>link: https://hexo.io/zh-tw/</code><br><code>avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg</code><br><code>descr: 快速、简单且强大的网志框架</code></li>
+</ul>
+</li>
+<li><p><code>class_name: 网站</code><br><code>class_desc: 值得推荐的网站</code><br><code>link_list:</code></p>
+<ul>
+<li><code>name: Youtube</code><br><code>link: https://www.youtube.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png</code><br><code>descr: 视频网站</code></li>
+<li><code>name: Weibo</code><br><code>link: https://www.weibo.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png</code><br><code>descr: 中国最大社交分享平台</code></li>
+<li><code>name: Twitter</code><br><code>link: https://twitter.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png</code><br><code>descr: 社交分享平台</code></li>
+</ul>
+</li>
+</ul>
+<p>class_name 和 class_desc 支持 html 格式书写，如不需要，也可以留空。</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo分类页规则</title>
+    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>分类页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page categories</p>
+<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “categories”</p>
+<hr>
+<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
+<hr>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HEXO命令</title>
+    <url>/2023/09/19/hexo%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>常用命令</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo g     <span class="comment">//生成静态页面</span></span><br><span class="line">hexo clean <span class="comment">//清除一下缓存</span></span><br><span class="line">hexo s    <span class="comment">//启动本地服务器进行查看</span></span><br><span class="line">hexo d   <span class="comment">//查看后没有问题即可部署到github上</span></span><br></pre></td></tr></table></figure>
+
+<p>新增文章</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;new article&quot;</span></span><br><span class="line">hexo n 文章标题</span><br></pre></td></tr></table></figure>
+
+<p>新增完成之后，md文章路径</p>
+<p>E:\OneDrive - Twork\Bolg\blog\source_posts</p>
+<p>修改即可</p>
+<p><img src="https://image.allcx.eu.org/file/e6f101c6c16c4d1909a99.png"></p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo文章页头部配置</title>
+    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部文章页头部typora标签</p>
+<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo标签页规则</title>
+    <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>标签页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page tags</p>
+<p>你会找到 source&#x2F;tags&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “tags”</p>
+<hr>
+<p>title: 标签<br>date: 2018-01-05 00:00:00<br>type: “tags”<br>orderby: random</p>
+<p>order:1</p>
+<hr>
+<p>参数	解释<br>type	【必须】页面类型，必须为 tags<br>orderby	【可选】排序方式 ：random&#x2F;name&#x2F;length<br>order	【可选】排序次序： 1, asc for ascending; -1, desc for descending</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo页面头部配置</title>
+    <url>/2023/09/19/hexo%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部页面头部typora标签</p>
+<p>写法	解释<br>title	【必需】页面标题<br>date	【必需】页面创建日期<br>type	【必需】标签、分类和友情链接三个页面需要配置<br>updated	【可选】页面更新日期<br>description	【可选】页面描述<br>keywords	【可选】页面关键字<br>comments	【可选】显示页面评论模块 (默认 true)<br>top_img	【可选】页面顶部图片<br>mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)<br>katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)<br>aside	【可选】显示侧边栏 (默认 true)<br>aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开 (true&#x2F;false) (默认为设置中highlight_shrink的配置)<br>random	【可选】配置友情链接是否随机排序（默认为 false)</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vscode插件</title>
+    <url>/2023/09/19/vscode%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<p>链接原地址:<a href="https://www.cnblogs.com/vivaxiaonan/p/7380099.html">https://www.cnblogs.com/vivaxiaonan/p/7380099.html</a></p>
+<p> 格式化文档 shift+alt+f</p>
+<p>先按Ctrl+F打开搜索框，然后搜索要编辑的内容，接着按Ctrl+Shift+L就可以选中对应的所有内容了，然后可以全部编辑和替换了。按了Ctrl+shift+L之后把搜索框关闭就可以同时编辑多处了。</p>
+<p>自动换行设置</p>
+<p>File&gt;&gt;Preferences&gt;&gt;settings&gt;&gt;UserSettings&gt;&gt;CommonlyUsed&gt;&gt;找到Editor:WordWrap,将off修改为on即可</p>
+<p>vscode搜索多个文件，同时替换    ctrl+shift+h</p>
+<p>VScode现在已经越来越完善。性能远超Atom和webstorm,你有什么理由不用它?</p>
+<p>在这里，我会给你们推荐很多实用的插件，让你对 vscode 有更深刻的体会，渐渐地你就会知道它有多好用。</p>
+<p>走马观花前，请先将你的 vscode 更新到最新版本。</p>
+<p><strong>通用插件</strong></p>
+<p><strong>HTML Snippets</strong></p>
+<p>超级实用且初级的 H5代码片段以及提示</p>
+<p><strong>HTML CSS Support</strong></p>
+<p>让 html 标签上写class 智能提示当前项目所支持的样式</p>
+<p>新版已经支持scss文件检索</p>
+<p><strong>Debugger for Chrome</strong></p>
+<p>让 vscode 映射 chrome 的 debug功能，静态页面都可以用 vscode 来打断点调试，真666~ </p>
+<p>配置稍微复杂一些，哪天心情好我再另写教程吧~</p>
+<p><strong>jQuery Code Snippets</strong></p>
+<p>jquery 重度患者必须品，废话不多说，上图</p>
+<p><strong>vscode-icon</strong></p>
+<p>让 vscode 资源树目录加上图标，必备良品！</p>
+<p><strong>Path Intellisense</strong></p>
+<p>自动路劲补全，默认不带这个功能的，赶紧装</p>
+<p><strong>Npm Intellisense</strong></p>
+<p>require 时的包提示（最新版的vscode已经集成此功能）</p>
+<p><strong>Document this</strong></p>
+<p>js 的注释模板 （注意：最新版的vscode已经原生支持）</p>
+<p><strong>ESlint</strong></p>
+<p>ESlint 接管原生 js 提示，可以自定制提示规则。这个比较高玩，不会的就算了，我之前发过一篇文章 sublime 配置 <a href="https://segmentfault.com/a/1190000004818718">Atom js 语法校验</a>中有提到，他们的配置文件是通用的。</p>
+<p><strong>HTMLHint</strong></p>
+<p>html代码检测</p>
+<p><strong>Project Manager</strong></p>
+<p>在多个项目之前快速切换的工具</p>
+<p><strong>beautify</strong></p>
+<p>格式化代码的工具</p>
+<p><strong>Bootstrap 3 Sinnpet</strong></p>
+<p>常用 bootstrap 的可以下</p>
+<p><strong>Atuo Rename Tag</strong></p>
+<p>修改 html 标签，自动帮你完成尾部闭合标签的同步修改，不过有些bug。</p>
+<p><strong>GitLens</strong></p>
+<p>丰富的git日志插件</p>
+<p><strong>fileheader</strong></p>
+<p>顶部注释模板，可定义作者、时间等信息，并会自动更新最后修改时间</p>
+<p><strong>filesize</strong></p>
+<p>在底部状态栏显示当前文件大小，点击后还可以看到详细创建、修改时间</p>
+<p><strong>Bracket Pair Colorizer</strong></p>
+<p>让括号拥有独立的颜色，易于区分。可以配合任意主题使用。</p>
+<p><strong>Quokka</strong></p>
+<p><strong>使用</strong>：先shift+cmd+p （ctrl+shift+p）输入 quokka 选择 new javascript 就行了</p>
+<p>Quokka 是一个调试工具插件，能够根据你正在编写的代码提供实时反馈。它易于配置，并能够预览变量的函数和计算值结果。另外，在使用 JSX 或 TypeScript 项目中，它能够开箱即用。</p>
+<p>&#x2F;<em>?</em>&#x2F;在某个表达式之后（或&#x2F;&#x2F;?在语句之后）插入特殊注释将仅记录该表达式的值。</p>
+<p>例如，</p>
+<p>a.b()&#x2F;<em>?</em>&#x2F;.c().d()</p>
+<p>将输出a.b()表达式的结果，和</p>
+<p>a.b().c().d() &#x2F;<em>?</em>&#x2F;&#x2F;&#x2F; or justa.b().c().d() &#x2F;&#x2F;?</p>
+<p>将输出完整a.b().c().d()表达式的结果。</p>
+<p>&#x2F;<em>?.</em>&#x2F; 在任何表达式之后插入特殊注释将报告执行表达式所花费的时间。</p>
+<p>a() &#x2F;&#x2F;?. $    显示a()执行时间和结果。</p>
+<p>插件地址：<a href="https://quokkajs.com/">https://quokkajs.com/</a></p>
+<p><strong>CSS Peek</strong></p>
+<p>使用此插件，你可以追踪至样式表中 CSS 类和 ids 定义的地方。当你在 HTML 文件中右键单击选择器时，选择“ Go to Definition 和 Peek definition ”选项，它便会给你发送样式设置的 CSS 代码。</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek">https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek</a></p>
+<p><strong>HTML Boilerplate</strong></p>
+<p>通过使用 HTML 模版插件，你就摆脱了为 HTML 新文件重新编写头部和正文标签的苦恼。你只需在空文件中输入 html，并按 Tab 键，即可生成干净的文档结构。</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=sidthesloth.html5-boilerplate">https://marketplace.visualstudio.com/items?itemName=sidthesloth.html5-boilerplate</a></p>
+<p><strong>Prettier</strong></p>
+<p>Prettier 是目前 Web 开发中最受欢迎的代码格式化程序。安装了这个插件，它就能够自动应用 Prettier，并将整个 JS 和 CSS 文档快速格式化为统一的代码样式。如果你还想使用 ESLint，那么还有个 Prettier – Eslint 插件，你可不要错过咯！</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode</a></p>
+<p><strong>Color Info</strong></p>
+<p>这个便捷的插件，将为你提供你在 CSS 中使用颜色的相关信息。你只需在颜色上悬停光标，就可以预览色块中色彩模型的（HEX、 RGB、HSL 和 CMYK）相关信息了。</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=bierner.color-info">https://marketplace.visualstudio.com/items?itemName=bierner.color-info</a></p>
+<p><strong>Icon Fonts</strong></p>
+<p>这是一个能够在项目中添加图标字体的插件。该插件支持超过 20 个热门的图标集，包括了 Font Awesome、Ionicons、Glyphicons 和 Material Design Icons。</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=idleberg.icon-fonts">https://marketplace.visualstudio.com/items?itemName=idleberg.icon-fonts</a></p>
+<p><strong>Minify</strong></p>
+<p>这是一款用于压缩合并 JavaScript 和 CSS 文件的应用程序。它提供了大量自定义的设置，以及自动压缩保存并导出为.min文件的选项。它能够分别通过 uglify-js、clean-css 和 html-minifier，与 JavaScript、CSS 和 HTML 协同工作。</p>
+<p>使用<strong>F1</strong>运行文件缩小器Minify</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=HookyQR.minify">https://marketplace.visualstudio.com/items?itemName=HookyQR.minify</a></p>
+<p><strong>Vue插件</strong></p>
+<p>以下推荐vue框架所需的插件</p>
+<p><strong>vetur</strong></p>
+<p>语法高亮、智能感知、Emmet等</p>
+<p><strong>VueHelper</strong></p>
+<p>snippet代码片段</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>统计文件中某个字符串出现的次数</title>
+    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<p>一、grep+wc</p>
+<p>1、单个字符串</p>
+<p>grep -o targetStr filename | wc -l</p>
+<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
+<p>备注：单个字符串可以不加引号</p>
+<p>2、多个字符串</p>
+<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
+<p>备注：必须加引号（单、双都可以）</p>
+<p>如果不加引号，结果是不正确的</p>
+<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
+<p>grep 一条数据里面有多个相同，会统计一次次数</p>
+<p>二、awk</p>
+<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
+<p>1</p>
+<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
+<p>1</p>
+<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
+<p>当文件大的时候awk优势会更加明显。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+</search>
