@@ -4,16 +4,8 @@
     <title>finalshell屏蔽更新</title>
     <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
     <content><![CDATA[<p>#禁止finalshell更新</p>
-<p>127.0.0.1 <a href="http://www.youtusoft.com/">www.youtusoft.com</a></p>
-<p>127.0.0.1 youtusoft.com</p>
-<p>127.0.0.1 hostbuf.com</p>
-<p>127.0.0.1 <a href="http://www.hostbuf.com/">www.hostbuf.com</a></p>
-<p>127.0.0.1 dkys.org</p>
-<p>127.0.0.1 tcpspeed.com</p>
-<p>127.0.0.1 <a href="http://www.wn1998.com/">www.wn1998.com</a></p>
-<p>127.0.0.1 wn1998.com</p>
-<p>127.0.0.1 pwlt.wn1998.com</p>
-<p>127.0.0.1 backup.<a href="http://www.hostbuf.com/">www.hostbuf.com</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
+
 <p>本机host添加以上配置即可</p>
 ]]></content>
       <tags>
@@ -251,6 +243,116 @@
 ]]></content>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux批量查找与替换</title>
+    <url>/2023/09/21/Linux%E6%89%B9%E9%87%8F%E6%9F%A5%E6%89%BE%E4%B8%8E%E6%9B%BF%E6%8D%A2/</url>
+    <content><![CDATA[<p>经常要使用到 Linux 的批量查找与替换，这里我们为大家介绍使用 <strong>sed</strong> 命令来实现查找文件中的内容并替换。</p>
+<p><strong>语法格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/原字符串/新字符串/g&quot; `grep 原字符串 -rl 所在目录`</span><br></pre></td></tr></table></figure>
+
+<p><strong>实例</strong></p>
+<p>以下我们实现在当前目录下查找包含 baidu 的字符串，并将字符串 baidu 替换为 runoob，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/baidu/runoob/g&quot; `grep &quot;baidu&quot; -rl ./`</span><br></pre></td></tr></table></figure>
+
+<p>接下来使用一个更复杂实例，批量替换网址 libs.baidu.com 为 cdn.static.runoob.com：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/https:\/\/libs.baidu.com/https:\/\/cdn.static.runoob.com\/libs/g&quot; `grep -rl &quot;libs.baidu.com&quot; ./`</span><br></pre></td></tr></table></figure>
+
+<p>修改   href&#x3D;’<a href="http://www.hanweb.com/">http://www.hanweb.com</a>‘ style&#x3D;’display:none’&gt;Produced By 大汉网络 大汉版通发布系统  这个标签为    href&#x3D;’<a href="http://yjglj.beijing.gov.cn/">http://yjglj.beijing.gov.cn</a>‘ style&#x3D;’display:none’&gt;北京市应急管理局</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;/&lt;a href=&#x27;http:\/\/yjglj.beijing.gov.cn&#x27; style=&#x27;display:none&#x27;&gt;北京市应急管理局&lt;\/a&gt;/g&quot; `grep -rl &quot;&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;&quot; ./`</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RedisDesktop屏蔽更新</title>
+    <url>/2023/09/21/RedisDesktop%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>解压安装完成之后</p>
+<p>屏蔽更新</p>
+<p>在host文件中添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 rdm.dev</span><br><span class="line">127.0.0.1 redisdesktop.com</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ES(Elasticsearch)解除索引只读限制</title>
+    <url>/2023/09/21/ES-Elasticsearch-%E8%A7%A3%E9%99%A4%E7%B4%A2%E5%BC%95%E5%8F%AA%E8%AF%BB%E9%99%90%E5%88%B6/</url>
+    <content><![CDATA[<p>服务器 空间满了，导致 ES 自动设置了只读限制</p>
+<p>在此之前，先清空多余的日志</p>
+<p>在elasticsearch 目录下 进入 logs 文件夹，清空后缀为 .gz和 gc.log.xx (xx为任意字符) 的文件</p>
+<p>如下命令可以解除只读限制</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPUT -H &quot;Content-Type: application/json&quot; http://127.0.0.1:9200/_all/_settings -d &#x27;&#123;&quot;index.blocks.read_only_allow_delete&quot;: false&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>elasticsearch发现磁盘空间大于95%时，将运行于只读状态，此时将不能更新索引，只能查询和删除。</p>
+<p>如果还是出现此问题</p>
+<p>通过手动重新分配分片，不断执行这个指令，直到unassigned_shards为0，status为green，解决这个问题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPOST http://127.0.0.1:9200/_cluster/reroute?retry_failed=true</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shell脚本中执行时提示没有那个文件或目录的解决办法</title>
+    <url>/2023/09/21/shell%E8%84%9A%E6%9C%AC%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%97%B6%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B8%AA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>出现bad interpreter:No such file or directory的原因，是文件格式的问题。这个文件是在Windows下编写的。换行的方式与Unix不一样，但是在vim下面如果不Set一下又完全看不出来。</p>
+<p>问题原因：</p>
+<p>因为操作系统是windows，在windows下编辑的脚本，所以有可能有不可见字符。脚本文件是DOS格式的</p>
+<p>即每一行的行尾以\r\n来标识, 其ASCII码分别是0x0D, 0x0A.</p>
+<p>解决方法：</p>
+<p>可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的</p>
+<p>（1） vim filename</p>
+<p>然后用命令 :set ff</p>
+<p>可看到dos或unix的字样，如果的确是dos格式的, 那么用set ff&#x3D;unix把它强制为unix格式的,，然后存盘退出后就可运行。</p>
+<p>转换不同平台的文本文件格式可以用</p>
+<ol>
+<li>unix2dos或dos2unix这两个小程序来做. 很简单. 在djgpp中这两个程序的名字叫dtou和utod, u代表unix, d代表dos</li>
+<li>也可以用sed 这样的工具来做:</li>
+</ol>
+<p>复制代码 代码如下:</p>
+<p>sed ‘s&#x2F;^M&#x2F;&#x2F;‘ filename &gt; tmp_filename</p>
+<p>mv -f tmp_filename filename</p>
+<p>特别说明：^M并不是按键shift + 6产生的^和字母M, 它是一个字符, 其ASCII是0x0D, 生成它的办法是先按CTRL+V, 然后再回车(或CTRL+M)</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10软链接</title>
+    <url>/2023/09/21/win10%E8%BD%AF%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mklink /J &quot;D:\finalshell\conn&quot; &quot;E:\OneDrive - hjblcx\documents\finalshell\conn&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在cmd窗口执行以上命令</p>
+<p>在 D:\finalshell 文件夹下创建一个conn的文件夹,这个文件夹为E:\OneDrive - hjblcx\documents\finalshell\conn 这个文件夹的软连接</p>
+<p>实现finalshell的多台电脑同步保存的连接信息,需要借助onedrive</p>
+<p>删除软链接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rmdir D:\Desktop\temp\ckx</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解压缩报错tar  Error is not recoverable  exiting now</title>
+    <url>/2023/09/21/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%8A%A5%E9%94%99tar-Error-is-not-recoverable-exiting-now/</url>
+    <content><![CDATA[<p>[root@Gris-11140 FMIS2600bak]# tar -zxvf &#x2F;home&#x2F;oradata&#x2F;FMIS2600DMP.tar.gz</p>
+<p>gzip: stdin: not in gzip format</p>
+<p>tar: Child returned status 1</p>
+<p>tar: Error is not recoverable: exiting now</p>
+<p><strong>解决方法：</strong></p>
+<p><strong>去掉z参数，使用 tar -xvf 解压正常</strong></p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
 </search>
