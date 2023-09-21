@@ -380,4 +380,21 @@
         <tag>linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Apache防止恶意指向</title>
+    <url>/2023/09/21/apache%E9%98%B2%E6%AD%A2%E6%81%B6%E6%84%8F%E6%8C%87%E5%90%91/</url>
+    <content><![CDATA[<blockquote>
+<p>项目中经常有同事提到很多域名恶意指向政府 ip， 导致随意访问哪个域名， 都能浏览政府<br>网， 而那些恶意的域名指向可能会影响电信封掉政府 ip。</p>
+</blockquote>
+<blockquote>
+<p>还有客户发的漏洞报告中【域名访问限制不严格】漏洞，说明：Http请求的Hostname字段没有严格的域名限制，导致可以绕过一些防护措施。修改方法是配置WEB服务器，限制只能以域名形式访问服务器。</p>
+</blockquote>
+<h6 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h6><p>利用 apache 的跳转功能， 在 VirtualHost 区域添加配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx.gov.cn [NC]</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx1.gov.cn [NC]</span><br><span class="line">RewriteRule ^/(.*) /error.html [L]</span><br></pre></td></tr></table></figure>
+<p>说明：写在</VirtualHost>上即可</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
 </search>
