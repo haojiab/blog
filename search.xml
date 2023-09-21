@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hexo分类页规则</title>
-    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
-    <content><![CDATA[<p>分类页</p>
-<p>前往你的 Hexo 博客的根目录</p>
-<p>输入 hexo new page categories</p>
-<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
-<p>修改这个文件：</p>
-<p>记得添加 type: “categories”</p>
-<hr>
-<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
-<hr>
+    <title>finalshell屏蔽更新</title>
+    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>#禁止finalshell更新</p>
+<p>127.0.0.1 <a href="http://www.youtusoft.com/">www.youtusoft.com</a></p>
+<p>127.0.0.1 youtusoft.com</p>
+<p>127.0.0.1 hostbuf.com</p>
+<p>127.0.0.1 <a href="http://www.hostbuf.com/">www.hostbuf.com</a></p>
+<p>127.0.0.1 dkys.org</p>
+<p>127.0.0.1 tcpspeed.com</p>
+<p>127.0.0.1 <a href="http://www.wn1998.com/">www.wn1998.com</a></p>
+<p>127.0.0.1 wn1998.com</p>
+<p>127.0.0.1 pwlt.wn1998.com</p>
+<p>127.0.0.1 backup.<a href="http://www.hostbuf.com/">www.hostbuf.com</a></p>
+<p>本机host添加以上配置即可</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo常用命令</title>
+    <url>/2023/09/19/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>常用命令</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo g     <span class="comment">//生成静态页面</span></span><br><span class="line">hexo clean <span class="comment">//清除一下缓存</span></span><br><span class="line">hexo s    <span class="comment">//启动本地服务器进行查看</span></span><br><span class="line">hexo d   <span class="comment">//查看后没有问题即可部署到github上</span></span><br></pre></td></tr></table></figure>
+
+<p>新增文章</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;new article&quot;</span></span><br><span class="line">hexo n 文章标题</span><br></pre></td></tr></table></figure>
+
+<p>新增完成之后，md文章路径</p>
+<p>E:\OneDrive - Twork\Bolg\blog\source_posts</p>
+<p>修改即可</p>
+<p><img src="https://image.allcx.eu.org/file/e6f101c6c16c4d1909a99.png"></p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo文章页头部配置</title>
+    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部文章页头部typora标签</p>
+<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
 ]]></content>
       <tags>
         <tag>hexo</tag>
@@ -52,26 +83,6 @@
       </tags>
   </entry>
   <entry>
-    <title>finalshell屏蔽更新</title>
-    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<p>#禁止finalshell更新</p>
-<p>127.0.0.1 <a href="http://www.youtusoft.com/">www.youtusoft.com</a></p>
-<p>127.0.0.1 youtusoft.com</p>
-<p>127.0.0.1 hostbuf.com</p>
-<p>127.0.0.1 <a href="http://www.hostbuf.com/">www.hostbuf.com</a></p>
-<p>127.0.0.1 dkys.org</p>
-<p>127.0.0.1 tcpspeed.com</p>
-<p>127.0.0.1 <a href="http://www.wn1998.com/">www.wn1998.com</a></p>
-<p>127.0.0.1 wn1998.com</p>
-<p>127.0.0.1 pwlt.wn1998.com</p>
-<p>127.0.0.1 backup.<a href="http://www.hostbuf.com/">www.hostbuf.com</a></p>
-<p>本机host添加以上配置即可</p>
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo标签页规则</title>
     <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
     <content><![CDATA[<p>标签页</p>
@@ -91,34 +102,6 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo常用命令</title>
-    <url>/2023/09/19/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>常用命令</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo g     <span class="comment">//生成静态页面</span></span><br><span class="line">hexo clean <span class="comment">//清除一下缓存</span></span><br><span class="line">hexo s    <span class="comment">//启动本地服务器进行查看</span></span><br><span class="line">hexo d   <span class="comment">//查看后没有问题即可部署到github上</span></span><br></pre></td></tr></table></figure>
-
-<p>新增文章</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;new article&quot;</span></span><br><span class="line">hexo n 文章标题</span><br></pre></td></tr></table></figure>
-
-<p>新增完成之后，md文章路径</p>
-<p>E:\OneDrive - Twork\Bolg\blog\source_posts</p>
-<p>修改即可</p>
-<p><img src="https://image.allcx.eu.org/file/e6f101c6c16c4d1909a99.png"></p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo文章页头部配置</title>
-    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>全部文章页头部typora标签</p>
-<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo页面头部配置</title>
     <url>/2023/09/19/hexo%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<p>全部页面头部typora标签</p>
@@ -126,6 +109,32 @@
 ]]></content>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>统计文件中某个字符串出现的次数</title>
+    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<p>一、grep+wc</p>
+<p>1、单个字符串</p>
+<p>grep -o targetStr filename | wc -l</p>
+<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
+<p>备注：单个字符串可以不加引号</p>
+<p>2、多个字符串</p>
+<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
+<p>备注：必须加引号（单、双都可以）</p>
+<p>如果不加引号，结果是不正确的</p>
+<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
+<p>grep 一条数据里面有多个相同，会统计一次次数</p>
+<p>二、awk</p>
+<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
+<p>1</p>
+<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
+<p>1</p>
+<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
+<p>当文件大的时候awk优势会更加明显。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -228,29 +237,20 @@
       </tags>
   </entry>
   <entry>
-    <title>统计文件中某个字符串出现的次数</title>
-    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
-    <content><![CDATA[<p>一、grep+wc</p>
-<p>1、单个字符串</p>
-<p>grep -o targetStr filename | wc -l</p>
-<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
-<p>备注：单个字符串可以不加引号</p>
-<p>2、多个字符串</p>
-<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
-<p>备注：必须加引号（单、双都可以）</p>
-<p>如果不加引号，结果是不正确的</p>
-<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
-<p>grep 一条数据里面有多个相同，会统计一次次数</p>
-<p>二、awk</p>
-<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
-<p>1</p>
-<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
-<p>1</p>
-<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
-<p>当文件大的时候awk优势会更加明显。</p>
+    <title>hexo分类页规则</title>
+    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>分类页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page categories</p>
+<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “categories”</p>
+<hr>
+<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
+<hr>
 ]]></content>
       <tags>
-        <tag>linux</tag>
+        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
