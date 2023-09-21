@@ -355,4 +355,29 @@
         <tag>linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>centos 7 对用过yum更新的软件服务进行降级</title>
+    <url>/2023/09/21/centos-7-%E5%AF%B9%E7%94%A8%E8%BF%87yum%E6%9B%B4%E6%96%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E9%99%8D%E7%BA%A7/</url>
+    <content><![CDATA[<p>　　centos 7 执行 yum update 会对现有服务软件进行更新，但是如果把不该升级的软件升级，彼此软件不兼容，如何进行降级，比如：kibana 必须与 elasticsearch 大版本相同，否则服务不匹配（所以centos 中不是必要不要在已经运行的服务中yum update）<br>　　服务现安装 elasticsearch（5.5.3），但是因为执行 yum update，kibana 由 5.5.3 到 7.3.2</p>
+<ol>
+<li>查看机器上相近的版本，是否有可选的软件包</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum search --showduplicates kibana</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过查询出指定的软件全名，通过 downgrade 进行升级</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum downgrade kibana-5.5.3-1</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如果降级是大版本，可通过修改yum源配置进行大版本降级</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/kibana.repo</span><br><span class="line">[kibana-5.x]name=Kibana repository for5.x packagesbaseurl=https://artifacts.elastic.co/packages/5.x/yumgpgcheck=1gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearchenabled=1autorefresh=1type=rpm-md</span><br></pre></td></tr></table></figure>
+
+<p>  　　然后重新执行步骤1和步骤2</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
 </search>
