@@ -1,43 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>finalshell屏蔽更新</title>
-    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<p>#禁止finalshell更新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
+    <title>ES(Elasticsearch)解除索引只读限制</title>
+    <url>/2023/09/21/ES-Elasticsearch-%E8%A7%A3%E9%99%A4%E7%B4%A2%E5%BC%95%E5%8F%AA%E8%AF%BB%E9%99%90%E5%88%B6/</url>
+    <content><![CDATA[<p>服务器 空间满了，导致 ES 自动设置了只读限制</p>
+<p>在此之前，先清空多余的日志</p>
+<p>在elasticsearch 目录下 进入 logs 文件夹，清空后缀为 .gz和 gc.log.xx (xx为任意字符) 的文件</p>
+<p>如下命令可以解除只读限制</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPUT -H &quot;Content-Type: application/json&quot; http://127.0.0.1:9200/_all/_settings -d &#x27;&#123;&quot;index.blocks.read_only_allow_delete&quot;: false&#125;&#x27;</span><br></pre></td></tr></table></figure>
 
-<p>本机host添加以上配置即可</p>
+<p>elasticsearch发现磁盘空间大于95%时，将运行于只读状态，此时将不能更新索引，只能查询和删除。</p>
+<p>如果还是出现此问题</p>
+<p>通过手动重新分配分片，不断执行这个指令，直到unassigned_shards为0，status为green，解决这个问题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPOST http://127.0.0.1:9200/_cluster/reroute?retry_failed=true</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RedisDesktop屏蔽更新</title>
+    <url>/2023/09/21/RedisDesktop%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>解压安装完成之后</p>
+<p>屏蔽更新</p>
+<p>在host文件中添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 rdm.dev</span><br><span class="line">127.0.0.1 redisdesktop.com</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <tags>
         <tag>win</tag>
       </tags>
   </entry>
   <entry>
-    <title>hexo常用命令</title>
-    <url>/2023/09/19/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>常用命令</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo g     <span class="comment">//生成静态页面</span></span><br><span class="line">hexo clean <span class="comment">//清除一下缓存</span></span><br><span class="line">hexo s    <span class="comment">//启动本地服务器进行查看</span></span><br><span class="line">hexo d   <span class="comment">//查看后没有问题即可部署到github上</span></span><br></pre></td></tr></table></figure>
-
-<p>新增文章</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;new article&quot;</span></span><br><span class="line">hexo n 文章标题</span><br></pre></td></tr></table></figure>
-
-<p>新增完成之后，md文章路径</p>
-<p>E:\OneDrive - Twork\Bolg\blog\source_posts</p>
-<p>修改即可</p>
-<p><img src="https://image.allcx.eu.org/file/e6f101c6c16c4d1909a99.png"></p>
+    <title>Apache防止恶意指向</title>
+    <url>/2023/09/21/apache%E9%98%B2%E6%AD%A2%E6%81%B6%E6%84%8F%E6%8C%87%E5%90%91/</url>
+    <content><![CDATA[<blockquote>
+<p>项目中经常有同事提到很多域名恶意指向政府 ip， 导致随意访问哪个域名， 都能浏览政府网， 而那些恶意的域名指向可能会影响电信封掉政府 ip。</p>
+</blockquote>
+<blockquote>
+<p>还有客户发的漏洞报告中【域名访问限制不严格】漏洞，说明：Http请求的Hostname字段没有严格的域名限制，导致可以绕过一些防护措施。修改方法是配置WEB服务器，限制只能以域名形式访问服务器。</p>
+</blockquote>
+<h6 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h6><p>利用 apache 的跳转功能， 在 VirtualHost 区域添加配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx.gov.cn [NC]</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx1.gov.cn [NC]</span><br><span class="line">RewriteRule ^/(.*) /error.html [L]</span><br></pre></td></tr></table></figure>
+<p>说明：写在</VirtualHost>上即可</p>
 ]]></content>
       <tags>
-        <tag>hexo</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
-    <title>hexo文章页头部配置</title>
-    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>全部文章页头部typora标签</p>
-<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
+    <title>centos 7 对用过yum更新的软件服务进行降级</title>
+    <url>/2023/09/21/centos-7-%E5%AF%B9%E7%94%A8%E8%BF%87yum%E6%9B%B4%E6%96%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E9%99%8D%E7%BA%A7/</url>
+    <content><![CDATA[<p>　　centos 7 执行 yum update 会对现有服务软件进行更新，但是如果把不该升级的软件升级，彼此软件不兼容，如何进行降级，比如：kibana 必须与 elasticsearch 大版本相同，否则服务不匹配（所以centos 中不是必要不要在已经运行的服务中yum update）<br>　　服务现安装 elasticsearch（5.5.3），但是因为执行 yum update，kibana 由 5.5.3 到 7.3.2</p>
+<ol>
+<li>查看机器上相近的版本，是否有可选的软件包</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum search --showduplicates kibana</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过查询出指定的软件全名，通过 downgrade 进行升级</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum downgrade kibana-5.5.3-1</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如果降级是大版本，可通过修改yum源配置进行大版本降级</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/kibana.repo</span><br><span class="line">[kibana-5.x]name=Kibana repository for5.x packagesbaseurl=https://artifacts.elastic.co/packages/5.x/yumgpgcheck=1gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearchenabled=1autorefresh=1type=rpm-md</span><br></pre></td></tr></table></figure>
+
+<p>  　　然后重新执行步骤1和步骤2</p>
 ]]></content>
       <tags>
-        <tag>hexo</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux批量查找与替换</title>
+    <url>/2023/09/21/Linux%E6%89%B9%E9%87%8F%E6%9F%A5%E6%89%BE%E4%B8%8E%E6%9B%BF%E6%8D%A2/</url>
+    <content><![CDATA[<p>经常要使用到 Linux 的批量查找与替换，这里我们为大家介绍使用 <strong>sed</strong> 命令来实现查找文件中的内容并替换。</p>
+<p><strong>语法格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/原字符串/新字符串/g&quot; `grep 原字符串 -rl 所在目录`</span><br></pre></td></tr></table></figure>
+
+<p><strong>实例</strong></p>
+<p>以下我们实现在当前目录下查找包含 baidu 的字符串，并将字符串 baidu 替换为 runoob，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/baidu/runoob/g&quot; `grep &quot;baidu&quot; -rl ./`</span><br></pre></td></tr></table></figure>
+
+<p>接下来使用一个更复杂实例，批量替换网址 libs.baidu.com 为 cdn.static.runoob.com：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/https:\/\/libs.baidu.com/https:\/\/cdn.static.runoob.com\/libs/g&quot; `grep -rl &quot;libs.baidu.com&quot; ./`</span><br></pre></td></tr></table></figure>
+
+<p>修改   href&#x3D;’<a href="http://www.hanweb.com/">http://www.hanweb.com</a>‘ style&#x3D;’display:none’&gt;Produced By 大汉网络 大汉版通发布系统  这个标签为    href&#x3D;’<a href="http://yjglj.beijing.gov.cn/">http://yjglj.beijing.gov.cn</a>‘ style&#x3D;’display:none’&gt;北京市应急管理局</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;/&lt;a href=&#x27;http:\/\/yjglj.beijing.gov.cn&#x27; style=&#x27;display:none&#x27;&gt;北京市应急管理局&lt;\/a&gt;/g&quot; `grep -rl &quot;&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;&quot; ./`</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -75,19 +131,28 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo标签页规则</title>
-    <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
-    <content><![CDATA[<p>标签页</p>
-<p>前往你的 Hexo 博客的根目录</p>
-<p>输入 hexo new page tags</p>
-<p>你会找到 source&#x2F;tags&#x2F;index.md 这个文件</p>
-<p>修改这个文件：</p>
-<p>记得添加 type: “tags”</p>
-<hr>
-<p>title: 标签<br>date: 2018-01-05 00:00:00<br>type: “tags”<br>orderby: random</p>
-<p>order:1</p>
-<hr>
-<p>参数	解释<br>type	【必须】页面类型，必须为 tags<br>orderby	【可选】排序方式 ：random&#x2F;name&#x2F;length<br>order	【可选】排序次序： 1, asc for ascending; -1, desc for descending</p>
+    <title>hexo常用命令</title>
+    <url>/2023/09/19/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>常用命令</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo g     <span class="comment">//生成静态页面</span></span><br><span class="line">hexo clean <span class="comment">//清除一下缓存</span></span><br><span class="line">hexo s    <span class="comment">//启动本地服务器进行查看</span></span><br><span class="line">hexo d   <span class="comment">//查看后没有问题即可部署到github上</span></span><br></pre></td></tr></table></figure>
+
+<p>新增文章</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;new article&quot;</span></span><br><span class="line">hexo n 文章标题</span><br></pre></td></tr></table></figure>
+
+<p>新增完成之后，md文章路径</p>
+<p>E:\OneDrive - Twork\Bolg\blog\source_posts</p>
+<p>修改即可</p>
+<p><img src="https://image.allcx.eu.org/file/e6f101c6c16c4d1909a99.png"></p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo文章页头部配置</title>
+    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部文章页头部typora标签</p>
+<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
 ]]></content>
       <tags>
         <tag>hexo</tag>
@@ -104,26 +169,26 @@
       </tags>
   </entry>
   <entry>
-    <title>统计文件中某个字符串出现的次数</title>
-    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
-    <content><![CDATA[<p>一、grep+wc</p>
-<p>1、单个字符串</p>
-<p>grep -o targetStr filename | wc -l</p>
-<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
-<p>备注：单个字符串可以不加引号</p>
-<p>2、多个字符串</p>
-<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
-<p>备注：必须加引号（单、双都可以）</p>
-<p>如果不加引号，结果是不正确的</p>
-<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
-<p>grep 一条数据里面有多个相同，会统计一次次数</p>
-<p>二、awk</p>
-<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
-<p>1</p>
-<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
-<p>1</p>
-<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
-<p>当文件大的时候awk优势会更加明显。</p>
+    <title>shell脚本中执行时提示没有那个文件或目录的解决办法</title>
+    <url>/2023/09/21/shell%E8%84%9A%E6%9C%AC%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%97%B6%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B8%AA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>出现bad interpreter:No such file or directory的原因，是文件格式的问题。这个文件是在Windows下编写的。换行的方式与Unix不一样，但是在vim下面如果不Set一下又完全看不出来。</p>
+<p>问题原因：</p>
+<p>因为操作系统是windows，在windows下编辑的脚本，所以有可能有不可见字符。脚本文件是DOS格式的</p>
+<p>即每一行的行尾以\r\n来标识, 其ASCII码分别是0x0D, 0x0A.</p>
+<p>解决方法：</p>
+<p>可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的</p>
+<p>（1） vim filename</p>
+<p>然后用命令 :set ff</p>
+<p>可看到dos或unix的字样，如果的确是dos格式的, 那么用set ff&#x3D;unix把它强制为unix格式的,，然后存盘退出后就可运行。</p>
+<p>转换不同平台的文本文件格式可以用</p>
+<ol>
+<li>unix2dos或dos2unix这两个小程序来做. 很简单. 在djgpp中这两个程序的名字叫dtou和utod, u代表unix, d代表dos</li>
+<li>也可以用sed 这样的工具来做:</li>
+</ol>
+<p>复制代码 代码如下:</p>
+<p>sed ‘s&#x2F;^M&#x2F;&#x2F;‘ filename &gt; tmp_filename</p>
+<p>mv -f tmp_filename filename</p>
+<p>特别说明：^M并不是按键shift + 6产生的^和字母M, 它是一个字符, 其ASCII是0x0D, 生成它的办法是先按CTRL+V, 然后再回车(或CTRL+M)</p>
 ]]></content>
       <tags>
         <tag>linux</tag>
@@ -229,194 +294,33 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo分类页规则</title>
-    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
-    <content><![CDATA[<p>分类页</p>
-<p>前往你的 Hexo 博客的根目录</p>
-<p>输入 hexo new page categories</p>
-<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
-<p>修改这个文件：</p>
-<p>记得添加 type: “categories”</p>
-<hr>
-<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
-<hr>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux批量查找与替换</title>
-    <url>/2023/09/21/Linux%E6%89%B9%E9%87%8F%E6%9F%A5%E6%89%BE%E4%B8%8E%E6%9B%BF%E6%8D%A2/</url>
-    <content><![CDATA[<p>经常要使用到 Linux 的批量查找与替换，这里我们为大家介绍使用 <strong>sed</strong> 命令来实现查找文件中的内容并替换。</p>
-<p><strong>语法格式</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/原字符串/新字符串/g&quot; `grep 原字符串 -rl 所在目录`</span><br></pre></td></tr></table></figure>
-
-<p><strong>实例</strong></p>
-<p>以下我们实现在当前目录下查找包含 baidu 的字符串，并将字符串 baidu 替换为 runoob，执行命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/baidu/runoob/g&quot; `grep &quot;baidu&quot; -rl ./`</span><br></pre></td></tr></table></figure>
-
-<p>接下来使用一个更复杂实例，批量替换网址 libs.baidu.com 为 cdn.static.runoob.com：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/https:\/\/libs.baidu.com/https:\/\/cdn.static.runoob.com\/libs/g&quot; `grep -rl &quot;libs.baidu.com&quot; ./`</span><br></pre></td></tr></table></figure>
-
-<p>修改   href&#x3D;’<a href="http://www.hanweb.com/">http://www.hanweb.com</a>‘ style&#x3D;’display:none’&gt;Produced By 大汉网络 大汉版通发布系统  这个标签为    href&#x3D;’<a href="http://yjglj.beijing.gov.cn/">http://yjglj.beijing.gov.cn</a>‘ style&#x3D;’display:none’&gt;北京市应急管理局</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;/&lt;a href=&#x27;http:\/\/yjglj.beijing.gov.cn&#x27; style=&#x27;display:none&#x27;&gt;北京市应急管理局&lt;\/a&gt;/g&quot; `grep -rl &quot;&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;&quot; ./`</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RedisDesktop屏蔽更新</title>
-    <url>/2023/09/21/RedisDesktop%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<p>解压安装完成之后</p>
-<p>屏蔽更新</p>
-<p>在host文件中添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 rdm.dev</span><br><span class="line">127.0.0.1 redisdesktop.com</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ES(Elasticsearch)解除索引只读限制</title>
-    <url>/2023/09/21/ES-Elasticsearch-%E8%A7%A3%E9%99%A4%E7%B4%A2%E5%BC%95%E5%8F%AA%E8%AF%BB%E9%99%90%E5%88%B6/</url>
-    <content><![CDATA[<p>服务器 空间满了，导致 ES 自动设置了只读限制</p>
-<p>在此之前，先清空多余的日志</p>
-<p>在elasticsearch 目录下 进入 logs 文件夹，清空后缀为 .gz和 gc.log.xx (xx为任意字符) 的文件</p>
-<p>如下命令可以解除只读限制</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPUT -H &quot;Content-Type: application/json&quot; http://127.0.0.1:9200/_all/_settings -d &#x27;&#123;&quot;index.blocks.read_only_allow_delete&quot;: false&#125;&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>elasticsearch发现磁盘空间大于95%时，将运行于只读状态，此时将不能更新索引，只能查询和删除。</p>
-<p>如果还是出现此问题</p>
-<p>通过手动重新分配分片，不断执行这个指令，直到unassigned_shards为0，status为green，解决这个问题</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPOST http://127.0.0.1:9200/_cluster/reroute?retry_failed=true</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>shell脚本中执行时提示没有那个文件或目录的解决办法</title>
-    <url>/2023/09/21/shell%E8%84%9A%E6%9C%AC%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%97%B6%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B8%AA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>出现bad interpreter:No such file or directory的原因，是文件格式的问题。这个文件是在Windows下编写的。换行的方式与Unix不一样，但是在vim下面如果不Set一下又完全看不出来。</p>
-<p>问题原因：</p>
-<p>因为操作系统是windows，在windows下编辑的脚本，所以有可能有不可见字符。脚本文件是DOS格式的</p>
-<p>即每一行的行尾以\r\n来标识, 其ASCII码分别是0x0D, 0x0A.</p>
-<p>解决方法：</p>
-<p>可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的</p>
-<p>（1） vim filename</p>
-<p>然后用命令 :set ff</p>
-<p>可看到dos或unix的字样，如果的确是dos格式的, 那么用set ff&#x3D;unix把它强制为unix格式的,，然后存盘退出后就可运行。</p>
-<p>转换不同平台的文本文件格式可以用</p>
-<ol>
-<li>unix2dos或dos2unix这两个小程序来做. 很简单. 在djgpp中这两个程序的名字叫dtou和utod, u代表unix, d代表dos</li>
-<li>也可以用sed 这样的工具来做:</li>
-</ol>
-<p>复制代码 代码如下:</p>
-<p>sed ‘s&#x2F;^M&#x2F;&#x2F;‘ filename &gt; tmp_filename</p>
-<p>mv -f tmp_filename filename</p>
-<p>特别说明：^M并不是按键shift + 6产生的^和字母M, 它是一个字符, 其ASCII是0x0D, 生成它的办法是先按CTRL+V, 然后再回车(或CTRL+M)</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>win10软链接</title>
-    <url>/2023/09/21/win10%E8%BD%AF%E9%93%BE%E6%8E%A5/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mklink /J &quot;D:\finalshell\conn&quot; &quot;E:\OneDrive - hjblcx\documents\finalshell\conn&quot;</span><br></pre></td></tr></table></figure>
-
-<p>在cmd窗口执行以上命令</p>
-<p>在 D:\finalshell 文件夹下创建一个conn的文件夹,这个文件夹为E:\OneDrive - hjblcx\documents\finalshell\conn 这个文件夹的软连接</p>
-<p>实现finalshell的多台电脑同步保存的连接信息,需要借助onedrive</p>
-<p>删除软链接</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rmdir D:\Desktop\temp\ckx</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解压缩报错tar  Error is not recoverable  exiting now</title>
-    <url>/2023/09/21/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%8A%A5%E9%94%99tar-Error-is-not-recoverable-exiting-now/</url>
-    <content><![CDATA[<p>[root@Gris-11140 FMIS2600bak]# tar -zxvf &#x2F;home&#x2F;oradata&#x2F;FMIS2600DMP.tar.gz</p>
-<p>gzip: stdin: not in gzip format</p>
-<p>tar: Child returned status 1</p>
-<p>tar: Error is not recoverable: exiting now</p>
-<p><strong>解决方法：</strong></p>
-<p><strong>去掉z参数，使用 tar -xvf 解压正常</strong></p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>centos 7 对用过yum更新的软件服务进行降级</title>
-    <url>/2023/09/21/centos-7-%E5%AF%B9%E7%94%A8%E8%BF%87yum%E6%9B%B4%E6%96%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E9%99%8D%E7%BA%A7/</url>
-    <content><![CDATA[<p>　　centos 7 执行 yum update 会对现有服务软件进行更新，但是如果把不该升级的软件升级，彼此软件不兼容，如何进行降级，比如：kibana 必须与 elasticsearch 大版本相同，否则服务不匹配（所以centos 中不是必要不要在已经运行的服务中yum update）<br>　　服务现安装 elasticsearch（5.5.3），但是因为执行 yum update，kibana 由 5.5.3 到 7.3.2</p>
-<ol>
-<li>查看机器上相近的版本，是否有可选的软件包</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum search --showduplicates kibana</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>通过查询出指定的软件全名，通过 downgrade 进行升级</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum downgrade kibana-5.5.3-1</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>如果降级是大版本，可通过修改yum源配置进行大版本降级</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/kibana.repo</span><br><span class="line">[kibana-5.x]name=Kibana repository for5.x packagesbaseurl=https://artifacts.elastic.co/packages/5.x/yumgpgcheck=1gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearchenabled=1autorefresh=1type=rpm-md</span><br></pre></td></tr></table></figure>
-
-<p>  　　然后重新执行步骤1和步骤2</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Apache防止恶意指向</title>
-    <url>/2023/09/21/apache%E9%98%B2%E6%AD%A2%E6%81%B6%E6%84%8F%E6%8C%87%E5%90%91/</url>
+    <title>免费使用cloudflare搭建v2之创建Workers</title>
+    <url>/2023/09/26/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E5%88%9B%E5%BB%BAWorkers/</url>
     <content><![CDATA[<blockquote>
-<p>项目中经常有同事提到很多域名恶意指向政府 ip， 导致随意访问哪个域名， 都能浏览政府网， 而那些恶意的域名指向可能会影响电信封掉政府 ip。</p>
+<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第一步</p>
 </blockquote>
-<blockquote>
-<p>还有客户发的漏洞报告中【域名访问限制不严格】漏洞，说明：Http请求的Hostname字段没有严格的域名限制，导致可以绕过一些防护措施。修改方法是配置WEB服务器，限制只能以域名形式访问服务器。</p>
-</blockquote>
-<h6 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h6><p>利用 apache 的跳转功能， 在 VirtualHost 区域添加配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx.gov.cn [NC]</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx1.gov.cn [NC]</span><br><span class="line">RewriteRule ^/(.*) /error.html [L]</span><br></pre></td></tr></table></figure>
-<p>说明：写在</VirtualHost>上即可</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>免费使用cloudflare搭建v2之自定义域名</title>
-    <url>/2023/09/26/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<blockquote>
-<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第三步</p>
-</blockquote>
-<p>自定义域名</p>
-<p>cloudflare自动生成的域名再国内基本访问不到，所以需要使用自定义域名来进行访问，</p>
-<p>在Workers 和 Pages中找到上一步部署好的Workers，点击Custom Domains 下的查看</p>
-<p><img src="https://image.allcx.eu.org/file/a0711778365b6e8ba846e.png"></p>
-<p>往下拉会有添加自定义域的选项，点击添加自定义域</p>
-<p><img src="https://image.allcx.eu.org/file/21667f6bb4bc6c3581667.png"></p>
-<p>然后输入自己的域名，前面加前缀，后面为自己的域名</p>
-<p><img src="https://image.allcx.eu.org/file/5b4d7390e162204e87996.png"></p>
-<p>上图中，suibian为前缀，随便添加，后面的 onjp.eu.org为自己的域名，该域名需要注册到cloudflare中，然后点击添加自定义域，等待cloudflare自行完成，</p>
-<p><img src="https://image.allcx.eu.org/file/f7d4e5ba329239202914a.png"></p>
-<p>完成之后会提示证书有效</p>
+<h6 id="创建Workers"><a href="#创建Workers" class="headerlink" title="创建Workers"></a>创建Workers</h6><p>登录到cloudflare中，地址为<a href="https://www.cloudflare-cn.com/">Cloudflare</a>，首先点击左侧列表中 Workers 和 Pages ，点击 创建应用程序 </p>
+<p><img src="https://image.allcx.eu.org/file/2263583b059f98ce6ecab.png"></p>
+<p>然后点击 创建Worker</p>
+<p><img src="https://image.allcx.eu.org/file/7d7d39e11dc9467194dc4.png"></p>
+<p>名称随便写，然后点击下方部署</p>
+<p><img src="https://image.allcx.eu.org/file/09732a2c75ec22405be39.png"></p>
+<p>部署完成</p>
 ]]></content>
       <tags>
         <tag>cloudflare</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>finalshell屏蔽更新</title>
+    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>#禁止finalshell更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
+
+<p>本机host添加以上配置即可</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
       </tags>
   </entry>
   <entry>
@@ -453,18 +357,140 @@
       </tags>
   </entry>
   <entry>
-    <title>免费使用cloudflare搭建v2之创建Workers</title>
-    <url>/2023/09/26/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E5%88%9B%E5%BB%BAWorkers/</url>
+    <title>统计文件中某个字符串出现的次数</title>
+    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<p>一、grep+wc</p>
+<p>1、单个字符串</p>
+<p>grep -o targetStr filename | wc -l</p>
+<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
+<p>备注：单个字符串可以不加引号</p>
+<p>2、多个字符串</p>
+<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
+<p>备注：必须加引号（单、双都可以）</p>
+<p>如果不加引号，结果是不正确的</p>
+<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
+<p>grep 一条数据里面有多个相同，会统计一次次数</p>
+<p>二、awk</p>
+<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
+<p>1</p>
+<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
+<p>1</p>
+<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
+<p>当文件大的时候awk优势会更加明显。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>免费使用cloudflare搭建v2之自定义域名</title>
+    <url>/2023/09/26/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
     <content><![CDATA[<blockquote>
-<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第一步</p>
+<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第三步</p>
 </blockquote>
-<h6 id="创建Workers"><a href="#创建Workers" class="headerlink" title="创建Workers"></a>创建Workers</h6><p>登录到cloudflare中，地址为<a href="https://www.cloudflare-cn.com/">Cloudflare</a>，首先点击左侧列表中 Workers 和 Pages ，点击 创建应用程序 </p>
-<p><img src="https://image.allcx.eu.org/file/2263583b059f98ce6ecab.png"></p>
-<p>然后点击 创建Worker</p>
-<p><img src="https://image.allcx.eu.org/file/7d7d39e11dc9467194dc4.png"></p>
-<p>名称随便写，然后点击下方部署</p>
-<p><img src="https://image.allcx.eu.org/file/09732a2c75ec22405be39.png"></p>
-<p>部署完成</p>
+<p>自定义域名</p>
+<p>cloudflare自动生成的域名再国内基本访问不到，所以需要使用自定义域名来进行访问，</p>
+<p>在Workers 和 Pages中找到上一步部署好的Workers，点击Custom Domains 下的查看</p>
+<p><img src="https://image.allcx.eu.org/file/a0711778365b6e8ba846e.png"></p>
+<p>往下拉会有添加自定义域的选项，点击添加自定义域</p>
+<p><img src="https://image.allcx.eu.org/file/21667f6bb4bc6c3581667.png"></p>
+<p>然后输入自己的域名，前面加前缀，后面为自己的域名</p>
+<p><img src="https://image.allcx.eu.org/file/5b4d7390e162204e87996.png"></p>
+<p>上图中，suibian为前缀，随便添加，后面的 onjp.eu.org为自己的域名，该域名需要注册到cloudflare中，然后点击添加自定义域，等待cloudflare自行完成，</p>
+<p><img src="https://image.allcx.eu.org/file/f7d4e5ba329239202914a.png"></p>
+<p>完成之后会提示证书有效</p>
+]]></content>
+      <tags>
+        <tag>cloudflare</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo分类页规则</title>
+    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>分类页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page categories</p>
+<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “categories”</p>
+<hr>
+<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
+<hr>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10软链接</title>
+    <url>/2023/09/21/win10%E8%BD%AF%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mklink /J &quot;D:\finalshell\conn&quot; &quot;E:\OneDrive - hjblcx\documents\finalshell\conn&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在cmd窗口执行以上命令</p>
+<p>在 D:\finalshell 文件夹下创建一个conn的文件夹,这个文件夹为E:\OneDrive - hjblcx\documents\finalshell\conn 这个文件夹的软连接</p>
+<p>实现finalshell的多台电脑同步保存的连接信息,需要借助onedrive</p>
+<p>删除软链接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rmdir D:\Desktop\temp\ckx</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo标签页规则</title>
+    <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>标签页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page tags</p>
+<p>你会找到 source&#x2F;tags&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “tags”</p>
+<hr>
+<p>title: 标签<br>date: 2018-01-05 00:00:00<br>type: “tags”<br>orderby: random</p>
+<p>order:1</p>
+<hr>
+<p>参数	解释<br>type	【必须】页面类型，必须为 tags<br>orderby	【可选】排序方式 ：random&#x2F;name&#x2F;length<br>order	【可选】排序次序： 1, asc for ascending; -1, desc for descending</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解压缩报错tar  Error is not recoverable  exiting now</title>
+    <url>/2023/09/21/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%8A%A5%E9%94%99tar-Error-is-not-recoverable-exiting-now/</url>
+    <content><![CDATA[<p>[root@Gris-11140 FMIS2600bak]# tar -zxvf &#x2F;home&#x2F;oradata&#x2F;FMIS2600DMP.tar.gz</p>
+<p>gzip: stdin: not in gzip format</p>
+<p>tar: Child returned status 1</p>
+<p>tar: Error is not recoverable: exiting now</p>
+<p><strong>解决方法：</strong></p>
+<p><strong>去掉z参数，使用 tar -xvf 解压正常</strong></p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用 Cloudflare Workers 免费反代任意网站</title>
+    <url>/2023/10/16/%E7%94%A8-Cloudflare-Workers-%E5%85%8D%E8%B4%B9%E5%8F%8D%E4%BB%A3%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99/</url>
+    <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>WorkersProxy 是一个轻量级的 Javascript 应用程序，可从其他服务器作为客户端检索资源。</p>
+<p>在 Cloudflare Workers 上进行部署时，您可以构建自定义的反向代理，而无需购买计算引擎和配置 Nginx 等 Web 服务器。</p>
+<p>此外，由于您的应用程序将通过 Cloudflare 遍布 90 多个国家 &#x2F; 地区的全球数据中心网络进行分发，因此将优化关键性能，例如延迟和可用性。</p>
+<p>通过配置地理位置和 IP 地址过滤器，您可以根据其特定规定在特定国家或地区直接暂停反向代理服务。利用移动重定向器，您可以根据用户的设备分发各种网页</p>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p>导航到 Cloudflare Workers，注册或登录您的 Cloudflare 帐户，并为 worker 设置自定义子域，然后创建一个新的 Worker。</p>
+<p>自定义 “index.js”，将代码粘贴到 Cloudflare 在线编辑器中以替换默认代码。</p>
+<p>更改工作人员的名称，保存并部署它，并检查其性能是否满足您的需求。</p>
+<h1 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h1><p>检查您的域当前是否处于 Cloudflare 的保护之下。</p>
+<p>导航到您的域的仪表板，选择 “工作人员” 页面，然后单击 “添加路线”。</p>
+<p>键入 [https:&#x2F;&#x2F;&lt;](https:&#x2F;&#x2F;;domain-name&gt;&#x2F;* 在 Route 选择之前创建的工人。</p>
+<p>为您的自定义域添加 CNAME DNS 记录。具体而言，在 “名称” 字段中输入子域（或在根目录中为 “ @”），在 “目标” 字段中输入工作人员的二级域，然后将 “代理状态” 设置为 “代理”。</p>
+<h1 id="自定义-index-js"><a href="#自定义-index-js" class="headerlink" title="自定义 index.js"></a>自定义 index.js</h1><p>显然，在主 Javascript 文件的顶部定义了一些常量。</p>
+<p>要自定义自己的 WorkersProxy 服务，您应根据自己的期望进行编辑。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// List of domains bind to your WorkersProxy.</span><br><span class="line">const domain_list = [&#x27;https://google.error.workers.dev&#x27;]</span><br><span class="line"></span><br><span class="line">// Website you intended to retrieve for users.</span><br><span class="line">const upstream = &#x27;https://www.google.com/&#x27;</span><br><span class="line"></span><br><span class="line">// Website you intended to retrieve for users using mobile devices.</span><br><span class="line">const upstream_mobile = &#x27;https://www.google.com/&#x27;</span><br><span class="line"></span><br><span class="line">// Countries and regions where you wish to suspend your service.</span><br><span class="line">const blocked_region = [&#x27;KP&#x27;, &#x27;SY&#x27;, &#x27;PK&#x27;, &#x27;CU&#x27;]</span><br><span class="line"></span><br><span class="line">// IP addresses which you wish to block from using your service.</span><br><span class="line">const blocked_ip_address = [&#x27;0.0.0.0&#x27;, &#x27;127.0.0.1&#x27;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">addEventListener(&#x27;fetch&#x27;, event =&gt; &#123;</span><br><span class="line">    event.respondWith(fetchAndApply(event.request));</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">async function fetchAndApply(request) &#123;</span><br><span class="line"></span><br><span class="line">    const region = request.headers.get(&#x27;cf-ipcountry&#x27;).toUpperCase();</span><br><span class="line">    const ip_address = request.headers.get(&#x27;cf-connecting-ip&#x27;);</span><br><span class="line">    const user_agent = request.headers.get(&#x27;user-agent&#x27;);</span><br><span class="line">    const http = &quot;http://&quot;;</span><br><span class="line">    const https = &quot;https://&quot;;</span><br><span class="line">    </span><br><span class="line">    let response = null;</span><br><span class="line">    let url = request.url;</span><br><span class="line"></span><br><span class="line">    if (url.startsWith(http)) &#123;</span><br><span class="line">        url = url.replace(http, https);</span><br><span class="line">        response = Response.redirect(url);</span><br><span class="line">        return response;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (await device_status(user_agent)) &#123;</span><br><span class="line">        upstream_domain = upstream</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        upstream_domain = upstream_mobile</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(let domain of domain_list) &#123;</span><br><span class="line">        url = url.replace(domain, upstream_domain)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    if (blocked_region.includes(region)) &#123;</span><br><span class="line">        response = new Response(&#x27;Access denied: WorkersProxy is not available in your region yet.&#x27;, &#123;</span><br><span class="line">            status: 403</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else if(blocked_ip_address.includes(ip_address))&#123;</span><br><span class="line">        response = new Response(&#x27;Access denied: Your IP address is blocked by WorkersProxy.&#x27;, &#123;</span><br><span class="line">            status: 403</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else&#123;</span><br><span class="line">        let method = request.method;</span><br><span class="line">        let request_headers = request.headers;</span><br><span class="line">        let new_request_headers = new Headers(request_headers)</span><br><span class="line">        let host_name = upstream_domain.replace(http, &#x27;&#x27;)</span><br><span class="line">        host_name = upstream_domain.replace(https, &#x27;&#x27;)</span><br><span class="line">        host_name = upstream_domain.replace(&#x27;/&#x27;, &#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">        new_request_headers.set(&#x27;Host&#x27;, host_name)</span><br><span class="line">        new_request_headers.set(&#x27;Referer&#x27;, upstream_domain)</span><br><span class="line"></span><br><span class="line">        origin_response = await fetch(url, &#123;</span><br><span class="line">            method: method,</span><br><span class="line">            headers: new_request_headers</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">        let response_body = origin_response.body</span><br><span class="line">        let response_headers = origin_response.headers</span><br><span class="line">        let new_response_headers = new Headers(response_headers)</span><br><span class="line">        let status = origin_response.status</span><br><span class="line">        </span><br><span class="line">        new_response_headers.set(&#x27;access-control-allow-origin&#x27;, &#x27;*&#x27;);</span><br><span class="line">        new_response_headers.set(&#x27;access-control-allow-credentials&#x27;, true);</span><br><span class="line">        new_response_headers.delete(&#x27;content-security-policy&#x27;);</span><br><span class="line">        new_response_headers.delete(&#x27;content-security-policy-report-only&#x27;);</span><br><span class="line">        new_response_headers.delete(&#x27;clear-site-data&#x27;);</span><br><span class="line"></span><br><span class="line">        response = new Response(response_body, &#123;</span><br><span class="line">            status,</span><br><span class="line">            headers: response_headers</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    return response;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">async function device_status (userAgentInfo) &#123;</span><br><span class="line">    var Agents = [&quot;Android&quot;, &quot;iPhone&quot;, &quot;SymbianOS&quot;, &quot;Windows Phone&quot;, &quot;iPad&quot;, &quot;iPod&quot;];</span><br><span class="line">    var flag = true;</span><br><span class="line">    for (var v = 0; v &lt; Agents.length; v++) &#123;</span><br><span class="line">        if (userAgentInfo.indexOf(Agents[v]) &gt; 0) &#123;</span><br><span class="line">            flag = false;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return flag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>domain_list：主域名，可以是自己的域名，记得做好解析</p>
+<p>upstream、upstream_mobile：反代的网址，两者保持一致即可除非该网站有移动端的域名</p>
+<p>blocked_region：禁止访问的地区，记得去除’CN’</p>
 ]]></content>
       <tags>
         <tag>cloudflare</tag>
