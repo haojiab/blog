@@ -578,4 +578,13 @@
         <tag>生活</tag>
       </tags>
   </entry>
+  <entry>
+    <title>b站无人直播</title>
+    <url>/2023/10/24/b%E7%AB%99%E6%97%A0%E4%BA%BA%E7%9B%B4%E6%92%AD/</url>
+    <content><![CDATA[<p>1.先弄b站推流，类似ck：<a href="https://link.bilibili.com/p/center/index#/my-room/start-live">选分类，开播。复制→服务器地址+串流密钥</a><br>2.服务器一键拉库<br>curl -fsSL get.kplayer.net | bash<br>3.配置文件<a href="https://file.uhsea.com/2310/f8be897bd2c6818137d865da5c4d7a93RS.txt">config.yaml(点击下载)</a>，文件在服务器的root\kplayer，把推流代码放进去保存就行。<br>4.然后在服务器root\新建一个文件夹Downloads存放视频文件，上传文件xxx.mp4。<br>5.上面的B站点击开启直播，出现推流码后，然后服务器cd kplayer<br>.&#x2F;kplayer play start –daemon<br>返回刷新，查看B站直播间就行了。</p>
+]]></content>
+      <tags>
+        <tag>直播</tag>
+      </tags>
+  </entry>
 </search>
