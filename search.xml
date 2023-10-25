@@ -587,4 +587,22 @@
         <tag>直播</tag>
       </tags>
   </entry>
+  <entry>
+    <title>免费使用cloudflare搭建v2之获取配置使用</title>
+    <url>/2023/10/25/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E8%8E%B7%E5%8F%96%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<blockquote>
+<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第四步</p>
+</blockquote>
+<h6 id="获取节点配置"><a href="#获取节点配置" class="headerlink" title="获取节点配置"></a>获取节点配置</h6><p>参考第二步部署代码的方法，再次拿到生成的uuid，复制出来</p>
+<p><img src="https://image.allcx.eu.org/file/67341bbaa78a2c667ea8d.png"></p>
+<p>打开第三步中输入的自定义域名，在域名后面加一个 &#x2F; 再加刚才复制出来的uuid，在浏览器中打开，即可获得vless配置，如图</p>
+<p><img src="https://image.allcx.eu.org/file/5f721a161c7bd1c3bd1c7.png"></p>
+<p>导入v2软件即可使用，</p>
+<p>至此搭建完成</p>
+<p>速度一般，ipv6地址会一直在变化</p>
+]]></content>
+      <tags>
+        <tag>cloudflare</tag>
+      </tags>
+  </entry>
 </search>
