@@ -626,4 +626,36 @@
         <tag>linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>使用 Cloudflare 搭建无限空间及CDN、支持审查的免费图床</title>
+    <url>/2025/04/14/%E4%BD%BF%E7%94%A8-Cloudflare-%E6%90%AD%E5%BB%BA%E6%97%A0%E9%99%90%E7%A9%BA%E9%97%B4%E5%8F%8ACDN%E3%80%81%E6%94%AF%E6%8C%81%E5%AE%A1%E6%9F%A5%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/</url>
+    <content><![CDATA[<p>这个项目是基于 Cloudflare Pages、Telegraph、ModerateContent 免费图片托管、审查、CDN加速的解决方案，Flickr&#x2F;imgur 替代品。也就是无需 1 分钱，就可以得到一个无限空间，实时图像审核、无限 CDN 流量的免费图床，虽然有其他限制，但是也足够大部分情况使用，尤其适合海外个人博客图床使用。</p>
+<p>图床优点<br>无限图片储存数量，你可以上传不限数量的图片.<br>无需购买服务器，托管于 Cloudflare 的网络上，当使用量不超过 Cloudflare 的免费额度时，完全免费<br>无需购买域名，可以使用 Cloudflare Pages 提供的*.pages.dev的免费二级域名，同时也支持绑定自定义域名（需 NS 托管在 CloudFlare）。<br>调用 ModerateContent 支持图片审查 API，可根据需要开启，开启后不良图片将自动屏蔽，不再加载。<br>支持后台图片管理，可以对上传的图片进行在线预览，添加白名单，黑名单等操作。</p>
+<p>准备工作<br>Cloudflare 账号 - <a href="https://www.cloudflare.com/zh-cn/">https://www.cloudflare.com/zh-cn/</a><br>GitHub 账号 - <a href="https://github.com/">https://github.com/</a><br>ModerateContent API - <a href="https://moderatecontent.com/">https://moderatecontent.com/</a><br>部署方式<br>首先登录 GitHub 社区 Fork Telegraph-Image 项目。</p>
+<p>一切默认，Create Fork 即可。</p>
+<p>打开 Cloudflare Dashboard，进入 Pages 管理页面，选择创建项目，选择连接到 Git 提供程序，选择好刚刚操作的 GitHub 账号以及对应的存储库，点击开始设置即可。</p>
+<p>一切默认，直接下一步。</p>
+<p>只需要几十秒种就自动部署完毕了，下图打码的内容就是 CloudFlare 提供的免费二级域名。</p>
+<p>点击该二级域名，就可以看到第一张图那样的界面，意味着部署成功了。</p>
+<p>免费限制<br>由于图片文件实际存储于 Telegraph，Telegraph 限制上传的图片大小最大为 5MB。<br>由于使用 Cloudflare 的网络，图片的加载速度在某些地区可能得不到保证。<br>Cloudflare KV 每天只有1000次的免费写入额度，每有一张新的图片加载都会占用该写入额度（在没有缓存的情况下，如果你的域名在Cloudflare开启了缓存，当缓存未命中时才会占用该额度），如果超过该额度，图片管理后台将无法记录新加载的图片。<br>每天最多 1,000 次免费删除操作，每有一条图片记录都会占用该额度，超过将无法删除图片记录。<br>每天最多 1,000 次免费列出操作，每打开或刷新一次后台&#x2F;admin都会占用该额度，超过将进行后台图片管理。<br>Cloudflare Function 免费版每日限制 100,000 个请求（即上传或是加载图片的总次数不能超过 100,000 次）如超过可能需要选择购买 Cloudflare Function 的付费套餐，如开启图片管理功能还会存在 KV 操作数量的限制，如超过需购买付费套餐，每月$5起步，按量收费，没有上述额度限制。<br>绝大多数情况下，该免费额度都基本够用，并且可以稍微超出一点，不是已超出就立马停用，且每项额度单独计算，某项操作超出免费额度后只会停用该项操作，不影响其他的功能，即即便我的免费写入额度用完了，我的读写功能不受影响，图片能够正常加载，只是不能在图片管理后台看到新的图片了。<br>绑定个性化域名<br>在 Pages 的自定义域里面，绑定 CloudFlare 中存在的域名（在 CloudFlare 托管的域名，也就是 NS 在 CloudFlare 的域名），自动会修改 DNS 记录。</p>
+<p>后台图片管理功能<br>图片管理功能，默认是关闭的，如需开启请部署完成后前往后台依次点击设置→函数→KV 命名空间绑定→编辑绑定→变量名称填写：img_url KV 命名空间 选择你提前创建好的 KV 储存空间。</p>
+<p>开启后访问http(s):&#x2F;&#x2F;你的域名&#x2F;admin 即可打开后台管理页面。</p>
+<p>开启图片审查及后台管理<br>前往 <a href="https://moderatecontent.com/">https://moderatecontent.com/</a> 使用邮箱注册并获得一个免费的用于审查图像内容的 API key（注册就会显示这个 API，同时还会发送一份到你的邮箱备查，找不到的话可以去垃圾邮箱找找）。</p>
+<p>打开 Cloudflare Pages 的管理页面，依次点击设置，环境变量，添加环境变量。</p>
+<p>添加一个变量名称为ModerateContentApiKey，值为你刚刚第一步获得的 API key，点击保存即可。</p>
+<p>提示：如果你还想设置后台图片管理功能，等那个设置好后一起重新部署也可以。</p>
+<p>后台管理页面新增登录验证功能，默认也是关闭的，如需开启在编辑变量中添加如下表格所示的变量即可开启登录验证。</p>
+<p>变量名称	值<br>BASIC_USER &#x3D;	&lt;后台管理页面登录用户名称&gt;<br>BASIC_PASS &#x3D;	&lt;后台管理页面登录用户密码&gt;<br>当然你也可以不设置这两个值，这样访问后台管理页面时将无需验证，直接跳过登录步骤，这一设计使得你可以结合 Cloudflare Access 进行使用，实现支持邮件验证码登录，Microsoft 账户登录、Github 账户登录等功能，能够与你域名上原有的登录方式所集成，无需再次记忆多一组后台的账号密码，添加 Cloudflare Access 的方式请参考官方文档，注意需要保护路径。</p>
+<p>复制<br>&#x2F;admin<br>&#x2F;api&#x2F;manage&#x2F;*<br>当开启图片管理功能后，可在后台顶部查看记录中的图片数量，可在后台搜索框使用图片文件名称，快速搜索定位需要管理的图片</p>
+<p>可在后台查看图片当前的状态</p>
+<p>复制<br>{ “ListType”: “White”, “Label”: “None”, “TimeStamp”: 1705729800466 }<br>ListType代表图片当前是否在黑白名单当中，None则表示既不在黑名单中也不在白名单中，White表示在在白名单中（如上所示，加入白名单的图片无论如何都会正常加载，可绕过图片审查API的结果），Block表示在黑名单中，TimeStamp为图片首次加载的时间戳，如开启的图片审查 API，则这里还会显示图片审查的结果用Label标识。当然你也可以手动为图片加入黑名单，加入黑名单的图片将无法正常加载。</p>
+<p>可在后台手动删除图片记录，即不再后台显示该图片，除非有人再次上传并加载该图片，注意由于图片储存在 Telegraph 的服务器上，我们无法删除上传的原始图片，只能通过上述第6点的黑名单功能屏蔽图片的加载。</p>
+<p>开启图片审查后，因为审查需要时间，首次的图片加载将会变得缓慢，之后的图片加载由于存在缓存，并不会受到影响。</p>
+<p>更新升级本项目<br>其实更新非常简单，只需要参照上面的更新内容，先进入到 Cloudflare Pages 后台，把需要使用的环境变量提前设置好并绑定上 KV 命名空间，然后去到 Github 你之前 fork 过的仓库依次选择Sync fork→Update branch即可，稍等一会，Cloudflare Pages 那边检测到你的仓库更新了之后就会自动部署最新的代码了。</p>
+<p>注意事项<br>由于所做的更改将在下次部署时生效，你或许还需要进入部署页面，重新部署一下该本项目。</p>
+]]></content>
+      <tags>
+        <tag>cloudflare</tag>
+      </tags>
+  </entry>
 </search>
