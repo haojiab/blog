@@ -658,4 +658,10 @@
         <tag>cloudflare</tag>
       </tags>
   </entry>
+  <entry>
+    <title>在Windows 11系统中将任意文件（如bat/log等）固定在开始菜单</title>
+    <url>/2025/04/14/%E5%9C%A8Windows-11%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%B0%86%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%EF%BC%88%E5%A6%82bat-log%E7%AD%89%EF%BC%89%E5%9B%BA%E5%AE%9A%E5%9C%A8%E5%BC%80%E5%A7%8B%E8%8F%9C%E5%8D%95/</url>
+    <content><![CDATA[<p>1.对任意文件右键创建快捷方式<br>2.打开%AppData%\Microsoft\Windows\Start Menu\Programs，把快捷方式放到这里<br>3.在开始菜单的列表（所有应用）中找到它，然后右键固定到开始屏幕</p>
+]]></content>
+  </entry>
 </search>
