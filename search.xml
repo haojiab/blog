@@ -20,6 +20,28 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux批量查找与替换</title>
+    <url>/2023/09/21/Linux%E6%89%B9%E9%87%8F%E6%9F%A5%E6%89%BE%E4%B8%8E%E6%9B%BF%E6%8D%A2/</url>
+    <content><![CDATA[<p>经常要使用到 Linux 的批量查找与替换，这里我们为大家介绍使用 <strong>sed</strong> 命令来实现查找文件中的内容并替换。</p>
+<p><strong>语法格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/原字符串/新字符串/g&quot; `grep 原字符串 -rl 所在目录`</span><br></pre></td></tr></table></figure>
+
+<p><strong>实例</strong></p>
+<p>以下我们实现在当前目录下查找包含 baidu 的字符串，并将字符串 baidu 替换为 runoob，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/baidu/runoob/g&quot; `grep &quot;baidu&quot; -rl ./`</span><br></pre></td></tr></table></figure>
+
+<p>接下来使用一个更复杂实例，批量替换网址 libs.baidu.com 为 cdn.static.runoob.com：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/https:\/\/libs.baidu.com/https:\/\/cdn.static.runoob.com\/libs/g&quot; `grep -rl &quot;libs.baidu.com&quot; ./`</span><br></pre></td></tr></table></figure>
+
+<p>修改   href&#x3D;’<a href="http://www.hanweb.com/">http://www.hanweb.com</a>‘ style&#x3D;’display:none’&gt;Produced By 大汉网络 大汉版通发布系统  这个标签为    href&#x3D;’<a href="http://yjglj.beijing.gov.cn/">http://yjglj.beijing.gov.cn</a>‘ style&#x3D;’display:none’&gt;北京市应急管理局</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;/&lt;a href=&#x27;http:\/\/yjglj.beijing.gov.cn&#x27; style=&#x27;display:none&#x27;&gt;北京市应急管理局&lt;\/a&gt;/g&quot; `grep -rl &quot;&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;&quot; ./`</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RedisDesktop屏蔽更新</title>
     <url>/2023/09/21/RedisDesktop%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
     <content><![CDATA[<p>解压安装完成之后</p>
@@ -30,6 +52,27 @@
 ]]></content>
       <tags>
         <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Subreg.CZ 永久免费的.Free.hr域名注册</title>
+    <url>/2023/11/22/Subreg-CZ-%E6%B0%B8%E4%B9%85%E5%85%8D%E8%B4%B9%E7%9A%84-Free-hr%E5%9F%9F%E5%90%8D%E6%B3%A8%E5%86%8C/</url>
+    <content><![CDATA[<p>Subreg.CZ和HZ.CZ同为第一家获得ICANN认证的捷克最大域名注册商之一Gransy旗下网站，目前管理着近70万个域名，提供近1000种域名供客户注册。Subreg.CZ最近推出了yourname.Free.hr域名注册，该域名价格为“0”元完全免费，初始注册时间为1年，可自动免费续期！在Subreg.CZ注册的.Free.hr域名均提供免费DNS解析服务，支持设置A、AAAA、MX、TXT、CNAME、SPF、SRV、NS、PTR、TLSA、CAA、SSHFP、DS解析记录，还支持DNSSEC，当然你也可以修改域名的DNS服务器。</p>
+<p>Subreg.CZ官网<br>网址：<a href="https://subreg.cz/en">https://subreg.cz/en</a></p>
+<p>Subreg.CZ域名注册量统计<br>网址：<a href="https://subreg.cz/en/statistics_full">https://subreg.cz/en/statistics_full</a><br>截止到2023年11月21日，.Free.hr免费域名注册量只有1160个，还有大量不错的免费域名没被注册！</p>
+<p>Subreg.CZ免费.Free.hr域名注册教程<br>打开注册网址：<a href="https://subreg.cz/en/register">https://subreg.cz/en/register</a><br>注意：HZ.CZ也可以免费注册.Free.hr域名，如果你有HZ.CZ账号可以直接到HZ.CZ注册.Free.hr域名。</p>
+<p>首先填写你的名字、姓氏、地址、城市、国家、邮编、电话（一定要按照“+国际区号.电话号码”这个格式填写）、邮箱、用户名等个人信息（密码会发到你的邮箱中），再输入验证问题的答案，选上同意服务协议，点“Create account”按钮注册账号。</p>
+<p>登录你的邮箱，可以看到Subreg.CZ发来的邮件，邮件中有你的用户名和密码。</p>
+<p>点右上角绿色“LOGIN”按钮，输入你的用户名、密码，点橙色“LOG IN”按钮登录你的账号。</p>
+<p>点左面菜单中的“New order”，“Domain”后面输入你要注册的域名，在后面域名列表中选上或直接输入“free.hr”，点黑色“Next”按钮。</p>
+<p>“Owner contact:”后面选上域名所有人的信息，点下方黑色“Next”按钮完成你的.Free.hr域名注册。</p>
+<p>所有自己注册的域名管理界面<br><a href="https://subreg.cz/en/domain/list">https://subreg.cz/en/domain/list</a><br>进去后可以设置自动续期</p>
+<p>或者，点击你刚刚注册的.Free.hr域名。</p>
+<p>点击“Automatic renewal:”自动续期后面的“No”。</p>
+<p>选上“Always extended before expiration”，再点下面黑色“Set”按钮，这时你的.Free.hr域名就会在到期前自动免费续期了！</p>
+]]></content>
+      <tags>
+        <tag>域名</tag>
       </tags>
   </entry>
   <entry>
@@ -47,6 +90,15 @@
 ]]></content>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>b站无人直播</title>
+    <url>/2023/10/24/b%E7%AB%99%E6%97%A0%E4%BA%BA%E7%9B%B4%E6%92%AD/</url>
+    <content><![CDATA[<p>1.先弄b站推流，类似ck：<a href="https://link.bilibili.com/p/center/index#/my-room/start-live">选分类，开播。复制→服务器地址+串流密钥</a><br>2.服务器一键拉库<br>curl -fsSL get.kplayer.net | bash<br>3.配置文件<a href="https://file.uhsea.com/2310/f8be897bd2c6818137d865da5c4d7a93RS.txt">config.yaml(点击下载)</a>，文件在服务器的root\kplayer，把推流代码放进去保存就行。<br>4.然后在服务器root\新建一个文件夹Downloads存放视频文件，上传文件xxx.mp4。<br>5.上面的B站点击开启直播，出现推流码后，然后服务器cd kplayer<br>.&#x2F;kplayer play start –daemon<br>返回刷新，查看B站直播间就行了。</p>
+]]></content>
+      <tags>
+        <tag>直播</tag>
       </tags>
   </entry>
   <entry>
@@ -69,28 +121,6 @@
   <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/kibana.repo</span><br><span class="line">[kibana-5.x]name=Kibana repository for5.x packagesbaseurl=https://artifacts.elastic.co/packages/5.x/yumgpgcheck=1gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearchenabled=1autorefresh=1type=rpm-md</span><br></pre></td></tr></table></figure>
 
 <p>  　　然后重新执行步骤1和步骤2</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux批量查找与替换</title>
-    <url>/2023/09/21/Linux%E6%89%B9%E9%87%8F%E6%9F%A5%E6%89%BE%E4%B8%8E%E6%9B%BF%E6%8D%A2/</url>
-    <content><![CDATA[<p>经常要使用到 Linux 的批量查找与替换，这里我们为大家介绍使用 <strong>sed</strong> 命令来实现查找文件中的内容并替换。</p>
-<p><strong>语法格式</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/原字符串/新字符串/g&quot; `grep 原字符串 -rl 所在目录`</span><br></pre></td></tr></table></figure>
-
-<p><strong>实例</strong></p>
-<p>以下我们实现在当前目录下查找包含 baidu 的字符串，并将字符串 baidu 替换为 runoob，执行命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/baidu/runoob/g&quot; `grep &quot;baidu&quot; -rl ./`</span><br></pre></td></tr></table></figure>
-
-<p>接下来使用一个更复杂实例，批量替换网址 libs.baidu.com 为 cdn.static.runoob.com：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/https:\/\/libs.baidu.com/https:\/\/cdn.static.runoob.com\/libs/g&quot; `grep -rl &quot;libs.baidu.com&quot; ./`</span><br></pre></td></tr></table></figure>
-
-<p>修改   href&#x3D;’<a href="http://www.hanweb.com/">http://www.hanweb.com</a>‘ style&#x3D;’display:none’&gt;Produced By 大汉网络 大汉版通发布系统  这个标签为    href&#x3D;’<a href="http://yjglj.beijing.gov.cn/">http://yjglj.beijing.gov.cn</a>‘ style&#x3D;’display:none’&gt;北京市应急管理局</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;/&lt;a href=&#x27;http:\/\/yjglj.beijing.gov.cn&#x27; style=&#x27;display:none&#x27;&gt;北京市应急管理局&lt;\/a&gt;/g&quot; `grep -rl &quot;&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;&quot; ./`</span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <tags>
         <tag>linux</tag>
@@ -131,6 +161,28 @@
       </tags>
   </entry>
   <entry>
+    <title>finalshell屏蔽更新</title>
+    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>#禁止finalshell更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
+
+<p>本机host添加以上配置即可</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo文章页头部配置</title>
+    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部文章页头部typora标签</p>
+<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo常用命令</title>
     <url>/2023/09/19/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<p>常用命令</p>
@@ -149,20 +201,36 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo文章页头部配置</title>
-    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>全部文章页头部typora标签</p>
-<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
+    <title>hexo分类页规则</title>
+    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>分类页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page categories</p>
+<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “categories”</p>
+<hr>
+<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
+<hr>
 ]]></content>
       <tags>
         <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
-    <title>hexo页面头部配置</title>
-    <url>/2023/09/19/hexo%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>全部页面头部typora标签</p>
-<p>写法	解释<br>title	【必需】页面标题<br>date	【必需】页面创建日期<br>type	【必需】标签、分类和友情链接三个页面需要配置<br>updated	【可选】页面更新日期<br>description	【可选】页面描述<br>keywords	【可选】页面关键字<br>comments	【可选】显示页面评论模块 (默认 true)<br>top_img	【可选】页面顶部图片<br>mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)<br>katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)<br>aside	【可选】显示侧边栏 (默认 true)<br>aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开 (true&#x2F;false) (默认为设置中highlight_shrink的配置)<br>random	【可选】配置友情链接是否随机排序（默认为 false)</p>
+    <title>hexo标签页规则</title>
+    <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>标签页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page tags</p>
+<p>你会找到 source&#x2F;tags&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “tags”</p>
+<hr>
+<p>title: 标签<br>date: 2018-01-05 00:00:00<br>type: “tags”<br>orderby: random</p>
+<p>order:1</p>
+<hr>
+<p>参数	解释<br>type	【必须】页面类型，必须为 tags<br>orderby	【可选】排序方式 ：random&#x2F;name&#x2F;length<br>order	【可选】排序次序： 1, asc for ascending; -1, desc for descending</p>
 ]]></content>
       <tags>
         <tag>hexo</tag>
@@ -294,6 +362,16 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo页面头部配置</title>
+    <url>/2023/09/19/hexo%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部页面头部typora标签</p>
+<p>写法	解释<br>title	【必需】页面标题<br>date	【必需】页面创建日期<br>type	【必需】标签、分类和友情链接三个页面需要配置<br>updated	【可选】页面更新日期<br>description	【可选】页面描述<br>keywords	【可选】页面关键字<br>comments	【可选】显示页面评论模块 (默认 true)<br>top_img	【可选】页面顶部图片<br>mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)<br>katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)<br>aside	【可选】显示侧边栏 (默认 true)<br>aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开 (true&#x2F;false) (默认为设置中highlight_shrink的配置)<br>random	【可选】配置友情链接是否随机排序（默认为 false)</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>免费使用cloudflare搭建v2之创建Workers</title>
     <url>/2023/09/26/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E5%88%9B%E5%BB%BAWorkers/</url>
     <content><![CDATA[<blockquote>
@@ -312,15 +390,37 @@
       </tags>
   </entry>
   <entry>
-    <title>finalshell屏蔽更新</title>
-    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<p>#禁止finalshell更新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
+    <title>win10软链接</title>
+    <url>/2023/09/21/win10%E8%BD%AF%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mklink /J &quot;D:\finalshell\conn&quot; &quot;E:\OneDrive - hjblcx\documents\finalshell\conn&quot;</span><br></pre></td></tr></table></figure>
 
-<p>本机host添加以上配置即可</p>
+<p>在cmd窗口执行以上命令</p>
+<p>在 D:\finalshell 文件夹下创建一个conn的文件夹,这个文件夹为E:\OneDrive - hjblcx\documents\finalshell\conn 这个文件夹的软连接</p>
+<p>实现finalshell的多台电脑同步保存的连接信息,需要借助onedrive</p>
+<p>删除软链接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rmdir D:\Desktop\temp\ckx</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <tags>
         <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>免费使用cloudflare搭建v2之获取配置使用</title>
+    <url>/2023/10/25/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E8%8E%B7%E5%8F%96%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<blockquote>
+<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第四步</p>
+</blockquote>
+<h6 id="获取节点配置"><a href="#获取节点配置" class="headerlink" title="获取节点配置"></a>获取节点配置</h6><p>参考第二步部署代码的方法，再次拿到生成的uuid，复制出来</p>
+<p><img src="https://image.allcx.eu.org/file/67341bbaa78a2c667ea8d.png"></p>
+<p>打开第三步中输入的自定义域名，在域名后面加一个 &#x2F; 再加刚才复制出来的uuid，在浏览器中打开，即可获得vless配置，如图</p>
+<p><img src="https://image.allcx.eu.org/file/5f721a161c7bd1c3bd1c7.png"></p>
+<p>导入v2软件即可使用，</p>
+<p>至此搭建完成</p>
+<p>速度一般，ipv6地址会一直在变化</p>
+]]></content>
+      <tags>
+        <tag>cloudflare</tag>
       </tags>
   </entry>
   <entry>
@@ -357,32 +457,6 @@
       </tags>
   </entry>
   <entry>
-    <title>统计文件中某个字符串出现的次数</title>
-    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
-    <content><![CDATA[<p>一、grep+wc</p>
-<p>1、单个字符串</p>
-<p>grep -o targetStr filename | wc -l</p>
-<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
-<p>备注：单个字符串可以不加引号</p>
-<p>2、多个字符串</p>
-<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
-<p>备注：必须加引号（单、双都可以）</p>
-<p>如果不加引号，结果是不正确的</p>
-<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
-<p>grep 一条数据里面有多个相同，会统计一次次数</p>
-<p>二、awk</p>
-<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
-<p>1</p>
-<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
-<p>1</p>
-<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
-<p>当文件大的时候awk优势会更加明显。</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>免费使用cloudflare搭建v2之自定义域名</title>
     <url>/2023/09/26/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
     <content><![CDATA[<blockquote>
@@ -402,72 +476,6 @@
 ]]></content>
       <tags>
         <tag>cloudflare</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo分类页规则</title>
-    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
-    <content><![CDATA[<p>分类页</p>
-<p>前往你的 Hexo 博客的根目录</p>
-<p>输入 hexo new page categories</p>
-<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
-<p>修改这个文件：</p>
-<p>记得添加 type: “categories”</p>
-<hr>
-<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
-<hr>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>win10软链接</title>
-    <url>/2023/09/21/win10%E8%BD%AF%E9%93%BE%E6%8E%A5/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mklink /J &quot;D:\finalshell\conn&quot; &quot;E:\OneDrive - hjblcx\documents\finalshell\conn&quot;</span><br></pre></td></tr></table></figure>
-
-<p>在cmd窗口执行以上命令</p>
-<p>在 D:\finalshell 文件夹下创建一个conn的文件夹,这个文件夹为E:\OneDrive - hjblcx\documents\finalshell\conn 这个文件夹的软连接</p>
-<p>实现finalshell的多台电脑同步保存的连接信息,需要借助onedrive</p>
-<p>删除软链接</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rmdir D:\Desktop\temp\ckx</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo标签页规则</title>
-    <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
-    <content><![CDATA[<p>标签页</p>
-<p>前往你的 Hexo 博客的根目录</p>
-<p>输入 hexo new page tags</p>
-<p>你会找到 source&#x2F;tags&#x2F;index.md 这个文件</p>
-<p>修改这个文件：</p>
-<p>记得添加 type: “tags”</p>
-<hr>
-<p>title: 标签<br>date: 2018-01-05 00:00:00<br>type: “tags”<br>orderby: random</p>
-<p>order:1</p>
-<hr>
-<p>参数	解释<br>type	【必须】页面类型，必须为 tags<br>orderby	【可选】排序方式 ：random&#x2F;name&#x2F;length<br>order	【可选】排序次序： 1, asc for ascending; -1, desc for descending</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解压缩报错tar  Error is not recoverable  exiting now</title>
-    <url>/2023/09/21/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%8A%A5%E9%94%99tar-Error-is-not-recoverable-exiting-now/</url>
-    <content><![CDATA[<p>[root@Gris-11140 FMIS2600bak]# tar -zxvf &#x2F;home&#x2F;oradata&#x2F;FMIS2600DMP.tar.gz</p>
-<p>gzip: stdin: not in gzip format</p>
-<p>tar: Child returned status 1</p>
-<p>tar: Error is not recoverable: exiting now</p>
-<p><strong>解决方法：</strong></p>
-<p><strong>去掉z参数，使用 tar -xvf 解压正常</strong></p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -579,51 +587,43 @@
       </tags>
   </entry>
   <entry>
-    <title>b站无人直播</title>
-    <url>/2023/10/24/b%E7%AB%99%E6%97%A0%E4%BA%BA%E7%9B%B4%E6%92%AD/</url>
-    <content><![CDATA[<p>1.先弄b站推流，类似ck：<a href="https://link.bilibili.com/p/center/index#/my-room/start-live">选分类，开播。复制→服务器地址+串流密钥</a><br>2.服务器一键拉库<br>curl -fsSL get.kplayer.net | bash<br>3.配置文件<a href="https://file.uhsea.com/2310/f8be897bd2c6818137d865da5c4d7a93RS.txt">config.yaml(点击下载)</a>，文件在服务器的root\kplayer，把推流代码放进去保存就行。<br>4.然后在服务器root\新建一个文件夹Downloads存放视频文件，上传文件xxx.mp4。<br>5.上面的B站点击开启直播，出现推流码后，然后服务器cd kplayer<br>.&#x2F;kplayer play start –daemon<br>返回刷新，查看B站直播间就行了。</p>
+    <title>统计文件中某个字符串出现的次数</title>
+    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<p>一、grep+wc</p>
+<p>1、单个字符串</p>
+<p>grep -o targetStr filename | wc -l</p>
+<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
+<p>备注：单个字符串可以不加引号</p>
+<p>2、多个字符串</p>
+<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
+<p>备注：必须加引号（单、双都可以）</p>
+<p>如果不加引号，结果是不正确的</p>
+<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
+<p>grep 一条数据里面有多个相同，会统计一次次数</p>
+<p>二、awk</p>
+<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
+<p>1</p>
+<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
+<p>1</p>
+<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
+<p>当文件大的时候awk优势会更加明显。</p>
 ]]></content>
       <tags>
-        <tag>直播</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
-    <title>免费使用cloudflare搭建v2之获取配置使用</title>
-    <url>/2023/10/25/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E8%8E%B7%E5%8F%96%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<blockquote>
-<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第四步</p>
-</blockquote>
-<h6 id="获取节点配置"><a href="#获取节点配置" class="headerlink" title="获取节点配置"></a>获取节点配置</h6><p>参考第二步部署代码的方法，再次拿到生成的uuid，复制出来</p>
-<p><img src="https://image.allcx.eu.org/file/67341bbaa78a2c667ea8d.png"></p>
-<p>打开第三步中输入的自定义域名，在域名后面加一个 &#x2F; 再加刚才复制出来的uuid，在浏览器中打开，即可获得vless配置，如图</p>
-<p><img src="https://image.allcx.eu.org/file/5f721a161c7bd1c3bd1c7.png"></p>
-<p>导入v2软件即可使用，</p>
-<p>至此搭建完成</p>
-<p>速度一般，ipv6地址会一直在变化</p>
+    <title>解压缩报错tar  Error is not recoverable  exiting now</title>
+    <url>/2023/09/21/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%8A%A5%E9%94%99tar-Error-is-not-recoverable-exiting-now/</url>
+    <content><![CDATA[<p>[root@Gris-11140 FMIS2600bak]# tar -zxvf &#x2F;home&#x2F;oradata&#x2F;FMIS2600DMP.tar.gz</p>
+<p>gzip: stdin: not in gzip format</p>
+<p>tar: Child returned status 1</p>
+<p>tar: Error is not recoverable: exiting now</p>
+<p><strong>解决方法：</strong></p>
+<p><strong>去掉z参数，使用 tar -xvf 解压正常</strong></p>
 ]]></content>
       <tags>
-        <tag>cloudflare</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Subreg.CZ 永久免费的.Free.hr域名注册</title>
-    <url>/2023/11/22/Subreg-CZ-%E6%B0%B8%E4%B9%85%E5%85%8D%E8%B4%B9%E7%9A%84-Free-hr%E5%9F%9F%E5%90%8D%E6%B3%A8%E5%86%8C/</url>
-    <content><![CDATA[<p>Subreg.CZ和HZ.CZ同为第一家获得ICANN认证的捷克最大域名注册商之一Gransy旗下网站，目前管理着近70万个域名，提供近1000种域名供客户注册。Subreg.CZ最近推出了yourname.Free.hr域名注册，该域名价格为“0”元完全免费，初始注册时间为1年，可自动免费续期！在Subreg.CZ注册的.Free.hr域名均提供免费DNS解析服务，支持设置A、AAAA、MX、TXT、CNAME、SPF、SRV、NS、PTR、TLSA、CAA、SSHFP、DS解析记录，还支持DNSSEC，当然你也可以修改域名的DNS服务器。</p>
-<p>Subreg.CZ官网<br>网址：<a href="https://subreg.cz/en">https://subreg.cz/en</a></p>
-<p>Subreg.CZ域名注册量统计<br>网址：<a href="https://subreg.cz/en/statistics_full">https://subreg.cz/en/statistics_full</a><br>截止到2023年11月21日，.Free.hr免费域名注册量只有1160个，还有大量不错的免费域名没被注册！</p>
-<p>Subreg.CZ免费.Free.hr域名注册教程<br>打开注册网址：<a href="https://subreg.cz/en/register">https://subreg.cz/en/register</a><br>注意：HZ.CZ也可以免费注册.Free.hr域名，如果你有HZ.CZ账号可以直接到HZ.CZ注册.Free.hr域名。</p>
-<p>首先填写你的名字、姓氏、地址、城市、国家、邮编、电话（一定要按照“+国际区号.电话号码”这个格式填写）、邮箱、用户名等个人信息（密码会发到你的邮箱中），再输入验证问题的答案，选上同意服务协议，点“Create account”按钮注册账号。</p>
-<p>登录你的邮箱，可以看到Subreg.CZ发来的邮件，邮件中有你的用户名和密码。</p>
-<p>点右上角绿色“LOGIN”按钮，输入你的用户名、密码，点橙色“LOG IN”按钮登录你的账号。</p>
-<p>点左面菜单中的“New order”，“Domain”后面输入你要注册的域名，在后面域名列表中选上或直接输入“free.hr”，点黑色“Next”按钮。</p>
-<p>“Owner contact:”后面选上域名所有人的信息，点下方黑色“Next”按钮完成你的.Free.hr域名注册。</p>
-<p>所有自己注册的域名管理界面<br><a href="https://subreg.cz/en/domain/list">https://subreg.cz/en/domain/list</a><br>进去后可以设置自动续期</p>
-<p>或者，点击你刚刚注册的.Free.hr域名。</p>
-<p>点击“Automatic renewal:”自动续期后面的“No”。</p>
-<p>选上“Always extended before expiration”，再点下面黑色“Set”按钮，这时你的.Free.hr域名就会在到期前自动免费续期了！</p>
-]]></content>
-      <tags>
-        <tag>域名</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
 </search>
