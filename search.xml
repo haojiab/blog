@@ -42,19 +42,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RedisDesktop屏蔽更新</title>
-    <url>/2023/09/21/RedisDesktop%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<p>解压安装完成之后</p>
-<p>屏蔽更新</p>
-<p>在host文件中添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 rdm.dev</span><br><span class="line">127.0.0.1 redisdesktop.com</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Subreg.CZ 永久免费的.Free.hr域名注册</title>
     <url>/2023/11/22/Subreg-CZ-%E6%B0%B8%E4%B9%85%E5%85%8D%E8%B4%B9%E7%9A%84-Free-hr%E5%9F%9F%E5%90%8D%E6%B3%A8%E5%86%8C/</url>
     <content><![CDATA[<p>Subreg.CZ和HZ.CZ同为第一家获得ICANN认证的捷克最大域名注册商之一Gransy旗下网站，目前管理着近70万个域名，提供近1000种域名供客户注册。Subreg.CZ最近推出了yourname.Free.hr域名注册，该域名价格为“0”元完全免费，初始注册时间为1年，可自动免费续期！在Subreg.CZ注册的.Free.hr域名均提供免费DNS解析服务，支持设置A、AAAA、MX、TXT、CNAME、SPF、SRV、NS、PTR、TLSA、CAA、SSHFP、DS解析记录，还支持DNSSEC，当然你也可以修改域名的DNS服务器。</p>
@@ -73,6 +60,44 @@
 ]]></content>
       <tags>
         <tag>域名</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RedisDesktop屏蔽更新</title>
+    <url>/2023/09/21/RedisDesktop%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>解压安装完成之后</p>
+<p>屏蔽更新</p>
+<p>在host文件中添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 rdm.dev</span><br><span class="line">127.0.0.1 redisdesktop.com</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>centos 7 对用过yum更新的软件服务进行降级</title>
+    <url>/2023/09/21/centos-7-%E5%AF%B9%E7%94%A8%E8%BF%87yum%E6%9B%B4%E6%96%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E9%99%8D%E7%BA%A7/</url>
+    <content><![CDATA[<p>　　centos 7 执行 yum update 会对现有服务软件进行更新，但是如果把不该升级的软件升级，彼此软件不兼容，如何进行降级，比如：kibana 必须与 elasticsearch 大版本相同，否则服务不匹配（所以centos 中不是必要不要在已经运行的服务中yum update）<br>　　服务现安装 elasticsearch（5.5.3），但是因为执行 yum update，kibana 由 5.5.3 到 7.3.2</p>
+<ol>
+<li>查看机器上相近的版本，是否有可选的软件包</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum search --showduplicates kibana</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过查询出指定的软件全名，通过 downgrade 进行升级</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum downgrade kibana-5.5.3-1</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如果降级是大版本，可通过修改yum源配置进行大版本降级</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/kibana.repo</span><br><span class="line">[kibana-5.x]name=Kibana repository for5.x packagesbaseurl=https://artifacts.elastic.co/packages/5.x/yumgpgcheck=1gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearchenabled=1autorefresh=1type=rpm-md</span><br></pre></td></tr></table></figure>
+
+<p>  　　然后重新执行步骤1和步骤2</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -99,31 +124,6 @@
 ]]></content>
       <tags>
         <tag>直播</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>centos 7 对用过yum更新的软件服务进行降级</title>
-    <url>/2023/09/21/centos-7-%E5%AF%B9%E7%94%A8%E8%BF%87yum%E6%9B%B4%E6%96%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E9%99%8D%E7%BA%A7/</url>
-    <content><![CDATA[<p>　　centos 7 执行 yum update 会对现有服务软件进行更新，但是如果把不该升级的软件升级，彼此软件不兼容，如何进行降级，比如：kibana 必须与 elasticsearch 大版本相同，否则服务不匹配（所以centos 中不是必要不要在已经运行的服务中yum update）<br>　　服务现安装 elasticsearch（5.5.3），但是因为执行 yum update，kibana 由 5.5.3 到 7.3.2</p>
-<ol>
-<li>查看机器上相近的版本，是否有可选的软件包</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum search --showduplicates kibana</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>通过查询出指定的软件全名，通过 downgrade 进行升级</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum downgrade kibana-5.5.3-1</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>如果降级是大版本，可通过修改yum源配置进行大版本降级</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/kibana.repo</span><br><span class="line">[kibana-5.x]name=Kibana repository for5.x packagesbaseurl=https://artifacts.elastic.co/packages/5.x/yumgpgcheck=1gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearchenabled=1autorefresh=1type=rpm-md</span><br></pre></td></tr></table></figure>
-
-<p>  　　然后重新执行步骤1和步骤2</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -155,28 +155,6 @@
 </li>
 </ul>
 <p>class_name 和 class_desc 支持 html 格式书写，如不需要，也可以留空。</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>finalshell屏蔽更新</title>
-    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<p>#禁止finalshell更新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
-
-<p>本机host添加以上配置即可</p>
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo文章页头部配置</title>
-    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>全部文章页头部typora标签</p>
-<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
 ]]></content>
       <tags>
         <tag>hexo</tag>
@@ -218,6 +196,18 @@
       </tags>
   </entry>
   <entry>
+    <title>finalshell屏蔽更新</title>
+    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>#禁止finalshell更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
+
+<p>本机host添加以上配置即可</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo标签页规则</title>
     <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
     <content><![CDATA[<p>标签页</p>
@@ -231,6 +221,26 @@
 <p>order:1</p>
 <hr>
 <p>参数	解释<br>type	【必须】页面类型，必须为 tags<br>orderby	【可选】排序方式 ：random&#x2F;name&#x2F;length<br>order	【可选】排序次序： 1, asc for ascending; -1, desc for descending</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo文章页头部配置</title>
+    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部文章页头部typora标签</p>
+<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo页面头部配置</title>
+    <url>/2023/09/19/hexo%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部页面头部typora标签</p>
+<p>写法	解释<br>title	【必需】页面标题<br>date	【必需】页面创建日期<br>type	【必需】标签、分类和友情链接三个页面需要配置<br>updated	【可选】页面更新日期<br>description	【可选】页面描述<br>keywords	【可选】页面关键字<br>comments	【可选】显示页面评论模块 (默认 true)<br>top_img	【可选】页面顶部图片<br>mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)<br>katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)<br>aside	【可选】显示侧边栏 (默认 true)<br>aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开 (true&#x2F;false) (默认为设置中highlight_shrink的配置)<br>random	【可选】配置友情链接是否随机排序（默认为 false)</p>
 ]]></content>
       <tags>
         <tag>hexo</tag>
@@ -362,34 +372,6 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo页面头部配置</title>
-    <url>/2023/09/19/hexo%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>全部页面头部typora标签</p>
-<p>写法	解释<br>title	【必需】页面标题<br>date	【必需】页面创建日期<br>type	【必需】标签、分类和友情链接三个页面需要配置<br>updated	【可选】页面更新日期<br>description	【可选】页面描述<br>keywords	【可选】页面关键字<br>comments	【可选】显示页面评论模块 (默认 true)<br>top_img	【可选】页面顶部图片<br>mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)<br>katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)<br>aside	【可选】显示侧边栏 (默认 true)<br>aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开 (true&#x2F;false) (默认为设置中highlight_shrink的配置)<br>random	【可选】配置友情链接是否随机排序（默认为 false)</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>免费使用cloudflare搭建v2之创建Workers</title>
-    <url>/2023/09/26/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E5%88%9B%E5%BB%BAWorkers/</url>
-    <content><![CDATA[<blockquote>
-<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第一步</p>
-</blockquote>
-<h6 id="创建Workers"><a href="#创建Workers" class="headerlink" title="创建Workers"></a>创建Workers</h6><p>登录到cloudflare中，地址为<a href="https://www.cloudflare-cn.com/">Cloudflare</a>，首先点击左侧列表中 Workers 和 Pages ，点击 创建应用程序 </p>
-<p><img src="https://image.allcx.eu.org/file/2263583b059f98ce6ecab.png"></p>
-<p>然后点击 创建Worker</p>
-<p><img src="https://image.allcx.eu.org/file/7d7d39e11dc9467194dc4.png"></p>
-<p>名称随便写，然后点击下方部署</p>
-<p><img src="https://image.allcx.eu.org/file/09732a2c75ec22405be39.png"></p>
-<p>部署完成</p>
-]]></content>
-      <tags>
-        <tag>cloudflare</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>win10软链接</title>
     <url>/2023/09/21/win10%E8%BD%AF%E9%93%BE%E6%8E%A5/</url>
     <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mklink /J &quot;D:\finalshell\conn&quot; &quot;E:\OneDrive - hjblcx\documents\finalshell\conn&quot;</span><br></pre></td></tr></table></figure>
@@ -406,18 +388,32 @@
       </tags>
   </entry>
   <entry>
-    <title>免费使用cloudflare搭建v2之获取配置使用</title>
-    <url>/2023/10/25/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E8%8E%B7%E5%8F%96%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<blockquote>
-<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第四步</p>
-</blockquote>
-<h6 id="获取节点配置"><a href="#获取节点配置" class="headerlink" title="获取节点配置"></a>获取节点配置</h6><p>参考第二步部署代码的方法，再次拿到生成的uuid，复制出来</p>
-<p><img src="https://image.allcx.eu.org/file/67341bbaa78a2c667ea8d.png"></p>
-<p>打开第三步中输入的自定义域名，在域名后面加一个 &#x2F; 再加刚才复制出来的uuid，在浏览器中打开，即可获得vless配置，如图</p>
-<p><img src="https://image.allcx.eu.org/file/5f721a161c7bd1c3bd1c7.png"></p>
-<p>导入v2软件即可使用，</p>
-<p>至此搭建完成</p>
-<p>速度一般，ipv6地址会一直在变化</p>
+    <title>使用 Cloudflare 搭建无限空间及CDN、支持审查的免费图床</title>
+    <url>/2025/04/14/%E4%BD%BF%E7%94%A8-Cloudflare-%E6%90%AD%E5%BB%BA%E6%97%A0%E9%99%90%E7%A9%BA%E9%97%B4%E5%8F%8ACDN%E3%80%81%E6%94%AF%E6%8C%81%E5%AE%A1%E6%9F%A5%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/</url>
+    <content><![CDATA[<p>这个项目是基于 Cloudflare Pages、Telegraph、ModerateContent 免费图片托管、审查、CDN加速的解决方案，Flickr&#x2F;imgur 替代品。也就是无需 1 分钱，就可以得到一个无限空间，实时图像审核、无限 CDN 流量的免费图床，虽然有其他限制，但是也足够大部分情况使用，尤其适合海外个人博客图床使用。</p>
+<p>图床优点<br>无限图片储存数量，你可以上传不限数量的图片.<br>无需购买服务器，托管于 Cloudflare 的网络上，当使用量不超过 Cloudflare 的免费额度时，完全免费<br>无需购买域名，可以使用 Cloudflare Pages 提供的*.pages.dev的免费二级域名，同时也支持绑定自定义域名（需 NS 托管在 CloudFlare）。<br>调用 ModerateContent 支持图片审查 API，可根据需要开启，开启后不良图片将自动屏蔽，不再加载。<br>支持后台图片管理，可以对上传的图片进行在线预览，添加白名单，黑名单等操作。</p>
+<p>准备工作<br>Cloudflare 账号 - <a href="https://www.cloudflare.com/zh-cn/">https://www.cloudflare.com/zh-cn/</a><br>GitHub 账号 - <a href="https://github.com/">https://github.com/</a><br>ModerateContent API - <a href="https://moderatecontent.com/">https://moderatecontent.com/</a><br>部署方式<br>首先登录 GitHub 社区 Fork Telegraph-Image 项目。</p>
+<p>一切默认，Create Fork 即可。</p>
+<p>打开 Cloudflare Dashboard，进入 Pages 管理页面，选择创建项目，选择连接到 Git 提供程序，选择好刚刚操作的 GitHub 账号以及对应的存储库，点击开始设置即可。</p>
+<p>一切默认，直接下一步。</p>
+<p>只需要几十秒种就自动部署完毕了，下图打码的内容就是 CloudFlare 提供的免费二级域名。</p>
+<p>点击该二级域名，就可以看到第一张图那样的界面，意味着部署成功了。</p>
+<p>免费限制<br>由于图片文件实际存储于 Telegraph，Telegraph 限制上传的图片大小最大为 5MB。<br>由于使用 Cloudflare 的网络，图片的加载速度在某些地区可能得不到保证。<br>Cloudflare KV 每天只有1000次的免费写入额度，每有一张新的图片加载都会占用该写入额度（在没有缓存的情况下，如果你的域名在Cloudflare开启了缓存，当缓存未命中时才会占用该额度），如果超过该额度，图片管理后台将无法记录新加载的图片。<br>每天最多 1,000 次免费删除操作，每有一条图片记录都会占用该额度，超过将无法删除图片记录。<br>每天最多 1,000 次免费列出操作，每打开或刷新一次后台&#x2F;admin都会占用该额度，超过将进行后台图片管理。<br>Cloudflare Function 免费版每日限制 100,000 个请求（即上传或是加载图片的总次数不能超过 100,000 次）如超过可能需要选择购买 Cloudflare Function 的付费套餐，如开启图片管理功能还会存在 KV 操作数量的限制，如超过需购买付费套餐，每月$5起步，按量收费，没有上述额度限制。<br>绝大多数情况下，该免费额度都基本够用，并且可以稍微超出一点，不是已超出就立马停用，且每项额度单独计算，某项操作超出免费额度后只会停用该项操作，不影响其他的功能，即即便我的免费写入额度用完了，我的读写功能不受影响，图片能够正常加载，只是不能在图片管理后台看到新的图片了。<br>绑定个性化域名<br>在 Pages 的自定义域里面，绑定 CloudFlare 中存在的域名（在 CloudFlare 托管的域名，也就是 NS 在 CloudFlare 的域名），自动会修改 DNS 记录。</p>
+<p>后台图片管理功能<br>图片管理功能，默认是关闭的，如需开启请部署完成后前往后台依次点击设置→函数→KV 命名空间绑定→编辑绑定→变量名称填写：img_url KV 命名空间 选择你提前创建好的 KV 储存空间。</p>
+<p>开启后访问http(s):&#x2F;&#x2F;你的域名&#x2F;admin 即可打开后台管理页面。</p>
+<p>开启图片审查及后台管理<br>前往 <a href="https://moderatecontent.com/">https://moderatecontent.com/</a> 使用邮箱注册并获得一个免费的用于审查图像内容的 API key（注册就会显示这个 API，同时还会发送一份到你的邮箱备查，找不到的话可以去垃圾邮箱找找）。</p>
+<p>打开 Cloudflare Pages 的管理页面，依次点击设置，环境变量，添加环境变量。</p>
+<p>添加一个变量名称为ModerateContentApiKey，值为你刚刚第一步获得的 API key，点击保存即可。</p>
+<p>提示：如果你还想设置后台图片管理功能，等那个设置好后一起重新部署也可以。</p>
+<p>后台管理页面新增登录验证功能，默认也是关闭的，如需开启在编辑变量中添加如下表格所示的变量即可开启登录验证。</p>
+<p>变量名称	值<br>BASIC_USER &#x3D;	&lt;后台管理页面登录用户名称&gt;<br>BASIC_PASS &#x3D;	&lt;后台管理页面登录用户密码&gt;<br>当然你也可以不设置这两个值，这样访问后台管理页面时将无需验证，直接跳过登录步骤，这一设计使得你可以结合 Cloudflare Access 进行使用，实现支持邮件验证码登录，Microsoft 账户登录、Github 账户登录等功能，能够与你域名上原有的登录方式所集成，无需再次记忆多一组后台的账号密码，添加 Cloudflare Access 的方式请参考官方文档，注意需要保护路径。</p>
+<p>复制<br>&#x2F;admin<br>&#x2F;api&#x2F;manage&#x2F;*<br>当开启图片管理功能后，可在后台顶部查看记录中的图片数量，可在后台搜索框使用图片文件名称，快速搜索定位需要管理的图片</p>
+<p>可在后台查看图片当前的状态</p>
+<p>复制<br>{ “ListType”: “White”, “Label”: “None”, “TimeStamp”: 1705729800466 }<br>ListType代表图片当前是否在黑白名单当中，None则表示既不在黑名单中也不在白名单中，White表示在在白名单中（如上所示，加入白名单的图片无论如何都会正常加载，可绕过图片审查API的结果），Block表示在黑名单中，TimeStamp为图片首次加载的时间戳，如开启的图片审查 API，则这里还会显示图片审查的结果用Label标识。当然你也可以手动为图片加入黑名单，加入黑名单的图片将无法正常加载。</p>
+<p>可在后台手动删除图片记录，即不再后台显示该图片，除非有人再次上传并加载该图片，注意由于图片储存在 Telegraph 的服务器上，我们无法删除上传的原始图片，只能通过上述第6点的黑名单功能屏蔽图片的加载。</p>
+<p>开启图片审查后，因为审查需要时间，首次的图片加载将会变得缓慢，之后的图片加载由于存在缓存，并不会受到影响。</p>
+<p>更新升级本项目<br>其实更新非常简单，只需要参照上面的更新内容，先进入到 Cloudflare Pages 后台，把需要使用的环境变量提前设置好并绑定上 KV 命名空间，然后去到 Github 你之前 fork 过的仓库依次选择Sync fork→Update branch即可，稍等一会，Cloudflare Pages 那边检测到你的仓库更新了之后就会自动部署最新的代码了。</p>
+<p>注意事项<br>由于所做的更改将在下次部署时生效，你或许还需要进入部署页面，重新部署一下该本项目。</p>
 ]]></content>
       <tags>
         <tag>cloudflare</tag>
@@ -479,6 +475,68 @@
       </tags>
   </entry>
   <entry>
+    <title>免费使用cloudflare搭建v2之创建Workers</title>
+    <url>/2023/09/26/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E5%88%9B%E5%BB%BAWorkers/</url>
+    <content><![CDATA[<blockquote>
+<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第一步</p>
+</blockquote>
+<h6 id="创建Workers"><a href="#创建Workers" class="headerlink" title="创建Workers"></a>创建Workers</h6><p>登录到cloudflare中，地址为<a href="https://www.cloudflare-cn.com/">Cloudflare</a>，首先点击左侧列表中 Workers 和 Pages ，点击 创建应用程序 </p>
+<p><img src="https://image.allcx.eu.org/file/2263583b059f98ce6ecab.png"></p>
+<p>然后点击 创建Worker</p>
+<p><img src="https://image.allcx.eu.org/file/7d7d39e11dc9467194dc4.png"></p>
+<p>名称随便写，然后点击下方部署</p>
+<p><img src="https://image.allcx.eu.org/file/09732a2c75ec22405be39.png"></p>
+<p>部署完成</p>
+]]></content>
+      <tags>
+        <tag>cloudflare</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>免费使用cloudflare搭建v2之获取配置使用</title>
+    <url>/2023/10/25/%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8cloudflare%E6%90%AD%E5%BB%BAv2%E4%B9%8B%E8%8E%B7%E5%8F%96%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<blockquote>
+<p>使用cloudflare中免费的Workers进行搭建，实现免费v2，速度一般，划水基本够用，前提为拥有cloudflare账号以及拥有自己域名。此篇为系列教程第四步</p>
+</blockquote>
+<h6 id="获取节点配置"><a href="#获取节点配置" class="headerlink" title="获取节点配置"></a>获取节点配置</h6><p>参考第二步部署代码的方法，再次拿到生成的uuid，复制出来</p>
+<p><img src="https://image.allcx.eu.org/file/67341bbaa78a2c667ea8d.png"></p>
+<p>打开第三步中输入的自定义域名，在域名后面加一个 &#x2F; 再加刚才复制出来的uuid，在浏览器中打开，即可获得vless配置，如图</p>
+<p><img src="https://image.allcx.eu.org/file/5f721a161c7bd1c3bd1c7.png"></p>
+<p>导入v2软件即可使用，</p>
+<p>至此搭建完成</p>
+<p>速度一般，ipv6地址会一直在变化</p>
+]]></content>
+      <tags>
+        <tag>cloudflare</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>统计文件中某个字符串出现的次数</title>
+    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<p>一、grep+wc</p>
+<p>1、单个字符串</p>
+<p>grep -o targetStr filename | wc -l</p>
+<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
+<p>备注：单个字符串可以不加引号</p>
+<p>2、多个字符串</p>
+<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
+<p>备注：必须加引号（单、双都可以）</p>
+<p>如果不加引号，结果是不正确的</p>
+<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
+<p>grep 一条数据里面有多个相同，会统计一次次数</p>
+<p>二、awk</p>
+<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
+<p>1</p>
+<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
+<p>1</p>
+<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
+<p>当文件大的时候awk优势会更加明显。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>用 Cloudflare Workers 免费反代任意网站</title>
     <url>/2023/10/16/%E7%94%A8-Cloudflare-Workers-%E5%85%8D%E8%B4%B9%E5%8F%8D%E4%BB%A3%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99/</url>
     <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>WorkersProxy 是一个轻量级的 Javascript 应用程序，可从其他服务器作为客户端检索资源。</p>
@@ -503,6 +561,12 @@
       <tags>
         <tag>cloudflare</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>在Windows 11系统中将任意文件（如bat/log等）固定在开始菜单</title>
+    <url>/2025/04/14/%E5%9C%A8Windows-11%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%B0%86%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%EF%BC%88%E5%A6%82bat-log%E7%AD%89%EF%BC%89%E5%9B%BA%E5%AE%9A%E5%9C%A8%E5%BC%80%E5%A7%8B%E8%8F%9C%E5%8D%95/</url>
+    <content><![CDATA[<p>1.对任意文件右键创建快捷方式<br>2.打开%AppData%\Microsoft\Windows\Start Menu\Programs，把快捷方式放到这里<br>3.在开始菜单的列表（所有应用）中找到它，然后右键固定到开始屏幕</p>
+]]></content>
   </entry>
   <entry>
     <title>砍价36计</title>
@@ -587,32 +651,6 @@
       </tags>
   </entry>
   <entry>
-    <title>统计文件中某个字符串出现的次数</title>
-    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
-    <content><![CDATA[<p>一、grep+wc</p>
-<p>1、单个字符串</p>
-<p>grep -o targetStr filename | wc -l</p>
-<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
-<p>备注：单个字符串可以不加引号</p>
-<p>2、多个字符串</p>
-<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
-<p>备注：必须加引号（单、双都可以）</p>
-<p>如果不加引号，结果是不正确的</p>
-<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
-<p>grep 一条数据里面有多个相同，会统计一次次数</p>
-<p>二、awk</p>
-<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
-<p>1</p>
-<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
-<p>1</p>
-<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
-<p>当文件大的时候awk优势会更加明显。</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>解压缩报错tar  Error is not recoverable  exiting now</title>
     <url>/2023/09/21/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%8A%A5%E9%94%99tar-Error-is-not-recoverable-exiting-now/</url>
     <content><![CDATA[<p>[root@Gris-11140 FMIS2600bak]# tar -zxvf &#x2F;home&#x2F;oradata&#x2F;FMIS2600DMP.tar.gz</p>
@@ -625,43 +663,5 @@
       <tags>
         <tag>linux</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>使用 Cloudflare 搭建无限空间及CDN、支持审查的免费图床</title>
-    <url>/2025/04/14/%E4%BD%BF%E7%94%A8-Cloudflare-%E6%90%AD%E5%BB%BA%E6%97%A0%E9%99%90%E7%A9%BA%E9%97%B4%E5%8F%8ACDN%E3%80%81%E6%94%AF%E6%8C%81%E5%AE%A1%E6%9F%A5%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/</url>
-    <content><![CDATA[<p>这个项目是基于 Cloudflare Pages、Telegraph、ModerateContent 免费图片托管、审查、CDN加速的解决方案，Flickr&#x2F;imgur 替代品。也就是无需 1 分钱，就可以得到一个无限空间，实时图像审核、无限 CDN 流量的免费图床，虽然有其他限制，但是也足够大部分情况使用，尤其适合海外个人博客图床使用。</p>
-<p>图床优点<br>无限图片储存数量，你可以上传不限数量的图片.<br>无需购买服务器，托管于 Cloudflare 的网络上，当使用量不超过 Cloudflare 的免费额度时，完全免费<br>无需购买域名，可以使用 Cloudflare Pages 提供的*.pages.dev的免费二级域名，同时也支持绑定自定义域名（需 NS 托管在 CloudFlare）。<br>调用 ModerateContent 支持图片审查 API，可根据需要开启，开启后不良图片将自动屏蔽，不再加载。<br>支持后台图片管理，可以对上传的图片进行在线预览，添加白名单，黑名单等操作。</p>
-<p>准备工作<br>Cloudflare 账号 - <a href="https://www.cloudflare.com/zh-cn/">https://www.cloudflare.com/zh-cn/</a><br>GitHub 账号 - <a href="https://github.com/">https://github.com/</a><br>ModerateContent API - <a href="https://moderatecontent.com/">https://moderatecontent.com/</a><br>部署方式<br>首先登录 GitHub 社区 Fork Telegraph-Image 项目。</p>
-<p>一切默认，Create Fork 即可。</p>
-<p>打开 Cloudflare Dashboard，进入 Pages 管理页面，选择创建项目，选择连接到 Git 提供程序，选择好刚刚操作的 GitHub 账号以及对应的存储库，点击开始设置即可。</p>
-<p>一切默认，直接下一步。</p>
-<p>只需要几十秒种就自动部署完毕了，下图打码的内容就是 CloudFlare 提供的免费二级域名。</p>
-<p>点击该二级域名，就可以看到第一张图那样的界面，意味着部署成功了。</p>
-<p>免费限制<br>由于图片文件实际存储于 Telegraph，Telegraph 限制上传的图片大小最大为 5MB。<br>由于使用 Cloudflare 的网络，图片的加载速度在某些地区可能得不到保证。<br>Cloudflare KV 每天只有1000次的免费写入额度，每有一张新的图片加载都会占用该写入额度（在没有缓存的情况下，如果你的域名在Cloudflare开启了缓存，当缓存未命中时才会占用该额度），如果超过该额度，图片管理后台将无法记录新加载的图片。<br>每天最多 1,000 次免费删除操作，每有一条图片记录都会占用该额度，超过将无法删除图片记录。<br>每天最多 1,000 次免费列出操作，每打开或刷新一次后台&#x2F;admin都会占用该额度，超过将进行后台图片管理。<br>Cloudflare Function 免费版每日限制 100,000 个请求（即上传或是加载图片的总次数不能超过 100,000 次）如超过可能需要选择购买 Cloudflare Function 的付费套餐，如开启图片管理功能还会存在 KV 操作数量的限制，如超过需购买付费套餐，每月$5起步，按量收费，没有上述额度限制。<br>绝大多数情况下，该免费额度都基本够用，并且可以稍微超出一点，不是已超出就立马停用，且每项额度单独计算，某项操作超出免费额度后只会停用该项操作，不影响其他的功能，即即便我的免费写入额度用完了，我的读写功能不受影响，图片能够正常加载，只是不能在图片管理后台看到新的图片了。<br>绑定个性化域名<br>在 Pages 的自定义域里面，绑定 CloudFlare 中存在的域名（在 CloudFlare 托管的域名，也就是 NS 在 CloudFlare 的域名），自动会修改 DNS 记录。</p>
-<p>后台图片管理功能<br>图片管理功能，默认是关闭的，如需开启请部署完成后前往后台依次点击设置→函数→KV 命名空间绑定→编辑绑定→变量名称填写：img_url KV 命名空间 选择你提前创建好的 KV 储存空间。</p>
-<p>开启后访问http(s):&#x2F;&#x2F;你的域名&#x2F;admin 即可打开后台管理页面。</p>
-<p>开启图片审查及后台管理<br>前往 <a href="https://moderatecontent.com/">https://moderatecontent.com/</a> 使用邮箱注册并获得一个免费的用于审查图像内容的 API key（注册就会显示这个 API，同时还会发送一份到你的邮箱备查，找不到的话可以去垃圾邮箱找找）。</p>
-<p>打开 Cloudflare Pages 的管理页面，依次点击设置，环境变量，添加环境变量。</p>
-<p>添加一个变量名称为ModerateContentApiKey，值为你刚刚第一步获得的 API key，点击保存即可。</p>
-<p>提示：如果你还想设置后台图片管理功能，等那个设置好后一起重新部署也可以。</p>
-<p>后台管理页面新增登录验证功能，默认也是关闭的，如需开启在编辑变量中添加如下表格所示的变量即可开启登录验证。</p>
-<p>变量名称	值<br>BASIC_USER &#x3D;	&lt;后台管理页面登录用户名称&gt;<br>BASIC_PASS &#x3D;	&lt;后台管理页面登录用户密码&gt;<br>当然你也可以不设置这两个值，这样访问后台管理页面时将无需验证，直接跳过登录步骤，这一设计使得你可以结合 Cloudflare Access 进行使用，实现支持邮件验证码登录，Microsoft 账户登录、Github 账户登录等功能，能够与你域名上原有的登录方式所集成，无需再次记忆多一组后台的账号密码，添加 Cloudflare Access 的方式请参考官方文档，注意需要保护路径。</p>
-<p>复制<br>&#x2F;admin<br>&#x2F;api&#x2F;manage&#x2F;*<br>当开启图片管理功能后，可在后台顶部查看记录中的图片数量，可在后台搜索框使用图片文件名称，快速搜索定位需要管理的图片</p>
-<p>可在后台查看图片当前的状态</p>
-<p>复制<br>{ “ListType”: “White”, “Label”: “None”, “TimeStamp”: 1705729800466 }<br>ListType代表图片当前是否在黑白名单当中，None则表示既不在黑名单中也不在白名单中，White表示在在白名单中（如上所示，加入白名单的图片无论如何都会正常加载，可绕过图片审查API的结果），Block表示在黑名单中，TimeStamp为图片首次加载的时间戳，如开启的图片审查 API，则这里还会显示图片审查的结果用Label标识。当然你也可以手动为图片加入黑名单，加入黑名单的图片将无法正常加载。</p>
-<p>可在后台手动删除图片记录，即不再后台显示该图片，除非有人再次上传并加载该图片，注意由于图片储存在 Telegraph 的服务器上，我们无法删除上传的原始图片，只能通过上述第6点的黑名单功能屏蔽图片的加载。</p>
-<p>开启图片审查后，因为审查需要时间，首次的图片加载将会变得缓慢，之后的图片加载由于存在缓存，并不会受到影响。</p>
-<p>更新升级本项目<br>其实更新非常简单，只需要参照上面的更新内容，先进入到 Cloudflare Pages 后台，把需要使用的环境变量提前设置好并绑定上 KV 命名空间，然后去到 Github 你之前 fork 过的仓库依次选择Sync fork→Update branch即可，稍等一会，Cloudflare Pages 那边检测到你的仓库更新了之后就会自动部署最新的代码了。</p>
-<p>注意事项<br>由于所做的更改将在下次部署时生效，你或许还需要进入部署页面，重新部署一下该本项目。</p>
-]]></content>
-      <tags>
-        <tag>cloudflare</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在Windows 11系统中将任意文件（如bat/log等）固定在开始菜单</title>
-    <url>/2025/04/14/%E5%9C%A8Windows-11%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%B0%86%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%EF%BC%88%E5%A6%82bat-log%E7%AD%89%EF%BC%89%E5%9B%BA%E5%AE%9A%E5%9C%A8%E5%BC%80%E5%A7%8B%E8%8F%9C%E5%8D%95/</url>
-    <content><![CDATA[<p>1.对任意文件右键创建快捷方式<br>2.打开%AppData%\Microsoft\Windows\Start Menu\Programs，把快捷方式放到这里<br>3.在开始菜单的列表（所有应用）中找到它，然后右键固定到开始屏幕</p>
-]]></content>
   </entry>
 </search>
