@@ -602,4 +602,50 @@
         <tag>win</tag>
       </tags>
   </entry>
+  <entry>
+    <title>11种方法解决蓝奏云无法打开的问题</title>
+    <url>/2025/04/29/11%E7%A7%8D%E6%96%B9%E6%B3%95%E8%A7%A3%E5%86%B3%E8%93%9D%E5%A5%8F%E4%BA%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>如果蓝奏云链接无法打开，可以尝试按以下方法解决，不同的设备和网络，需要使用不同的方法。</p>
+<p><strong>方法一：删掉lanzous中的s</strong></p>
+<p>例如：</p>
+<p>原网址：<a href="https://www.lanzous.com/adgewg5s">https://www.lanzous.com/adgewg5s</a></p>
+<p>修改为：<a href="https://www.lanzou.com/adgewg5s">https://www.lanzou.com/adgewg5s</a></p>
+<p><strong>方法二：把lanzous中的s改为i</strong></p>
+<p>例如：</p>
+<p>原网址：<a href="https://www.lanzous.com/adgewg5s">https://www.lanzous.com/adgewg5s</a></p>
+<p>修改为：<a href="https://www.lanzoui.com/adgewg5s">https://www.lanzoui.com/adgewg5s</a></p>
+<p><strong>方法三：把lanzous改为lanzoux</strong></p>
+<p>例如：</p>
+<p>原网址：<a href="https://www.lanzous.com/adgewg5s">https://www.lanzous.com/adgewg5s</a></p>
+<p>修改为：<a href="https://www.lanzoux.com/adgewg5s">https://www.lanzoux.com/adgewg5s</a></p>
+<p><strong>方法四：把链接中的www修改为wwx</strong></p>
+<p>例如：</p>
+<p>原网址：<a href="https://www.lanzous.com/adgewg5s">https://www.lanzous.com/adgewg5s</a></p>
+<p>修改为：<a href="https://wwx.lanzous.com/adgewg5s">https://wwx.lanzous.com/adgewg5s</a></p>
+<p><strong>方法五：把www换成pan</strong></p>
+<p>例如：</p>
+<p>原网址：<a href="https://www.lanzous.com/adgewg5s">https://www.lanzous.com/adgewg5s</a></p>
+<p>修改为：<a href="https://pan.lanzous.com/adgewg5s">https://pan.lanzous.com/adgewg5s</a></p>
+<p><strong>方法六：在http:&#x2F;&#x2F;后面加一个字母或数字</strong></p>
+<p>例如：</p>
+<p>原网址：<a href="https://www.lanzous.com/adgewg5s">https://www.lanzous.com/adgewg5s</a></p>
+<p>修改为：<a href="https://5www.lanzous.com/adgewg5s">https://5www.lanzous.com/adgewg5s</a></p>
+<p><strong>方法七：直接删除链接中的www.</strong></p>
+<p>例如：</p>
+<p>原网址：<a href="https://www.lanzous.com/adgewg5s">https://www.lanzous.com/adgewg5s</a></p>
+<p>修改为：<a href="https://lanzous.com/adgewg5s">https://lanzous.com/adgewg5s</a></p>
+<p><strong>方法八：www修改为该用户的二级域名地址</strong></p>
+<p>例如：http:&#x2F;&#x2F;用户名.lanzous.com</p>
+<p><strong>方法九：更换DNS</strong></p>
+<p>使用修改DNS的第三方工具修改DNS（工具可直接百度搜索）</p>
+<p><strong>方法十：手动设置DNS</strong></p>
+<p>DNS改为 114.114.114.114 或 8.8.8.8 ipv4和ipv6都改</p>
+<p><strong>方法十一：修改数值</strong></p>
+<p>C:\Windows\System32\drivers\etc\hosts 文件，添加内容（需管理员权限）118.31.212.253 <a href="http://www.lanzous.com118.31.212.253">www.lanzous.com118.31.212.253</a> lanzous.com118.31.212.253 *.<a href="http://lanzous.com如果无法修改,可能是win7、win10默认不授予权限,可将hosts文件先复制至桌面,修改后粘贴,提示权限时确认即可./">http://lanzous.com如果无法修改，可能是win7、win10默认不授予权限，可将hosts文件先复制至桌面，修改后粘贴，提示权限时确认即可。</a></p>
+<p>运行cmd，输入命令：ipconfig&#x2F;flushdns回车</p>
+]]></content>
+      <tags>
+        <tag>蓝奏云</tag>
+      </tags>
+  </entry>
 </search>
