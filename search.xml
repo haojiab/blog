@@ -649,6 +649,57 @@
       </tags>
   </entry>
   <entry>
+    <title>ubuntu 中 Jellyfin 安装</title>
+    <url>/2025/05/06/Jellyfin-%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>在Ubuntu上安装Jellyfin，您可以按照以下步骤进行：</p>
+<ol>
+<li><h5 id="添加Jellyfin的官方APT仓库"><a href="#添加Jellyfin的官方APT仓库" class="headerlink" title="添加Jellyfin的官方APT仓库"></a>添加Jellyfin的官方APT仓库</h5></li>
+</ol>
+<p>  首先，确保您的系统软件包列表是最新的：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<p>  然后，添加Jellyfin的官方APT仓库GPG密钥以验证下载的软件包：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+
+<p>  接下来，添加Jellyfin的APT仓库到您的系统。根据您的Ubuntu版本选择合适的命令。对于大多数现代Ubuntu版本，可以使用如下命令（请确认您的Ubuntu代号，例如focal、bionic等）：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/ubuntu $(lsb_release -c -s) main&quot; | sudo tee /etc/apt/sources.list.d/jellyfin.list</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><h5 id="更新软件包列表"><a href="#更新软件包列表" class="headerlink" title="更新软件包列表"></a>更新软件包列表</h5></li>
+</ol>
+<p>  添加仓库后，更新本地软件包索引以包含新添加的Jellyfin仓库：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><h5 id="安装Jellyfin"><a href="#安装Jellyfin" class="headerlink" title="安装Jellyfin"></a>安装Jellyfin</h5></li>
+</ol>
+<p>  现在，您可以通过以下命令来安装Jellyfin：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install jellyfin</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><h5 id="配置和管理Jellyfin服务"><a href="#配置和管理Jellyfin服务" class="headerlink" title="配置和管理Jellyfin服务"></a>配置和管理Jellyfin服务</h5></li>
+</ol>
+<p>  安装完成后，Jellyfin服务会自动启动。如果需要手动控制Jellyfin服务（例如启动、停止或重启），可以使用systemctl命令：</p>
+<p>启动Jellyfin服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl start jellyfin</span><br></pre></td></tr></table></figure>
+
+<p>停止Jellyfin服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl stop jellyfin</span><br></pre></td></tr></table></figure>
+
+<p>重启Jellyfin服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart jellyfin</span><br></pre></td></tr></table></figure>
+
+<p>如果您希望Jellyfin在系统启动时自动运行，可以使用以下命令启用开机自启：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable jellyfin</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><h5 id="访问Jellyfin"><a href="#访问Jellyfin" class="headerlink" title="访问Jellyfin"></a>访问Jellyfin</h5></li>
+</ol>
+<p>  安装并启动Jellyfin之后，您可以通过浏览器访问http:&#x2F;&#x2F;&lt;你的服务器IP&gt;:8096来进行首次设置。在这里，您可以配置媒体库、用户账户等。</p>
+<p>通过以上步骤，您就可以在Ubuntu系统上成功安装并开始使用Jellyfin了。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Jellyfin中MetaTube插件安装</title>
     <url>/2025/05/06/Jellyfin%E4%B8%ADMetaTube%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><ol>
@@ -732,57 +783,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>ubuntu 中 Jellyfin 安装</title>
-    <url>/2025/05/06/Jellyfin-%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>在Ubuntu上安装Jellyfin，您可以按照以下步骤进行：</p>
-<ol>
-<li><h5 id="添加Jellyfin的官方APT仓库"><a href="#添加Jellyfin的官方APT仓库" class="headerlink" title="添加Jellyfin的官方APT仓库"></a>添加Jellyfin的官方APT仓库</h5></li>
-</ol>
-<p>  首先，确保您的系统软件包列表是最新的：</p>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
-
-<p>  然后，添加Jellyfin的官方APT仓库GPG密钥以验证下载的软件包：</p>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add -</span><br></pre></td></tr></table></figure>
-
-<p>  接下来，添加Jellyfin的APT仓库到您的系统。根据您的Ubuntu版本选择合适的命令。对于大多数现代Ubuntu版本，可以使用如下命令（请确认您的Ubuntu代号，例如focal、bionic等）：</p>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/ubuntu $(lsb_release -c -s) main&quot; | sudo tee /etc/apt/sources.list.d/jellyfin.list</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><h5 id="更新软件包列表"><a href="#更新软件包列表" class="headerlink" title="更新软件包列表"></a>更新软件包列表</h5></li>
-</ol>
-<p>  添加仓库后，更新本地软件包索引以包含新添加的Jellyfin仓库：</p>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><h5 id="安装Jellyfin"><a href="#安装Jellyfin" class="headerlink" title="安装Jellyfin"></a>安装Jellyfin</h5></li>
-</ol>
-<p>  现在，您可以通过以下命令来安装Jellyfin：</p>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install jellyfin</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><h5 id="配置和管理Jellyfin服务"><a href="#配置和管理Jellyfin服务" class="headerlink" title="配置和管理Jellyfin服务"></a>配置和管理Jellyfin服务</h5></li>
-</ol>
-<p>  安装完成后，Jellyfin服务会自动启动。如果需要手动控制Jellyfin服务（例如启动、停止或重启），可以使用systemctl命令：</p>
-<p>启动Jellyfin服务：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl start jellyfin</span><br></pre></td></tr></table></figure>
-
-<p>停止Jellyfin服务：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl stop jellyfin</span><br></pre></td></tr></table></figure>
-
-<p>重启Jellyfin服务：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart jellyfin</span><br></pre></td></tr></table></figure>
-
-<p>如果您希望Jellyfin在系统启动时自动运行，可以使用以下命令启用开机自启：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable jellyfin</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li><h5 id="访问Jellyfin"><a href="#访问Jellyfin" class="headerlink" title="访问Jellyfin"></a>访问Jellyfin</h5></li>
-</ol>
-<p>  安装并启动Jellyfin之后，您可以通过浏览器访问http:&#x2F;&#x2F;&lt;你的服务器IP&gt;:8096来进行首次设置。在这里，您可以配置媒体库、用户账户等。</p>
-<p>通过以上步骤，您就可以在Ubuntu系统上成功安装并开始使用Jellyfin了。</p>
-]]></content>
-  </entry>
-  <entry>
     <title>ubuntu中 使用 rclone 挂载webdav</title>
     <url>/2025/05/06/ubuntu%E4%B8%AD-%E4%BD%BF%E7%94%A8-rclone-%E6%8C%82%E8%BD%BDwebdav/</url>
     <content><![CDATA[<p>在 Ubuntu 中使用 <code>rclone</code> 挂载 WebDAV 是一个相对直接的过程，但需要确保你已经正确安装了 <code>rclone</code> 并进行了相应的配置。以下是详细的步骤说明：</p>
@@ -817,6 +817,54 @@
 <li><strong>开机自动挂载</strong>：为了使挂载在系统重启后仍然有效，可以将上述命令加入到 <code>/etc/rc.local</code> 文件中，或者创建一个 systemd 服务单元文件来管理它。</li>
 </ul>
 <p>通过以上步骤，你应该能够在 Ubuntu 系统上成功地使用 <code>rclone</code> 挂载 WebDAV。如果遇到任何问题，请检查 <code>rclone</code> 日志或尝试增加 <code>-v</code> 参数以获取更详细的输出信息。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>MetaTube插件中文件命名规范</title>
+    <url>/2025/05/06/MetaTube%E6%8F%92%E4%BB%B6%E4%B8%AD%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/</url>
+    <content><![CDATA[<h2 id="有码类"><a href="#有码类" class="headerlink" title="有码类"></a>有码类</h2><ul>
+<li><code>SSSS-001</code></li>
+<li><code>ABC-100</code></li>
+<li><code>PPPC-326</code></li>
+</ul>
+<h2 id="素人类"><a href="#素人类" class="headerlink" title="素人类"></a>素人类</h2><ul>
+<li><code>390JAC-132</code></li>
+<li><code>300MAAN-783</code></li>
+</ul>
+<h2 id="无码类"><a href="#无码类" class="headerlink" title="无码类"></a>无码类</h2><ul>
+<li><code>HEYZO-1234</code></li>
+<li><code>KIN8-1675</code></li>
+<li><code>123456_999</code></li>
+<li><code>543210-001</code></li>
+<li><code>587234-01</code></li>
+<li><code>xxx-av-1234</code></li>
+<li><code>heydouga-1234-321</code></li>
+<li><code>c0930-ki897634</code></li>
+<li><code>h4610-ori98321</code></li>
+</ul>
+<h2 id="其他类"><a href="#其他类" class="headerlink" title="其他类"></a>其他类</h2><ul>
+<li><code>FC2-1234567</code></li>
+<li><code>MYWIFE-1394</code></li>
+<li><code>GETCHU-3456789</code></li>
+<li><code>GCOLLE-9876554</code></li>
+<li><code>PCOLLE-6543210</code></li>
+</ul>
+<h2 id="字幕标签"><a href="#字幕标签" class="headerlink" title="字幕标签"></a>字幕标签</h2><p>对于硬编码的中文字幕视频，可以在末尾加入<code>-C</code>后缀，插件会自动为该影片加入<code>中文字幕</code>标签，例如：</p>
+<ul>
+<li><code>ABC-330-C.mp4</code></li>
+<li><code>HEYZO-1784-C.mp4</code></li>
+</ul>
+<h2 id="多碟影片"><a href="#多碟影片" class="headerlink" title="多碟影片"></a>多碟影片</h2><p>对于多碟影片，可以在末尾加入<code>-cd1</code>之类的后缀，例如：</p>
+<ul>
+<li><code>ABC-330-cd1.mp4</code></li>
+<li><code>ABC-330-cd2.mp4</code></li>
+<li><code>MCBD-25-C-cd1.mkv</code></li>
+<li><code>MCBD-25-C-cd2.mkv</code></li>
+</ul>
+<p>PS：大小写不敏感，但是注意不要混淆<code>-</code>与<code>_</code>符号。</p>
+<p>自动修改文件名称的脚本，仅适用于linux</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># 定义目标目录</span><br><span class="line">TARGET_DIR=&quot;/alist/jp/001&quot;</span><br><span class="line"></span><br><span class="line"># 检查目录是否存在</span><br><span class="line">if [[ ! -d &quot;$TARGET_DIR&quot; ]]; then</span><br><span class="line">    echo &quot;目录 $TARGET_DIR 不存在&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># 使用 find 命令递归查找所有带扩展名的文件</span><br><span class="line">find &quot;$TARGET_DIR&quot; -type f | while read -r file; do</span><br><span class="line">    # 提取文件名和扩展名</span><br><span class="line">    filename=$(basename &quot;$file&quot;)</span><br><span class="line">    name_only=&quot;$&#123;filename%.*&#125;&quot;</span><br><span class="line">    ext=&quot;$&#123;filename##*.&#125;&quot;</span><br><span class="line"></span><br><span class="line">    # 判断是否已经是标准格式，如 EBOD-912-cd2.mp4 或 DGCEMD-005-cd1.mp4</span><br><span class="line">    if [[ &quot;$name_only&quot; =~ ^([A-Za-z0-9-]+)(-cd[1-9])?$ ]]; then</span><br><span class="line">        echo &quot;Skipped (already in standard format): &#x27;$filename&#x27;&quot;</span><br><span class="line">        continue</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    # 尝试匹配 ID（字母+数字+-）</span><br><span class="line">    if [[ &quot;$name_only&quot; =~ ^([A-Za-z0-9-]+) ]]; then</span><br><span class="line">        base_name=&quot;$&#123;BASH_REMATCH[1]&#125;&quot;</span><br><span class="line"></span><br><span class="line">        # 获取最后一个点的位置</span><br><span class="line">        last_dot_pos=$(awk -F. &#x27;&#123;print length($0)-length($NF)-1&#125;&#x27; &lt;&lt;&lt; &quot;$filename&quot;)</span><br><span class="line"></span><br><span class="line">        # 获取最后一个点之前的那个字符</span><br><span class="line">        if (( last_dot_pos &gt; 0 )); then</span><br><span class="line">            last_char=&quot;$&#123;filename:last_dot_pos-1:1&#125;&quot;</span><br><span class="line"></span><br><span class="line">            # 检查这个字符是否为数字1-9</span><br><span class="line">            if [[ &quot;$last_char&quot; =~ [1-9] ]]; then</span><br><span class="line">                digits=&quot;$last_char&quot;</span><br><span class="line">                new_name=&quot;$&#123;base_name&#125;-cd$&#123;digits&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">            else</span><br><span class="line">                new_name=&quot;$&#123;base_name&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">            fi</span><br><span class="line">        else</span><br><span class="line">            new_name=&quot;$&#123;base_name&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 如果原文件名和目标文件名相同，跳过</span><br><span class="line">        if [[ &quot;$filename&quot; == &quot;$new_name&quot; ]]; then</span><br><span class="line">            echo &quot;Skipped (already named correctly): &#x27;$filename&#x27;&quot;</span><br><span class="line">            continue</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 使用 mv 命令重命名文件，并确保正确处理空格和特殊字符</span><br><span class="line">        mv -- &quot;$file&quot; &quot;$(dirname &quot;$file&quot;)/$new_name&quot;</span><br><span class="line">        echo &quot;Renamed &#x27;$filename&#x27; to &#x27;$new_name&#x27;&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;No match pattern for &#x27;$filename&#x27;&quot;</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
 ]]></content>
   </entry>
 </search>
