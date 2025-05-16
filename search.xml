@@ -700,9 +700,9 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Jellyfin中MetaTube插件安装</title>
+    <title>MetaTube插件安装</title>
     <url>/2025/05/06/Jellyfin%E4%B8%ADMetaTube%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><ol>
+    <content><![CDATA[<h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><h3 id="jellyfin"><a href="#jellyfin" class="headerlink" title="jellyfin"></a>jellyfin</h3><ol>
 <li>进入 Jellyfin 控制台 &gt; 插件目录&#x2F;存储库 &gt; 设置，点击添加</li>
 <li>输入存储库名称：<code>MetaTube</code></li>
 <li>输入存储库 URL：<a href="https://raw.githubusercontent.com/metatube-community/jellyfin-plugin-metatube/dist/manifest.json"><code>https://raw.githubusercontent.com/metatube-community/jellyfin-plugin-metatube/dist/manifest.json</code></a></li>
@@ -710,6 +710,12 @@
 <li>重启 Jellyfin</li>
 </ol>
 <p><em>适用于中国大陆的存储库 URL：<a href="https://cdn.jsdelivr.net/gh/metatube-community/jellyfin-plugin-metatube@dist/manifest.json"><code>https://cdn.jsdelivr.net/gh/metatube-community/jellyfin-plugin-metatube@dist/manifest.json</code></a>（可能有缓存）</em></p>
+<h3 id="emby"><a href="#emby" class="headerlink" title="emby"></a>emby</h3><ol>
+<li>从 Releases （<a href="https://github.com/metatube-community/jellyfin-plugin-metatube/releases%EF%BC%89%E4%B8%8B%E8%BD%BD">https://github.com/metatube-community/jellyfin-plugin-metatube/releases）下载</a> MetaTube 最新插件</li>
+<li>解压出 MetaTube.dll 文件</li>
+<li>将 dll 文件复制到 Emby 插件目录（一般为config下的plugins目录，复制之后需要查看其他插件文件的权限，使用赋予和其他插件一样的用户组以及权限）</li>
+<li>重启 Emby 服务</li>
+</ol>
 <h2 id="后端安装"><a href="#后端安装" class="headerlink" title="后端安装"></a>后端安装</h2><p>后端项目名为<code>metatube-server</code></p>
 <p>二进制文件发布于：</p>
 <ul>
@@ -772,6 +778,9 @@
 <li>使用<code>刷新元数据</code>以更新数据内容。</li>
 <li>使用<code>识别</code>手动搜索影片或演员数据。</li>
 </ul>
+<h3 id="自动翻译中文"><a href="#自动翻译中文" class="headerlink" title="自动翻译中文"></a>自动翻译中文</h3><p>1.修改 <strong>Translation Mode</strong>  这个参数，设置为Title and Summary（翻译标题和简介）</p>
+<p>2.设置<strong>Translation engine</strong>为 Google (Free) 。</p>
+<p>3.设置媒体库  首选元数据下载语言   为中文</p>
 <h3 id="插件更新"><a href="#插件更新" class="headerlink" title="插件更新"></a>插件更新</h3><ul>
 <li>通过存储库 URL 添加的插件，Jellyfin会在后台自动更新。</li>
 <li>Emby 版本的 MetaTube 插件会通过计划任务自动更新。</li>
@@ -865,6 +874,58 @@
 <p>自动修改文件名称的脚本，仅适用于linux</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># 定义目标目录</span><br><span class="line">TARGET_DIR=&quot;/alist/jp/001&quot;</span><br><span class="line"></span><br><span class="line"># 检查目录是否存在</span><br><span class="line">if [[ ! -d &quot;$TARGET_DIR&quot; ]]; then</span><br><span class="line">    echo &quot;目录 $TARGET_DIR 不存在&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># 使用 find 命令递归查找所有带扩展名的文件</span><br><span class="line">find &quot;$TARGET_DIR&quot; -type f | while read -r file; do</span><br><span class="line">    # 提取文件名和扩展名</span><br><span class="line">    filename=$(basename &quot;$file&quot;)</span><br><span class="line">    name_only=&quot;$&#123;filename%.*&#125;&quot;</span><br><span class="line">    ext=&quot;$&#123;filename##*.&#125;&quot;</span><br><span class="line"></span><br><span class="line">    # 判断是否已经是标准格式，如 EBOD-912-cd2.mp4 或 DGCEMD-005-cd1.mp4</span><br><span class="line">    if [[ &quot;$name_only&quot; =~ ^([A-Za-z0-9-]+)(-cd[1-9])?$ ]]; then</span><br><span class="line">        echo &quot;Skipped (already in standard format): &#x27;$filename&#x27;&quot;</span><br><span class="line">        continue</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    # 尝试匹配 ID（字母+数字+-）</span><br><span class="line">    if [[ &quot;$name_only&quot; =~ ^([A-Za-z0-9-]+) ]]; then</span><br><span class="line">        base_name=&quot;$&#123;BASH_REMATCH[1]&#125;&quot;</span><br><span class="line"></span><br><span class="line">        # 获取最后一个点的位置</span><br><span class="line">        last_dot_pos=$(awk -F. &#x27;&#123;print length($0)-length($NF)-1&#125;&#x27; &lt;&lt;&lt; &quot;$filename&quot;)</span><br><span class="line"></span><br><span class="line">        # 获取最后一个点之前的那个字符</span><br><span class="line">        if (( last_dot_pos &gt; 0 )); then</span><br><span class="line">            last_char=&quot;$&#123;filename:last_dot_pos-1:1&#125;&quot;</span><br><span class="line"></span><br><span class="line">            # 检查这个字符是否为数字1-9</span><br><span class="line">            if [[ &quot;$last_char&quot; =~ [1-9] ]]; then</span><br><span class="line">                digits=&quot;$last_char&quot;</span><br><span class="line">                new_name=&quot;$&#123;base_name&#125;-cd$&#123;digits&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">            else</span><br><span class="line">                new_name=&quot;$&#123;base_name&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">            fi</span><br><span class="line">        else</span><br><span class="line">            new_name=&quot;$&#123;base_name&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 如果原文件名和目标文件名相同，跳过</span><br><span class="line">        if [[ &quot;$filename&quot; == &quot;$new_name&quot; ]]; then</span><br><span class="line">            echo &quot;Skipped (already named correctly): &#x27;$filename&#x27;&quot;</span><br><span class="line">            continue</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 使用 mv 命令重命名文件，并确保正确处理空格和特殊字符</span><br><span class="line">        mv -- &quot;$file&quot; &quot;$(dirname &quot;$file&quot;)/$new_name&quot;</span><br><span class="line">        echo &quot;Renamed &#x27;$filename&#x27; to &#x27;$new_name&#x27;&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;No match pattern for &#x27;$filename&#x27;&quot;</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
+]]></content>
+  </entry>
+  <entry>
+    <title>使用AutoFilm加快emby扫描库</title>
+    <url>/2025/05/16/%E4%BD%BF%E7%94%A8AutoFilm%E5%8A%A0%E5%BF%ABemby%E6%89%AB%E6%8F%8F%E5%BA%93/</url>
+    <content><![CDATA[<h2 id="AutoFilm简介"><a href="#AutoFilm简介" class="headerlink" title="AutoFilm简介"></a>AutoFilm简介</h2><p>通过Alist提供的Webdav获取网盘视频播放链接并生成Strm文件，可被Jellyfin&#x2F;Emby等影音媒体服务器识别并直接播放</p>
+<h2 id="部署方式"><a href="#部署方式" class="headerlink" title="部署方式"></a>部署方式</h2><p>Docker部署（推荐）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --name autofilm  -v ./config:/config -v ./media:/media -v./logs:/logs akimio/autofilm</span><br></pre></td></tr></table></figure>
+
+<p>Python部署<br>安装Python，推荐版本Python3.12<br>克隆项目并进入项目目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/Akimio521/AutoFilm.git</span><br><span class="line">cd AutoFilm</span><br></pre></td></tr></table></figure>
+
+<p>安装依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>配置配置文件config.yaml<br>启动程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python app/main.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改配置文件-config-yml"><a href="#修改配置文件-config-yml" class="headerlink" title="修改配置文件 config.yml"></a>修改配置文件 config.yml</h2><p>参考下面的示例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Settings:</span><br><span class="line">  DEV: False                          # 开发者模式(可选，默认 False)</span><br><span class="line"></span><br><span class="line">Alist2StrmList:</span><br><span class="line"></span><br><span class="line">  - id: 动漫                          # 标识 ID</span><br><span class="line">    cron: 0 20 * * *                  # 后台定时任务 Crontable 表达式</span><br><span class="line">    url: https://alist.akimio.top     # Alist 服务器地址</span><br><span class="line">    username: admin                   # Alist 用户名</span><br><span class="line">    password: adminadmin              # Alist 密码</span><br><span class="line">    source_dir: /ani/                 # Alist 服务器上文件夹路径</span><br><span class="line">    target_dir: D:\media\             # 输出路径</span><br><span class="line">    flatten_mode: False               # 平铺模式，开启后 subtitle、image、nfo 强制关闭(可选，默认 False)</span><br><span class="line">    subtitle: False                   # 是否下载字幕文件（可选，默认 False）</span><br><span class="line">    image: False                      # 是否下载图片文件（可选，默认 False）</span><br><span class="line">    nfo: False                        # 是否下载 .nfo 文件（可选，默认 False）</span><br><span class="line">    raw_url: False                    # 是否使用原始地址替换 Alist 服务器下载地址（可选，默认 False）</span><br><span class="line">    overwrite: False                  # 覆盖模式，本地路径存在同名文件时是否重新生成/下载该文件（可选，默认 False）</span><br><span class="line">    other_ext:                        # 自定义下载后缀，使用西文半角逗号进行分割，（可选，默认为空）</span><br><span class="line">    max_workers: 5                    # 下载文件最大并发数（可选，默认 5）</span><br><span class="line"></span><br><span class="line">  - id: 电影</span><br><span class="line">    cron: 0 0 7 * *</span><br><span class="line">    url: http://alist.example2.com:5244</span><br><span class="line">    username: alist</span><br><span class="line">    password: alist</span><br><span class="line">    source_dir: /网盘/115/电影</span><br><span class="line">    target_dir: /media/my_video </span><br><span class="line">    flatten_mode: False </span><br><span class="line">    subtitle: False</span><br><span class="line">    image: False</span><br><span class="line">    nfo: False</span><br><span class="line">    raw_url: True</span><br><span class="line">    overwrite: False</span><br><span class="line">    other_ext: zip,md</span><br><span class="line">    max_workers: 5</span><br><span class="line"></span><br><span class="line">Ani2AlistList:</span><br><span class="line"></span><br><span class="line">  - id: 新番追更                           # 标识 ID</span><br><span class="line">    cron: 20 12 * * *                     # 后台定时任务 Crontable 表达式</span><br><span class="line">    url: https://127.0.0.1:5244           # Alist 服务器地址</span><br><span class="line">    username: admin                       # Alist 用户名（需管理员权限）</span><br><span class="line">    password: myalist                     # Alist 密码</span><br><span class="line">    target_dir: /视频/动漫/新番            # Alist 地址树存储器路径，若存储器不存在将自动创建（可选，默认/Anime）</span><br><span class="line">    rss_update: False                     # 使用 RSS 订阅更新最新番剧，启用后忽视传入的 year 和 month（可选，默认为 True）</span><br><span class="line">    year: 2024                            # 动漫季度-年份，仅支持 2019-1 及以后更新的番剧（可选，默认使用当前日期）</span><br><span class="line">    month: 7                              # 动漫季度-月份，仅支持 2019-1 及以后更新的番剧（可选，默认使用当前日期）</span><br><span class="line">    src_domain: aniopen.an-i.workers.dev  # ANI Open 项目域名（可选，默认为 aniopen.an-i.workers.dev）</span><br><span class="line">    rss_domain: api.ani.rip               # ANI Open 项目 RSS 订阅域名（可选，默认为 api.ani.rip） </span><br></pre></td></tr></table></figure>
+
+<h3 id="Alist2StrmList模块"><a href="#Alist2StrmList模块" class="headerlink" title="Alist2StrmList模块"></a>Alist2StrmList模块</h3><p>主要用于生成Strm文件，可配置是否下载图片、字幕、nfo等详细配置，也可以自定义需要下载的格式<br>主要参数：</p>
+<p>cron：用于后台定时任务，例如0 20 * * *为每天晚上8:00都会运行<br>source_dir：为存放需要转化为Strm文件的路径，程序会遍历其子路径（如果用户设置了base_path，已登入用户看到的路径为准，不需要手动补全base_path）<br>target_dir：本地Strm文件的存放目录，建议使用绝对路径，相对路径可能出现找不到文件的情况<br>flatten_mode：启用后只生成Strm文件，关闭图片、字幕等文件的下载，并且Strm文件会直接在target_dir目录中生成，并非在其子目录中生成<br>overwrite：覆写功能，默认关闭，多次运行的时候检测到本地文件已经存在，会跳过，开启后会先删除原文件再重新生成<br>raw_url：会请求上游云盘获取云盘的CDN下载链接替换Alist的下载链接（此链接一般有时效性）<br>备注：<br>用户开启签名（Sign）功能后，下载链接会额外多出查询参数，新版本（v1.2.2及以上）无需配置Token既可以获取正确下载链接，如果设置签名过期时间，可以配合cron后台任务和overwrite覆写功能一起使用</p>
+<h3 id="Ani2Alist模块"><a href="#Ani2Alist模块" class="headerlink" title="Ani2Alist模块"></a>Ani2Alist模块</h3><p>配合ANi Open (an-i.workers.dev)项目使用，将动漫挂载到Alist上，可以配合Alist2StrmList模块使用<br>主要参数：</p>
+<p>cron：用于后台定时任务，例如0 20 * * *为每天晚上8:00都会运行<br>target_dir：将视频挂载到Alist服务器上的父路径（所有视频都会在这个路径下）<br>rss_update：通过ANI Open项目的RSS订阅快速添加最近更新的15个番剧<br>year&#x2F;month：指定更新哪个季度的番剧，仅支持 2019-1 及以后更新的番剧</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>按照上面的要求部署好AutoFilm之后，修改配置文件中的对应参数，会生成.strm文件，保存.strm文件的文件夹最好为emby的媒体文件夹（如果不是，则需要手动复制生成好的.strm文件到emby的媒体文件夹中），这些.strm文件会被emby识别为对应的视频。</p>
+<p>AutoFilm下config.yml中的alist地址，必须为emby服务器可访问的地址，不然在emby服务器中使用.strm文件生成的视频播放时会报错</p>
+<p>修改好配置文件之后，可以只执行一次，但是配置文件中的定时任务需要在手动执行的时间之后，执行完成即可关闭程序</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>使用docker安装emby</title>
+    <url>/2025/05/16/%E4%BD%BF%E7%94%A8docker%E5%AE%89%E8%A3%85emby/</url>
+    <content><![CDATA[<h3 id="1-安装Docker"><a href="#1-安装Docker" class="headerlink" title="1. 安装Docker"></a>1. 安装Docker</h3><p>如果您还没有安装Docker，请访问<a href="https://www.docker.com/">Docker官网</a>根据您的操作系统下载并安装适合的版本。</p>
+<h3 id="2-拉取Emby-Docker镜像"><a href="#2-拉取Emby-Docker镜像" class="headerlink" title="2. 拉取Emby Docker镜像"></a>2. 拉取Emby Docker镜像</h3><p>打开终端或命令提示符，运行以下命令来拉取最新的Emby服务器Docker镜像：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull emby/embyserver</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-创建并运行Emby容器"><a href="#3-创建并运行Emby容器" class="headerlink" title="3. 创建并运行Emby容器"></a>3. 创建并运行Emby容器</h3><p>使用以下命令创建并启动一个Emby容器。这将把Emby服务器映射到主机上的端口8096（默认HTTP端口），您可以根据需要调整这些设置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --name embyserver --restart unless-stopped -p 8096:8096 -v /data/emby/config:/config -v /data/emby/media:/media --network=&quot;host&quot; emby/embyserver</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong><code>docker run</code></strong>: 这是启动一个新的容器的命令。</li>
+<li><strong><code>-d</code></strong>: 表示以分离模式（后台）运行容器，即容器将在后台运行而不是占用当前终端。</li>
+<li><strong><code>--name embyserver</code></strong>: 给容器命名为 <code>embyserver</code>，这样可以通过这个名字来管理这个容器（如停止、重启等），而不需要使用容器ID。</li>
+<li><strong><code>--restart unless-stopped</code></strong>: 设置容器的重启策略为“除非手动停止”，这意味着如果容器因为任何原因意外退出了（例如系统重启），它将自动重新启动，除非它是被手动停止的。</li>
+<li><strong><code>-p 8096:8096</code></strong>: 将主机的 8096 端口映射到容器内的 8096 端口。这里指的是 HTTP 访问端口，允许外部访问 Emby 服务器提供的服务。</li>
+<li><strong><code>-v /data/emby/config:/config</code></strong>: 挂载主机上的 <code>/data/emby/config</code> 目录到容器内的 <code>/config</code> 目录。这通常用于持久化配置文件，使得即使容器被删除或重建，配置也不会丢失。</li>
+<li><strong><code>-v /data/emby/media:/media</code></strong>: 类似地，挂载主机上的 <code>/data/emby/media</code> 目录到容器内的 <code>/media</code> 目录。这是为了让 Emby 能够访问存放媒体文件的位置。</li>
+<li><strong><code>--network=&quot;host&quot;</code></strong>: 使用主机网络栈。这意味着容器不会获得自己的 IP 地址，而是直接使用主机的网络接口。这种方式可以让容器内部的服务直接监听主机的所有网络接口，并且可以从主机的任意IP地址访问这些服务，无需进行端口映射（虽然 <code>-p</code> 参数在这里仍然有效，但在 <code>host</code> 网络模式下并不必要）。</li>
+<li><strong><code>emby/embyserver</code></strong>: 这是要运行的 Docker 镜像名称，指定了基于 <code>emby/embyserver</code> 这个镜像来创建容器。</li>
+</ol>
+<h3 id="4-访问Emby服务器"><a href="#4-访问Emby服务器" class="headerlink" title="4. 访问Emby服务器"></a>4. 访问Emby服务器</h3><p>一旦容器开始运行，您就可以通过浏览器访问<code>http://localhost:8096</code>（如果是远程服务器，则替换localhost为主机的实际IP地址）来进行Emby服务器的初始设置。</p>
 ]]></content>
   </entry>
 </search>
