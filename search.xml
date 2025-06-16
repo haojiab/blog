@@ -1,608 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ES(Elasticsearch)解除索引只读限制</title>
-    <url>/2023/09/21/ES-Elasticsearch-%E8%A7%A3%E9%99%A4%E7%B4%A2%E5%BC%95%E5%8F%AA%E8%AF%BB%E9%99%90%E5%88%B6/</url>
-    <content><![CDATA[<p>服务器 空间满了，导致 ES 自动设置了只读限制</p>
-<p>在此之前，先清空多余的日志</p>
-<p>在elasticsearch 目录下 进入 logs 文件夹，清空后缀为 .gz和 gc.log.xx (xx为任意字符) 的文件</p>
-<p>如下命令可以解除只读限制</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPUT -H &quot;Content-Type: application/json&quot; http://127.0.0.1:9200/_all/_settings -d &#x27;&#123;&quot;index.blocks.read_only_allow_delete&quot;: false&#125;&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>elasticsearch发现磁盘空间大于95%时，将运行于只读状态，此时将不能更新索引，只能查询和删除。</p>
-<p>如果还是出现此问题</p>
-<p>通过手动重新分配分片，不断执行这个指令，直到unassigned_shards为0，status为green，解决这个问题</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPOST http://127.0.0.1:9200/_cluster/reroute?retry_failed=true</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux批量查找与替换</title>
-    <url>/2023/09/21/Linux%E6%89%B9%E9%87%8F%E6%9F%A5%E6%89%BE%E4%B8%8E%E6%9B%BF%E6%8D%A2/</url>
-    <content><![CDATA[<p>经常要使用到 Linux 的批量查找与替换，这里我们为大家介绍使用 <strong>sed</strong> 命令来实现查找文件中的内容并替换。</p>
-<p><strong>语法格式</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/原字符串/新字符串/g&quot; `grep 原字符串 -rl 所在目录`</span><br></pre></td></tr></table></figure>
-
-<p><strong>实例</strong></p>
-<p>以下我们实现在当前目录下查找包含 baidu 的字符串，并将字符串 baidu 替换为 runoob，执行命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/baidu/runoob/g&quot; `grep &quot;baidu&quot; -rl ./`</span><br></pre></td></tr></table></figure>
-
-<p>接下来使用一个更复杂实例，批量替换网址 libs.baidu.com 为 cdn.static.runoob.com：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/https:\/\/libs.baidu.com/https:\/\/cdn.static.runoob.com\/libs/g&quot; `grep -rl &quot;libs.baidu.com&quot; ./`</span><br></pre></td></tr></table></figure>
-
-<p>修改   href&#x3D;’<a href="http://www.hanweb.com/">http://www.hanweb.com</a>‘ style&#x3D;’display:none’&gt;Produced By 大汉网络 大汉版通发布系统  这个标签为    href&#x3D;’<a href="http://yjglj.beijing.gov.cn/">http://yjglj.beijing.gov.cn</a>‘ style&#x3D;’display:none’&gt;北京市应急管理局</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;/&lt;a href=&#x27;http:\/\/yjglj.beijing.gov.cn&#x27; style=&#x27;display:none&#x27;&gt;北京市应急管理局&lt;\/a&gt;/g&quot; `grep -rl &quot;&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;&quot; ./`</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RedisDesktop屏蔽更新</title>
-    <url>/2023/09/21/RedisDesktop%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<p>解压安装完成之后</p>
-<p>屏蔽更新</p>
-<p>在host文件中添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 rdm.dev</span><br><span class="line">127.0.0.1 redisdesktop.com</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>centos 7 对用过yum更新的软件服务进行降级</title>
-    <url>/2023/09/21/centos-7-%E5%AF%B9%E7%94%A8%E8%BF%87yum%E6%9B%B4%E6%96%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E9%99%8D%E7%BA%A7/</url>
-    <content><![CDATA[<p>　　centos 7 执行 yum update 会对现有服务软件进行更新，但是如果把不该升级的软件升级，彼此软件不兼容，如何进行降级，比如：kibana 必须与 elasticsearch 大版本相同，否则服务不匹配（所以centos 中不是必要不要在已经运行的服务中yum update）<br>　　服务现安装 elasticsearch（5.5.3），但是因为执行 yum update，kibana 由 5.5.3 到 7.3.2</p>
-<ol>
-<li>查看机器上相近的版本，是否有可选的软件包</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum search --showduplicates kibana</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>通过查询出指定的软件全名，通过 downgrade 进行升级</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum downgrade kibana-5.5.3-1</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>如果降级是大版本，可通过修改yum源配置进行大版本降级</li>
-</ol>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/kibana.repo</span><br><span class="line">[kibana-5.x]name=Kibana repository for5.x packagesbaseurl=https://artifacts.elastic.co/packages/5.x/yumgpgcheck=1gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearchenabled=1autorefresh=1type=rpm-md</span><br></pre></td></tr></table></figure>
-
-<p>  　　然后重新执行步骤1和步骤2</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Apache防止恶意指向</title>
-    <url>/2023/09/21/apache%E9%98%B2%E6%AD%A2%E6%81%B6%E6%84%8F%E6%8C%87%E5%90%91/</url>
-    <content><![CDATA[<blockquote>
-<p>项目中经常有同事提到很多域名恶意指向政府 ip， 导致随意访问哪个域名， 都能浏览政府网， 而那些恶意的域名指向可能会影响电信封掉政府 ip。</p>
-</blockquote>
-<blockquote>
-<p>还有客户发的漏洞报告中【域名访问限制不严格】漏洞，说明：Http请求的Hostname字段没有严格的域名限制，导致可以绕过一些防护措施。修改方法是配置WEB服务器，限制只能以域名形式访问服务器。</p>
-</blockquote>
-<h6 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h6><p>利用 apache 的跳转功能， 在 VirtualHost 区域添加配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx.gov.cn [NC]</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx1.gov.cn [NC]</span><br><span class="line">RewriteRule ^/(.*) /error.html [L]</span><br></pre></td></tr></table></figure>
-<p>说明：写在</VirtualHost>上即可</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>b站无人直播</title>
-    <url>/2023/10/24/b%E7%AB%99%E6%97%A0%E4%BA%BA%E7%9B%B4%E6%92%AD/</url>
-    <content><![CDATA[<p>1.先弄b站推流，类似ck：<a href="https://link.bilibili.com/p/center/index#/my-room/start-live">选分类，开播。复制→服务器地址+串流密钥</a><br>2.服务器一键拉库<br>curl -fsSL get.kplayer.net | bash<br>3.配置文件<a href="https://file.uhsea.com/2310/f8be897bd2c6818137d865da5c4d7a93RS.txt">config.yaml(点击下载)</a>，文件在服务器的root\kplayer，把推流代码放进去保存就行。<br>4.然后在服务器root\新建一个文件夹Downloads存放视频文件，上传文件xxx.mp4。<br>5.上面的B站点击开启直播，出现推流码后，然后服务器cd kplayer<br>.&#x2F;kplayer play start –daemon<br>返回刷新，查看B站直播间就行了。</p>
-]]></content>
-      <tags>
-        <tag>直播</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo友情链接</title>
-    <url>/2023/09/19/hexo%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/</url>
-    <content><![CDATA[<p>友情链接</p>
-<p>创建友情链接页面<br>前往你的 Hexo 博客的根目录</p>
-<p>输入 hexo new page link</p>
-<p>你会找到 source&#x2F;link&#x2F;index.md 这个文件</p>
-<p>修改这个文件：</p>
-<p>记得添加 type: “link”</p>
-<hr>
-<p>title: 友情链接<br>date: 2018-06-07 22:17:49<br>type: “link”</p>
-<hr>
-<p>在Hexo博客目录中的 source&#x2F;_data（如果没有 _data 文件夹，请自行创建），创建一个文件 link.yml</p>
-<p>例：</p>
-<ul>
-<li><p><code>class_name: 友情链接</code><br><code>class_desc: 那些人，那些事</code><br><code>link_list:</code></p>
-<ul>
-<li><code>name: Hexo</code><br><code>link: https://hexo.io/zh-tw/</code><br><code>avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg</code><br><code>descr: 快速、简单且强大的网志框架</code></li>
-</ul>
-</li>
-<li><p><code>class_name: 网站</code><br><code>class_desc: 值得推荐的网站</code><br><code>link_list:</code></p>
-<ul>
-<li><code>name: Youtube</code><br><code>link: https://www.youtube.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png</code><br><code>descr: 视频网站</code></li>
-<li><code>name: Weibo</code><br><code>link: https://www.weibo.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png</code><br><code>descr: 中国最大社交分享平台</code></li>
-<li><code>name: Twitter</code><br><code>link: https://twitter.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png</code><br><code>descr: 社交分享平台</code></li>
-</ul>
-</li>
-</ul>
-<p>class_name 和 class_desc 支持 html 格式书写，如不需要，也可以留空。</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo常用命令</title>
-    <url>/2023/09/19/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>常用命令</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo g     <span class="comment">//生成静态页面</span></span><br><span class="line">hexo clean <span class="comment">//清除一下缓存</span></span><br><span class="line">hexo s    <span class="comment">//启动本地服务器进行查看</span></span><br><span class="line">hexo d   <span class="comment">//查看后没有问题即可部署到github上</span></span><br></pre></td></tr></table></figure>
-
-<p>新增文章</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;new article&quot;</span></span><br><span class="line">hexo n 文章标题</span><br></pre></td></tr></table></figure>
-
-<p>新增完成之后，md文章路径</p>
-<p>E:\OneDrive - Twork\Bolg\blog\source_posts</p>
-<p>修改即可</p>
-<p><img src="https://image.allcx.eu.org/file/e6f101c6c16c4d1909a99.png"></p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo分类页规则</title>
-    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
-    <content><![CDATA[<p>分类页</p>
-<p>前往你的 Hexo 博客的根目录</p>
-<p>输入 hexo new page categories</p>
-<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
-<p>修改这个文件：</p>
-<p>记得添加 type: “categories”</p>
-<hr>
-<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
-<hr>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>finalshell屏蔽更新</title>
-    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<p>#禁止finalshell更新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
-
-<p>本机host添加以上配置即可</p>
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo标签页规则</title>
-    <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
-    <content><![CDATA[<p>标签页</p>
-<p>前往你的 Hexo 博客的根目录</p>
-<p>输入 hexo new page tags</p>
-<p>你会找到 source&#x2F;tags&#x2F;index.md 这个文件</p>
-<p>修改这个文件：</p>
-<p>记得添加 type: “tags”</p>
-<hr>
-<p>title: 标签<br>date: 2018-01-05 00:00:00<br>type: “tags”<br>orderby: random</p>
-<p>order:1</p>
-<hr>
-<p>参数	解释<br>type	【必须】页面类型，必须为 tags<br>orderby	【可选】排序方式 ：random&#x2F;name&#x2F;length<br>order	【可选】排序次序： 1, asc for ascending; -1, desc for descending</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo文章页头部配置</title>
-    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>全部文章页头部typora标签</p>
-<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo页面头部配置</title>
-    <url>/2023/09/19/hexo%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>全部页面头部typora标签</p>
-<p>写法	解释<br>title	【必需】页面标题<br>date	【必需】页面创建日期<br>type	【必需】标签、分类和友情链接三个页面需要配置<br>updated	【可选】页面更新日期<br>description	【可选】页面描述<br>keywords	【可选】页面关键字<br>comments	【可选】显示页面评论模块 (默认 true)<br>top_img	【可选】页面顶部图片<br>mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)<br>katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)<br>aside	【可选】显示侧边栏 (默认 true)<br>aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开 (true&#x2F;false) (默认为设置中highlight_shrink的配置)<br>random	【可选】配置友情链接是否随机排序（默认为 false)</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>shell脚本中执行时提示没有那个文件或目录的解决办法</title>
-    <url>/2023/09/21/shell%E8%84%9A%E6%9C%AC%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%97%B6%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B8%AA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>出现bad interpreter:No such file or directory的原因，是文件格式的问题。这个文件是在Windows下编写的。换行的方式与Unix不一样，但是在vim下面如果不Set一下又完全看不出来。</p>
-<p>问题原因：</p>
-<p>因为操作系统是windows，在windows下编辑的脚本，所以有可能有不可见字符。脚本文件是DOS格式的</p>
-<p>即每一行的行尾以\r\n来标识, 其ASCII码分别是0x0D, 0x0A.</p>
-<p>解决方法：</p>
-<p>可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的</p>
-<p>（1） vim filename</p>
-<p>然后用命令 :set ff</p>
-<p>可看到dos或unix的字样，如果的确是dos格式的, 那么用set ff&#x3D;unix把它强制为unix格式的,，然后存盘退出后就可运行。</p>
-<p>转换不同平台的文本文件格式可以用</p>
-<ol>
-<li>unix2dos或dos2unix这两个小程序来做. 很简单. 在djgpp中这两个程序的名字叫dtou和utod, u代表unix, d代表dos</li>
-<li>也可以用sed 这样的工具来做:</li>
-</ol>
-<p>复制代码 代码如下:</p>
-<p>sed ‘s&#x2F;^M&#x2F;&#x2F;‘ filename &gt; tmp_filename</p>
-<p>mv -f tmp_filename filename</p>
-<p>特别说明：^M并不是按键shift + 6产生的^和字母M, 它是一个字符, 其ASCII是0x0D, 生成它的办法是先按CTRL+V, 然后再回车(或CTRL+M)</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vscode插件</title>
-    <url>/2023/09/19/vscode%E6%8F%92%E4%BB%B6/</url>
-    <content><![CDATA[<p>链接原地址:<a href="https://www.cnblogs.com/vivaxiaonan/p/7380099.html">https://www.cnblogs.com/vivaxiaonan/p/7380099.html</a></p>
-<p> 格式化文档 shift+alt+f</p>
-<p>先按Ctrl+F打开搜索框，然后搜索要编辑的内容，接着按Ctrl+Shift+L就可以选中对应的所有内容了，然后可以全部编辑和替换了。按了Ctrl+shift+L之后把搜索框关闭就可以同时编辑多处了。</p>
-<p>自动换行设置</p>
-<p>File&gt;&gt;Preferences&gt;&gt;settings&gt;&gt;UserSettings&gt;&gt;CommonlyUsed&gt;&gt;找到Editor:WordWrap,将off修改为on即可</p>
-<p>vscode搜索多个文件，同时替换    ctrl+shift+h</p>
-<p>VScode现在已经越来越完善。性能远超Atom和webstorm,你有什么理由不用它?</p>
-<p>在这里，我会给你们推荐很多实用的插件，让你对 vscode 有更深刻的体会，渐渐地你就会知道它有多好用。</p>
-<p>走马观花前，请先将你的 vscode 更新到最新版本。</p>
-<p><strong>通用插件</strong></p>
-<p><strong>HTML Snippets</strong></p>
-<p>超级实用且初级的 H5代码片段以及提示</p>
-<p><strong>HTML CSS Support</strong></p>
-<p>让 html 标签上写class 智能提示当前项目所支持的样式</p>
-<p>新版已经支持scss文件检索</p>
-<p><strong>Debugger for Chrome</strong></p>
-<p>让 vscode 映射 chrome 的 debug功能，静态页面都可以用 vscode 来打断点调试，真666~ </p>
-<p>配置稍微复杂一些，哪天心情好我再另写教程吧~</p>
-<p><strong>jQuery Code Snippets</strong></p>
-<p>jquery 重度患者必须品，废话不多说，上图</p>
-<p><strong>vscode-icon</strong></p>
-<p>让 vscode 资源树目录加上图标，必备良品！</p>
-<p><strong>Path Intellisense</strong></p>
-<p>自动路劲补全，默认不带这个功能的，赶紧装</p>
-<p><strong>Npm Intellisense</strong></p>
-<p>require 时的包提示（最新版的vscode已经集成此功能）</p>
-<p><strong>Document this</strong></p>
-<p>js 的注释模板 （注意：最新版的vscode已经原生支持）</p>
-<p><strong>ESlint</strong></p>
-<p>ESlint 接管原生 js 提示，可以自定制提示规则。这个比较高玩，不会的就算了，我之前发过一篇文章 sublime 配置 <a href="https://segmentfault.com/a/1190000004818718">Atom js 语法校验</a>中有提到，他们的配置文件是通用的。</p>
-<p><strong>HTMLHint</strong></p>
-<p>html代码检测</p>
-<p><strong>Project Manager</strong></p>
-<p>在多个项目之前快速切换的工具</p>
-<p><strong>beautify</strong></p>
-<p>格式化代码的工具</p>
-<p><strong>Bootstrap 3 Sinnpet</strong></p>
-<p>常用 bootstrap 的可以下</p>
-<p><strong>Atuo Rename Tag</strong></p>
-<p>修改 html 标签，自动帮你完成尾部闭合标签的同步修改，不过有些bug。</p>
-<p><strong>GitLens</strong></p>
-<p>丰富的git日志插件</p>
-<p><strong>fileheader</strong></p>
-<p>顶部注释模板，可定义作者、时间等信息，并会自动更新最后修改时间</p>
-<p><strong>filesize</strong></p>
-<p>在底部状态栏显示当前文件大小，点击后还可以看到详细创建、修改时间</p>
-<p><strong>Bracket Pair Colorizer</strong></p>
-<p>让括号拥有独立的颜色，易于区分。可以配合任意主题使用。</p>
-<p><strong>Quokka</strong></p>
-<p><strong>使用</strong>：先shift+cmd+p （ctrl+shift+p）输入 quokka 选择 new javascript 就行了</p>
-<p>Quokka 是一个调试工具插件，能够根据你正在编写的代码提供实时反馈。它易于配置，并能够预览变量的函数和计算值结果。另外，在使用 JSX 或 TypeScript 项目中，它能够开箱即用。</p>
-<p>&#x2F;<em>?</em>&#x2F;在某个表达式之后（或&#x2F;&#x2F;?在语句之后）插入特殊注释将仅记录该表达式的值。</p>
-<p>例如，</p>
-<p>a.b()&#x2F;<em>?</em>&#x2F;.c().d()</p>
-<p>将输出a.b()表达式的结果，和</p>
-<p>a.b().c().d() &#x2F;<em>?</em>&#x2F;&#x2F;&#x2F; or justa.b().c().d() &#x2F;&#x2F;?</p>
-<p>将输出完整a.b().c().d()表达式的结果。</p>
-<p>&#x2F;<em>?.</em>&#x2F; 在任何表达式之后插入特殊注释将报告执行表达式所花费的时间。</p>
-<p>a() &#x2F;&#x2F;?. $    显示a()执行时间和结果。</p>
-<p>插件地址：<a href="https://quokkajs.com/">https://quokkajs.com/</a></p>
-<p><strong>CSS Peek</strong></p>
-<p>使用此插件，你可以追踪至样式表中 CSS 类和 ids 定义的地方。当你在 HTML 文件中右键单击选择器时，选择“ Go to Definition 和 Peek definition ”选项，它便会给你发送样式设置的 CSS 代码。</p>
-<p>插件地址：</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek">https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek</a></p>
-<p><strong>HTML Boilerplate</strong></p>
-<p>通过使用 HTML 模版插件，你就摆脱了为 HTML 新文件重新编写头部和正文标签的苦恼。你只需在空文件中输入 html，并按 Tab 键，即可生成干净的文档结构。</p>
-<p>插件地址：</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=sidthesloth.html5-boilerplate">https://marketplace.visualstudio.com/items?itemName=sidthesloth.html5-boilerplate</a></p>
-<p><strong>Prettier</strong></p>
-<p>Prettier 是目前 Web 开发中最受欢迎的代码格式化程序。安装了这个插件，它就能够自动应用 Prettier，并将整个 JS 和 CSS 文档快速格式化为统一的代码样式。如果你还想使用 ESLint，那么还有个 Prettier – Eslint 插件，你可不要错过咯！</p>
-<p>插件地址：</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode</a></p>
-<p><strong>Color Info</strong></p>
-<p>这个便捷的插件，将为你提供你在 CSS 中使用颜色的相关信息。你只需在颜色上悬停光标，就可以预览色块中色彩模型的（HEX、 RGB、HSL 和 CMYK）相关信息了。</p>
-<p>插件地址：</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=bierner.color-info">https://marketplace.visualstudio.com/items?itemName=bierner.color-info</a></p>
-<p><strong>Icon Fonts</strong></p>
-<p>这是一个能够在项目中添加图标字体的插件。该插件支持超过 20 个热门的图标集，包括了 Font Awesome、Ionicons、Glyphicons 和 Material Design Icons。</p>
-<p>插件地址：</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=idleberg.icon-fonts">https://marketplace.visualstudio.com/items?itemName=idleberg.icon-fonts</a></p>
-<p><strong>Minify</strong></p>
-<p>这是一款用于压缩合并 JavaScript 和 CSS 文件的应用程序。它提供了大量自定义的设置，以及自动压缩保存并导出为.min文件的选项。它能够分别通过 uglify-js、clean-css 和 html-minifier，与 JavaScript、CSS 和 HTML 协同工作。</p>
-<p>使用<strong>F1</strong>运行文件缩小器Minify</p>
-<p>插件地址：</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=HookyQR.minify">https://marketplace.visualstudio.com/items?itemName=HookyQR.minify</a></p>
-<p><strong>Vue插件</strong></p>
-<p>以下推荐vue框架所需的插件</p>
-<p><strong>vetur</strong></p>
-<p>语法高亮、智能感知、Emmet等</p>
-<p><strong>VueHelper</strong></p>
-<p>snippet代码片段</p>
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>win10软链接</title>
-    <url>/2023/09/21/win10%E8%BD%AF%E9%93%BE%E6%8E%A5/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mklink /J &quot;D:\finalshell\conn&quot; &quot;E:\OneDrive - hjblcx\documents\finalshell\conn&quot;</span><br></pre></td></tr></table></figure>
-
-<p>在cmd窗口执行以上命令</p>
-<p>在 D:\finalshell 文件夹下创建一个conn的文件夹,这个文件夹为E:\OneDrive - hjblcx\documents\finalshell\conn 这个文件夹的软连接</p>
-<p>实现finalshell的多台电脑同步保存的连接信息,需要借助onedrive</p>
-<p>删除软链接</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rmdir D:\Desktop\temp\ckx</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>搭建免费、无限空间的图床：Cloudflare Pages 和 Telegraph-Image</title>
-    <url>/2025/04/14/%E4%BD%BF%E7%94%A8-Cloudflare-%E6%90%AD%E5%BB%BA%E6%97%A0%E9%99%90%E7%A9%BA%E9%97%B4%E5%8F%8ACDN%E3%80%81%E6%94%AF%E6%8C%81%E5%AE%A1%E6%9F%A5%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/</url>
-    <content><![CDATA[<p><em>注：截至 2025 年 1 月，原有的 Telegraph API 接口被官方关闭，需要将上传渠道切换至 Telegram Channel，部署时需要设置 TG_Bot_Token 和 TG_Chat_ID，否则影响上传功能。</em></p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMIaAmvLn8DqrcYmdBlj7hdsZpQMP0AAvbKMRuTSkhUStlQMcxtnAsBAAMCAAN3AAM2BA.png"></p>
-<h1 id="1-在-GitHub-上-Fork-此项目"><a href="#1-在-GitHub-上-Fork-此项目" class="headerlink" title="1. 在 GitHub 上 Fork 此项目"></a>1. 在 GitHub 上 Fork 此项目</h1><p>转到项目仓库（<a href="https://github.com/cf-pages/Telegraph-Image%EF%BC%89%EF%BC%8C%E7%82%B9%E5%87%BB%E9%A1%B5%E9%9D%A2%E5%8F%B3%E4%B8%8A%E8%A7%92%E7%9A%84">https://github.com/cf-pages/Telegraph-Image），点击页面右上角的</a> <code>Fork</code>，创建新分支到你的仓库</p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMQaAm0VCd8_UdX_z63QhJPS-M01vMAAhXLMRuTSkhUCDKvjDWM6VgBAAMCAAN3AAM2BA.png"></p>
-<p>创建分支完成后，就不用管了，继续下面的步骤。</p>
-<h1 id="2-创建一个-Telegram-Bot"><a href="#2-创建一个-Telegram-Bot" class="headerlink" title="2. 创建一个 Telegram Bot"></a>2. 创建一个 Telegram Bot</h1><p>项目的原理可理解为：利用 Telegram Bot 的 API 实现图片上传和查看。</p>
-<h3 id="2-1-用-BotFather-创建机器人"><a href="#2-1-用-BotFather-创建机器人" class="headerlink" title="2.1 用 BotFather 创建机器人"></a>2.1 用 BotFather 创建机器人</h3><p>登录 Telegram，向 <a href="https://t.me/BotFather">@BotFather</a> 发送命令 <code>/newbot</code> 。</p>
-<p>根据提示，依次输入您的 <code>机器人名称</code> 和 <code>用户名</code> 。</p>
-<p>成功创建机器人后，您将会收到一个 <code>BOT_TOKEN</code>，用于与 Telegram API 进行交互。</p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMJaAmwkui9GzzFCY8RLxw3eETODaEAAvjKMRuTSkhUMg2AXC5eU2ABAAMCAAN5AAM2BA.png"></p>
-<h3 id="2-2-新建频道，并将机器人设置为管理员"><a href="#2-2-新建频道，并将机器人设置为管理员" class="headerlink" title="2.2 新建频道，并将机器人设置为管理员"></a>2.2 新建频道，并将机器人设置为管理员</h3><p>创建一个新的频道（Channel）。</p>
-<p>进入该频道后，选择频道设置，将刚刚创建的机器人添加为频道管理员。</p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMKaAmwvuVjR1JtI9CzbFywwAI_r88AAvrKMRuTSkhU974kwSOSULMBAAMCAAN4AAM2BA.png"></p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMRaAm0ud0JU1x2h1QVFt-db1URpr8AAhbLMRuTSkhU31UjGAe4YkgBAAMCAAN4AAM2BA.png"></p>
-<h3 id="2-3-获取频道-ID"><a href="#2-3-获取频道-ID" class="headerlink" title="2.3 获取频道 ID"></a>2.3 获取频道 ID</h3><p>频道 ID 无法直接被查看，为此，我们需要利用一个第三方机器人来获取频道 ID。</p>
-<p>向机器人 <a href="https://t.me/VersaToolsBot">@VersaToolsBot</a> 发送消息，并按提示操作。</p>
-<p>你将得到一个 <code>CHAT_ID</code> ，此即频道的ID。</p>
-<h1 id="3-在-Cloudflare-部署-Pages-项目"><a href="#3-在-Cloudflare-部署-Pages-项目" class="headerlink" title="3. 在 Cloudflare 部署 Pages 项目"></a>3. 在 Cloudflare 部署 Pages 项目</h1><h3 id="3-1-创建-Pages-项目"><a href="#3-1-创建-Pages-项目" class="headerlink" title="3.1 创建 Pages 项目"></a>3.1 创建 Pages 项目</h3><p>登录到 <a href="https://dash.cloudflare.com/">Cloudflare 控制台</a>，在左侧边栏中选择 <code>Workers 和 Pages</code> 。</p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMLaAmxH84PYWaDHn5FfFpIzPY9DXwAAvvKMRuTSkhU46WcAQPS1TsBAAMCAAN4AAM2BA.png"></p>
-<p>接下来选择 <code>连接到 Git</code> ，并在接下来的步骤中选中你刚刚 Fork 的那个仓库。</p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMMaAmxYU-_-I5VTgp5tjUyCN5GbHIAAvzKMRuTSkhUvQPKj-BbgywBAAMCAAN5AAM2BA.png"></p>
-<p>构建设置部分，我们点击展开 <code>环境变量（高级）</code> 选项。</p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMNaAmxkIM4gcT2VW3LAaidkj0dWpIAAv7KMRuTSkhU9ezlmw05QIEBAAMCAAN5AAM2BA.png"></p>
-<p>新建以下两条变量（将示例值改为你刚刚在 <code>第 2 步</code> 获取的数据）：</p>
-<table>
-<thead>
-<tr>
-<th align="center">环境变量</th>
-<th align="center">示例值</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">TG_Bot_Token</td>
-<td align="center">123468:AAxxxGKrn5</td>
-<td align="center">从 <a href="https://t.me/BotFather">@BotFather</a> 获取的 Telegram Bot Token</td>
-</tr>
-<tr>
-<td align="center">TG_Chat_ID</td>
-<td align="center">-1234567</td>
-<td align="center">频道的 ID，确保 TG Bot 是该频道或群组的管理员</td>
-</tr>
-</tbody></table>
-<h3 id="3-2-绑定自己的域名"><a href="#3-2-绑定自己的域名" class="headerlink" title="3.2 绑定自己的域名"></a>3.2 绑定自己的域名</h3><p>回到项目列表，点击进入这个项目，然后点击 <code>自定义域</code> 选项。</p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMOaAmx471c_A-FFDM6jX4JRSvOZ-oAAv_KMRuTSkhUFbkk8E_UPgEBAAMCAAN3AAM2BA.png"></p>
-<p>根据提示绑定自己的域名，并配置 CNAME 解析，稍后 Cloudflare 还会自动为你配置 SSL 证书。</p>
-<p>这一步骤大约需要 2 分钟生效，耐心等待片刻。</p>
-<h1 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h1><p>至此，一个无限空间的图床部署完成，尽情使用吧~</p>
-<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMPaAmyHyW8i3ofZ5LbUOb3PEDF9JMAAgHLMRuTSkhUjxObK7MdnfgBAAMCAAN3AAM2BA.png"></p>
-<h1 id="进阶使用"><a href="#进阶使用" class="headerlink" title="进阶使用"></a>进阶使用</h1><p>Telegraph-Image 其实也支持了图片后台管理、以及通过第三方 API 实现的图片 AI 审核功能，需要手动开启。</p>
-<p>有关操作步骤，请参阅官方教程：<a href="https://github.com/cf-pages/Telegraph-Image">https://github.com/cf-pages/Telegraph-Image</a></p>
-<h1 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h1><ol>
-<li>图片文件实际上存储于 Telegram 的服务器，其对图片大小的限制为最大 <code>5MB</code></li>
-<li>毕竟使用了 Cloudflare 的网络，图片的加载速度在某些国家和地区可能较慢</li>
-<li>Cloudflare Function 免费版每日限制 <code>100,000</code> 个请求（即上传、加载图片的总次数不能超过 <code>100,000</code> 次）</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>cloudflare</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>统计文件中某个字符串出现的次数</title>
-    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
-    <content><![CDATA[<p>一、grep+wc</p>
-<p>1、单个字符串</p>
-<p>grep -o targetStr filename | wc -l</p>
-<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
-<p>备注：单个字符串可以不加引号</p>
-<p>2、多个字符串</p>
-<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
-<p>备注：必须加引号（单、双都可以）</p>
-<p>如果不加引号，结果是不正确的</p>
-<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
-<p>grep 一条数据里面有多个相同，会统计一次次数</p>
-<p>二、awk</p>
-<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
-<p>1</p>
-<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
-<p>1</p>
-<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
-<p>当文件大的时候awk优势会更加明显。</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>用 Cloudflare Workers 免费反代任意网站</title>
-    <url>/2023/10/16/%E7%94%A8-Cloudflare-Workers-%E5%85%8D%E8%B4%B9%E5%8F%8D%E4%BB%A3%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99/</url>
-    <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>WorkersProxy 是一个轻量级的 Javascript 应用程序，可从其他服务器作为客户端检索资源。</p>
-<p>在 Cloudflare Workers 上进行部署时，您可以构建自定义的反向代理，而无需购买计算引擎和配置 Nginx 等 Web 服务器。</p>
-<p>此外，由于您的应用程序将通过 Cloudflare 遍布 90 多个国家 &#x2F; 地区的全球数据中心网络进行分发，因此将优化关键性能，例如延迟和可用性。</p>
-<p>通过配置地理位置和 IP 地址过滤器，您可以根据其特定规定在特定国家或地区直接暂停反向代理服务。利用移动重定向器，您可以根据用户的设备分发各种网页</p>
-<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p>导航到 Cloudflare Workers，注册或登录您的 Cloudflare 帐户，并为 worker 设置自定义子域，然后创建一个新的 Worker。</p>
-<p>自定义 “index.js”，将代码粘贴到 Cloudflare 在线编辑器中以替换默认代码。</p>
-<p>更改工作人员的名称，保存并部署它，并检查其性能是否满足您的需求。</p>
-<h1 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h1><p>检查您的域当前是否处于 Cloudflare 的保护之下。</p>
-<p>导航到您的域的仪表板，选择 “工作人员” 页面，然后单击 “添加路线”。</p>
-<p>键入 [https:&#x2F;&#x2F;&lt;](https:&#x2F;&#x2F;;domain-name&gt;&#x2F;* 在 Route 选择之前创建的工人。</p>
-<p>为您的自定义域添加 CNAME DNS 记录。具体而言，在 “名称” 字段中输入子域（或在根目录中为 “ @”），在 “目标” 字段中输入工作人员的二级域，然后将 “代理状态” 设置为 “代理”。</p>
-<h1 id="自定义-index-js"><a href="#自定义-index-js" class="headerlink" title="自定义 index.js"></a>自定义 index.js</h1><p>显然，在主 Javascript 文件的顶部定义了一些常量。</p>
-<p>要自定义自己的 WorkersProxy 服务，您应根据自己的期望进行编辑。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// List of domains bind to your WorkersProxy.</span><br><span class="line">const domain_list = [&#x27;https://google.error.workers.dev&#x27;]</span><br><span class="line"></span><br><span class="line">// Website you intended to retrieve for users.</span><br><span class="line">const upstream = &#x27;https://www.google.com/&#x27;</span><br><span class="line"></span><br><span class="line">// Website you intended to retrieve for users using mobile devices.</span><br><span class="line">const upstream_mobile = &#x27;https://www.google.com/&#x27;</span><br><span class="line"></span><br><span class="line">// Countries and regions where you wish to suspend your service.</span><br><span class="line">const blocked_region = [&#x27;KP&#x27;, &#x27;SY&#x27;, &#x27;PK&#x27;, &#x27;CU&#x27;]</span><br><span class="line"></span><br><span class="line">// IP addresses which you wish to block from using your service.</span><br><span class="line">const blocked_ip_address = [&#x27;0.0.0.0&#x27;, &#x27;127.0.0.1&#x27;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">addEventListener(&#x27;fetch&#x27;, event =&gt; &#123;</span><br><span class="line">    event.respondWith(fetchAndApply(event.request));</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">async function fetchAndApply(request) &#123;</span><br><span class="line"></span><br><span class="line">    const region = request.headers.get(&#x27;cf-ipcountry&#x27;).toUpperCase();</span><br><span class="line">    const ip_address = request.headers.get(&#x27;cf-connecting-ip&#x27;);</span><br><span class="line">    const user_agent = request.headers.get(&#x27;user-agent&#x27;);</span><br><span class="line">    const http = &quot;http://&quot;;</span><br><span class="line">    const https = &quot;https://&quot;;</span><br><span class="line">    </span><br><span class="line">    let response = null;</span><br><span class="line">    let url = request.url;</span><br><span class="line"></span><br><span class="line">    if (url.startsWith(http)) &#123;</span><br><span class="line">        url = url.replace(http, https);</span><br><span class="line">        response = Response.redirect(url);</span><br><span class="line">        return response;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (await device_status(user_agent)) &#123;</span><br><span class="line">        upstream_domain = upstream</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        upstream_domain = upstream_mobile</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(let domain of domain_list) &#123;</span><br><span class="line">        url = url.replace(domain, upstream_domain)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    if (blocked_region.includes(region)) &#123;</span><br><span class="line">        response = new Response(&#x27;Access denied: WorkersProxy is not available in your region yet.&#x27;, &#123;</span><br><span class="line">            status: 403</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else if(blocked_ip_address.includes(ip_address))&#123;</span><br><span class="line">        response = new Response(&#x27;Access denied: Your IP address is blocked by WorkersProxy.&#x27;, &#123;</span><br><span class="line">            status: 403</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else&#123;</span><br><span class="line">        let method = request.method;</span><br><span class="line">        let request_headers = request.headers;</span><br><span class="line">        let new_request_headers = new Headers(request_headers)</span><br><span class="line">        let host_name = upstream_domain.replace(http, &#x27;&#x27;)</span><br><span class="line">        host_name = upstream_domain.replace(https, &#x27;&#x27;)</span><br><span class="line">        host_name = upstream_domain.replace(&#x27;/&#x27;, &#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">        new_request_headers.set(&#x27;Host&#x27;, host_name)</span><br><span class="line">        new_request_headers.set(&#x27;Referer&#x27;, upstream_domain)</span><br><span class="line"></span><br><span class="line">        origin_response = await fetch(url, &#123;</span><br><span class="line">            method: method,</span><br><span class="line">            headers: new_request_headers</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">        let response_body = origin_response.body</span><br><span class="line">        let response_headers = origin_response.headers</span><br><span class="line">        let new_response_headers = new Headers(response_headers)</span><br><span class="line">        let status = origin_response.status</span><br><span class="line">        </span><br><span class="line">        new_response_headers.set(&#x27;access-control-allow-origin&#x27;, &#x27;*&#x27;);</span><br><span class="line">        new_response_headers.set(&#x27;access-control-allow-credentials&#x27;, true);</span><br><span class="line">        new_response_headers.delete(&#x27;content-security-policy&#x27;);</span><br><span class="line">        new_response_headers.delete(&#x27;content-security-policy-report-only&#x27;);</span><br><span class="line">        new_response_headers.delete(&#x27;clear-site-data&#x27;);</span><br><span class="line"></span><br><span class="line">        response = new Response(response_body, &#123;</span><br><span class="line">            status,</span><br><span class="line">            headers: response_headers</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    return response;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">async function device_status (userAgentInfo) &#123;</span><br><span class="line">    var Agents = [&quot;Android&quot;, &quot;iPhone&quot;, &quot;SymbianOS&quot;, &quot;Windows Phone&quot;, &quot;iPad&quot;, &quot;iPod&quot;];</span><br><span class="line">    var flag = true;</span><br><span class="line">    for (var v = 0; v &lt; Agents.length; v++) &#123;</span><br><span class="line">        if (userAgentInfo.indexOf(Agents[v]) &gt; 0) &#123;</span><br><span class="line">            flag = false;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return flag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>domain_list：主域名，可以是自己的域名，记得做好解析</p>
-<p>upstream、upstream_mobile：反代的网址，两者保持一致即可除非该网站有移动端的域名</p>
-<p>blocked_region：禁止访问的地区，记得去除’CN’</p>
-]]></content>
-      <tags>
-        <tag>cloudflare</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在Windows 11系统中将任意文件（如bat/log等）固定在开始菜单</title>
-    <url>/2025/04/14/%E5%9C%A8Windows-11%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%B0%86%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%EF%BC%88%E5%A6%82bat-log%E7%AD%89%EF%BC%89%E5%9B%BA%E5%AE%9A%E5%9C%A8%E5%BC%80%E5%A7%8B%E8%8F%9C%E5%8D%95/</url>
-    <content><![CDATA[<p>1.对任意文件右键创建快捷方式<br>2.打开%AppData%\Microsoft\Windows\Start Menu\Programs，把快捷方式放到这里<br>3.在开始菜单的列表（所有应用）中找到它，然后右键固定到开始屏幕</p>
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>砍价36计</title>
-    <url>/2023/10/23/%E7%A0%8D%E4%BB%B7/</url>
-    <content><![CDATA[<p><strong>砍价36计</strong></p>
-<p><strong>第01计:瞒天过海</strong></p>
-<p>　　不要表露对目标商品有好感，让商家不知道你的意图，无法争取主动</p>
-<p><strong>第02计:围魏救赵</strong></p>
-<p>告知自己钱刚刚花了很多在别的东西上，想买，但希望<a href="http://www.lawtime.cn/info/piaoju/fukuan/">付款</a>条件或售价能更优惠些;“老板，太不巧了，现在月末&#x2F;月初，我刚好没钱，这两天又买了XX，花了很多钱，你要是能优惠点就好了，要不真的买不了，我生活费都得靠自己，已经透支到下个月了”（有时候实在砍不下价可以让老板送店里的东西</p>
-<p>​      第<strong>03****计:借刀杀人</strong></p>
-<p>　　与其他店家的价格作比较，要求对方再降价</p>
-<p>　  <strong>第04计:以逸待劳</strong></p>
-<p>　　如果实在离自己心理价位比较远，那就参加团购搭乘顺风车，收获的不只价格优惠，更有利于约束产品品质;（如果没有团购 就淘宝搜 根据评价的细节图最终锁定目标商品，淘宝价本来就低但是也别忘了砍价）</p>
-<p><strong>第05计:趁火打劫</strong></p>
-<p>　一般的商品反季购买或者趁着打折促销价格要美丽很多（买房也是这样，一般滞销或者尾盘期也会发现保留的好房且折扣甚低）;</p>
-<p><strong>第06计:声东击西</strong></p>
-<p>　　找多位不同的卖家，试探最低价;（这个能做到心中有数</p>
-<p>　　<strong>第07计:无中生有</strong></p>
-<p>　　告知准备一次性付款，要求最优惠的价;（老板爽快点，最低多少。如果老板不够爽快就再加把火，老板我们都是爽快人，何必为这点钱墨迹，我拿你当朋友，诚信觉得你家东西好，正好我朋友都需要，我买回去就是给他们看看的，我们可能大批量购买的，你直接给我XX这个最低价，赚一群回头客，多好，就这样说定了，正好我包里就剩这么多了，老板给你钱）</p>
-<p><strong>第08计:暗渡陈仓</strong></p>
-<p>　　察言观色，有些发展商明言涨价，其实暗中给折扣。</p>
-<p><strong>第09计:隔岸观火</strong></p>
-<p>　　如果砍价过分顺利时，就要冷静地想想为什么。如销售员很爽快地答应了自己的折扣要求，要想一下他是否还有更低的底价没有透露?还是这件东西有其他问题，销售员急于脱手;（仔细检查商品是否有问题，如果自己忍受不了就立马走，如果觉得没事就把它放大，趁机再把价格拉低）</p>
-<p>　　<strong>第10计:笑里藏刀</strong></p>
-<p>　　与卖家或销售人员成为朋友，凭交情争取拿到该商品的最优惠的价格;（先套近乎最好说点你以前就是搞这个的，后来不搞了，争取共同话题，并适当争取对方的崇拜，如果争取不到就争取同情吧，然后再砍价，慢悠悠就像朋友唠嗑，僵局的时候就加个微信或者留个联系方式，表示你真的把他当朋友，“老板，东西虽然很喜欢，但价格太贵了，虽然买不了，但是交个朋友是很好的，感觉老板很会做生意，性格很好…”多点夸奖，让他觉得很不好意思，但是这个夸奖必须是基于你们沟通过程中表现出来的，不要盲目夸奖会惹人反感）</p>
-<p><strong>第11计:李代桃僵</strong></p>
-<p>　表示自己很满意，但家里人或朋友有其他的想法，如果便宜则可以解决问题;（老板，我挺喜欢的，但是我的东西一般都不是我买的，我刚才问我妈 ，她说在其他家也见过比这个优惠，但是我不想再跑回去买了，你直接给我便宜点，要不我妈又该骂我了）</p>
-<p><strong>第12计:顺手牵羊</strong></p>
-<p>“老板，算了，说这么久，您都不少，真的很不够意思，我也不说少什么了，你送我点小东西吧。你看你这里XX送我好了，也不值什么钱”（可以提前看上两件左右的东西，但是就这一件砍价，最后说算了，两件一起肯定会更便宜吧，让两件都是那个折扣，然后价钱加起来掐尾凑整，这样又能优惠点）</p>
-<p>　　<strong>第13计:打草惊蛇</strong></p>
-<p>　　告知自己有不少朋友也会跟着自己买，只有最优惠的价格才能带来更多买家;而且刚才有家好像和这家差不多，或者说网上也便宜些，要是老板不能再少点，就实在很抱歉</p>
-<p>　<strong>第14计:借尸还魂</strong></p>
-<p>　　要求给不送东西或者单件的价，同意后再要求送附加东西（比如买房，让开发商按毛胚房给你价，然后再让其提供装修或者提供送2年物业管理费）;</p>
-<p><strong>第15计:调虎离山</strong></p>
-<p>　　告知对方已看中其他家，看是否愿意开出更有吸引力的价格;（老板，刚刚看了一家也差不多，价格也和你一样，但是感觉老板你人特别好，而且我不想再跑回去了，您再价格低点，我就在你家买了）</p>
-<p><strong>第16计:欲擒故纵</strong></p>
-<p>告知卖家更看好其他，如果不降价就走; </p>
-<p><strong>第17计:抛砖引玉</strong></p>
-<p>带着钱 说只要售价合适就马上决定购买;</p>
-<p><strong>第18计:擒贼擒王</strong></p>
-<p>谈到一定程度销售人员就无让价余地，但只要抓住产品的实质问题和缺点，往往能寻到底价;</p>
-<p>　　<strong>第19计:釜底抽薪</strong></p>
-<p>　　不停地找的各种缺点，要求降价;（语气和态度要注意，千万不要惹怒卖家，否则一句话，那你别买了，你就呆了）</p>
-<p><strong>第20计:混水摸鱼</strong></p>
-<p>告知自己买此商品主要想用于XX，但因自己XX，借此提出是否能提供帮助，顺便送些东西</p>
-<p>​       <strong>第21计:金蝉脱壳</strong></p>
-<p>先选一个比较次一些的把价格谈好，再要求以同样的价格买更好的;</p>
-<p><strong>第22计:关门捉贼</strong></p>
-<p>　　不看样品看购买物质量毛病，逼迫其降价;（实体店就多看，多挑，淘宝直接看差评，或者看细节图  找毛病你不会呀）</p>
-<p><strong>第23计:远交近攻</strong></p>
-<p>　如果是网店，通过成交记录，了解过去的成交价，并与自己意欲购买的比较。如果比自己买的低就好说，如果比现在买的高，你就说他们家价格好大，趁机降价。</p>
-<p><strong>第24计:假道伐虢</strong></p>
-<p>告知从朋友处已知有多少优惠，要求同样的<a href="http://www.lawtime.cn/info/laodong/gongzi/">待遇</a>;或者谎称自己朋友买过好多次他们家的东西，每次都少好多，这次一定也要给自己少。</p>
-<p>　    <strong>第25计:偷梁换柱</strong></p>
-<p>　　抓住一件其他比目标东西价格高的东西砍价，看到一定程度夸夸老板，然后又说，没钱买那么贵的，买这个吧（锁定目标），“老板，那件那么贵，您都那么便宜，这件你就给我同样的优惠好啦，我这次没带那么多钱，下次我把那件也买了”，老板就晕了，趁着他脑子发蒙争取更优惠的付款条件;</p>
-<p>　<strong>第26计:指桑骂槐</strong></p>
-<p>　　列举其他家高价不让价销售不动的恶劣影响;</p>
-<p><strong>第27计:假痴不癫</strong></p>
-<p>多听、多看、多提问;</p>
-<p><strong>第28计:上屋抽梯</strong></p>
-<p>告知他你已经要买了，但要等XX才能买，因此要求卖方在付款方法上再优惠些;（比如老板 ，好了，不说那么多了，你算下多少钱，一般算出来都不是整的，你可以让抹零）或者说，老板我没带够钱，支付宝行么，或者威信支付行么。支付的时候，说老板抹个零好吧，我现在就打钱给您</p>
-<p>　<strong>第29计:树上开花</strong></p>
-<p>　　有经验的销售一般喜欢充分了解买家的需求，知己知彼后加以引导，这样我们往往比较被动，所以我们要尽量保持沉默，让销售多讲话、多介绍，这样可以始终处于比较有利的位置;</p>
-<p><strong>第30计:反客为主</strong></p>
-<p>　　比我们时间更宝贵的是卖家的时间，故意拖延时间，慢慢磨，主动权在自己手上，每次都要求更便宜的价格;（如果期间有别人要买东西，你可以帮顾客介绍，或者趁机夸下这家店。等顾客走了，老板对你的印象好，趁机再讲价）</p>
-<p><strong>第31计:美人计</strong></p>
-<p>　　这个看卖家是男是女，还要看自己是男是女。（主要就是说软话）</p>
-<p><strong>第32计:空城计</strong></p>
-<p>　　先去下厕所或者试衣间或者卖家看不到的地方，把自己的钱分散，按照自己心理价位留出这么多在钱包里，另外稍微多点零钱分散在身上或包里，其他的藏起来。老板，我就这么多钱，怎么办。老板实在不同意，你就使劲在身上找。一次摸出一点零钱，摸出一点卖下可怜，或者说，老板实在抱歉，我还是买不起，算了。基本上两次老板就受不了了，直接说好啦好啦，就这样吧。</p>
-<p>　<strong>第33计:反间计</strong></p>
-<p>　　告知对方已看中其他并已付定金，但亦喜欢这个，是否能再便宜点以补偿已付出不能退还的定金;</p>
-<p>　　<strong>第34计:苦肉计</strong></p>
-<p>　告知能力有限买不起，要求再便宜一点</p>
-<p>　第35<strong>计:连环计</strong></p>
-<p>　　除了自己参与砍价外，再让家人或同伴一起参与，在不同时间分别和不同的销售谈，分别前往;（我们宿舍就是，一人一台电脑或手机，旺旺轮番轰炸，使用不同的语气和计策，只要有一个最低价，其他几个就一起买）</p>
-<p>　<strong>第36计:走为上</strong></p>
-<p>实在谈不下去，抬腿就走。（拦你的话就有戏，不拦你的话，你心里掂量下到底喜欢么<br>再问我）</p>
-<p>其实好多总结起来有异曲同工之妙，可能你看不出区别，但是当你真正砍过很多价的时候，融会贯通，其实也没有区别，因为要促成交易成功，有时候都是混着来的，不必区分那么清楚，结果是最总要的——物美价廉</p>
-]]></content>
-      <tags>
-        <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解压缩报错tar  Error is not recoverable  exiting now</title>
-    <url>/2023/09/21/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%8A%A5%E9%94%99tar-Error-is-not-recoverable-exiting-now/</url>
-    <content><![CDATA[<p>[root@Gris-11140 FMIS2600bak]# tar -zxvf &#x2F;home&#x2F;oradata&#x2F;FMIS2600DMP.tar.gz</p>
-<p>gzip: stdin: not in gzip format</p>
-<p>tar: Child returned status 1</p>
-<p>tar: Error is not recoverable: exiting now</p>
-<p><strong>解决方法：</strong></p>
-<p><strong>去掉z参数，使用 tar -xvf 解压正常</strong></p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Typora的免费激活操作</title>
-    <url>/2025/04/24/Typora%E7%9A%84%E5%85%8D%E8%B4%B9%E6%BF%80%E6%B4%BB%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>方法不唯一，亲测有效迅速<br>全程大概只花了3-5分钟就搞定了<br>几乎直接就是进行了CV<br>这里使用的是windows 11</p>
-<hr>
-<h2 id="一、首先下载Typora"><a href="#一、首先下载Typora" class="headerlink" title="一、首先下载Typora"></a>一、首先下载Typora</h2><p><a href="https://typora.io/">Typora 官网地址</a>：<a href="https://typora.io/">https://typora.io</a><br><a href="https://typoraio.cn/">Typora 中文官网地址</a>：<a href="https://typoraio.cn/">https://typoraio.cn</a><br>或者是直接使用亲测有效的版本：1.9.5及其以前的版本</p>
-<h2 id="二、工具下载"><a href="#二、工具下载" class="headerlink" title="二、工具下载"></a>二、工具下载</h2><p>链接: <a href="https://pan.baidu.com/s/19aw_tpVMkVVRpb9vtS1UEw?pwd=a1k3">https://pan.baidu.com/s/19aw_tpVMkVVRpb9vtS1UEw?pwd=a1k3</a> 提取码: a1k3 复制这段内容后打开百度网盘手机App，操作更方便哦</p>
-<h2 id="三、开始"><a href="#三、开始" class="headerlink" title="三、开始"></a>三、开始</h2><h3 id="1-安装的Typora"><a href="#1-安装的Typora" class="headerlink" title="1.安装的Typora"></a>1.安装的Typora</h3><p>这里就直接跳过，安装过程自定义，自由发挥想装在哪里就哪里，外婆桥都可e</p>
-<h3 id="2-将工具解压出来"><a href="#2-将工具解压出来" class="headerlink" title="2.将工具解压出来"></a>2.将工具解压出来</h3><p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMSaAnW7KoTn-baYt3buAxc5QoOq3QAApLLMRuTSkhUMbvymXq2eLABAAMCAAN5AAM2BA.png"></p>
-<h3 id="3-根据操作指南获得序列号"><a href="#3-根据操作指南获得序列号" class="headerlink" title="3.根据操作指南获得序列号"></a>3.根据操作指南获得序列号</h3><p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMTaAnXHmV_zhU7SV_o-ZpmvT6qv8oAApPLMRuTSkhU8Qv714tgFMIBAAMCAAN5AAM2BA.png"></p>
-]]></content>
-      <tags>
-        <tag>win</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>11种方法解决蓝奏云无法打开的问题</title>
     <url>/2025/04/29/11%E7%A7%8D%E6%96%B9%E6%B3%95%E8%A7%A3%E5%86%B3%E8%93%9D%E5%A5%8F%E4%BA%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>如果蓝奏云链接无法打开，可以尝试按以下方法解决，不同的设备和网络，需要使用不同的方法。</p>
@@ -700,6 +98,25 @@
 ]]></content>
   </entry>
   <entry>
+    <title>ES(Elasticsearch)解除索引只读限制</title>
+    <url>/2023/09/21/ES-Elasticsearch-%E8%A7%A3%E9%99%A4%E7%B4%A2%E5%BC%95%E5%8F%AA%E8%AF%BB%E9%99%90%E5%88%B6/</url>
+    <content><![CDATA[<p>服务器 空间满了，导致 ES 自动设置了只读限制</p>
+<p>在此之前，先清空多余的日志</p>
+<p>在elasticsearch 目录下 进入 logs 文件夹，清空后缀为 .gz和 gc.log.xx (xx为任意字符) 的文件</p>
+<p>如下命令可以解除只读限制</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPUT -H &quot;Content-Type: application/json&quot; http://127.0.0.1:9200/_all/_settings -d &#x27;&#123;&quot;index.blocks.read_only_allow_delete&quot;: false&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>elasticsearch发现磁盘空间大于95%时，将运行于只读状态，此时将不能更新索引，只能查询和删除。</p>
+<p>如果还是出现此问题</p>
+<p>通过手动重新分配分片，不断执行这个指令，直到unassigned_shards为0，status为green，解决这个问题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -XPOST http://127.0.0.1:9200/_cluster/reroute?retry_failed=true</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MetaTube插件安装</title>
     <url>/2025/05/06/Jellyfin%E4%B8%ADMetaTube%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><h3 id="jellyfin"><a href="#jellyfin" class="headerlink" title="jellyfin"></a>jellyfin</h3><ol>
@@ -789,143 +206,6 @@
 <p>PS：需要重启 Jellyfin&#x2F;Emby&#x2F;Plex 服务，插件才会生效。</p>
 <p>其他例如自动翻译、人脸识别等配置，可以参考左侧页面的相关内容。</p>
 </blockquote>
-]]></content>
-  </entry>
-  <entry>
-    <title>ubuntu中 使用 rclone 挂载webdav</title>
-    <url>/2025/05/06/ubuntu%E4%B8%AD-%E4%BD%BF%E7%94%A8-rclone-%E6%8C%82%E8%BD%BDwebdav/</url>
-    <content><![CDATA[<p>在 Ubuntu 中使用 <code>rclone</code> 挂载 WebDAV 是一个相对直接的过程，但需要确保你已经正确安装了 <code>rclone</code> 并进行了相应的配置。以下是详细的步骤说明：</p>
-<h3 id="1-安装-rclone"><a href="#1-安装-rclone" class="headerlink" title="1. 安装 rclone"></a>1. 安装 rclone</h3><p>首先，如果你还没有安装 <code>rclone</code>，可以通过以下命令进行安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl https://rclone.org/install.sh | sudo bash</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后，可以通过运行 <code>rclone --version</code> 来验证是否安装成功。</p>
-<h3 id="2-配置-rclone-使用-WebDAV"><a href="#2-配置-rclone-使用-WebDAV" class="headerlink" title="2. 配置 rclone 使用 WebDAV"></a>2. 配置 rclone 使用 WebDAV</h3><p>接下来，你需要配置 <code>rclone</code> 以连接到你的 WebDAV 服务。运行以下命令开始配置过程：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rclone config</span><br></pre></td></tr></table></figure>
-
-<p>按照提示操作：</p>
-<ul>
-<li>输入 <code>n</code> 创建一个新的远程连接。</li>
-<li>为你的远程连接命名（例如 <code>mywebdav</code>）。</li>
-<li>在选择类型时，找到并输入 WebDAV 对应的编号。</li>
-<li>根据提示填写 WebDAV 的 URL、用户名和密码等信息。对于一些 WebDAV 服务器，可能还需要提供供应商信息或其他特定选项。</li>
-<li>完成配置后，选择 <code>q</code> 退出配置模式。</li>
-</ul>
-<h3 id="3-挂载-WebDAV-到本地目录"><a href="#3-挂载-WebDAV-到本地目录" class="headerlink" title="3. 挂载 WebDAV 到本地目录"></a>3. 挂载 WebDAV 到本地目录</h3><p>假设你已经完成了上述配置，并将远程命名为 <code>mywebdav</code>，你可以使用以下命令将其挂载到本地的一个目录中：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir -p /path/to/local/mount/point</span><br><span class="line">rclone mount mywebdav: /path/to/local/mount/point --daemon --allow-other --default-permissions --vfs-cache-mode writes</span><br></pre></td></tr></table></figure>
-
-<p>这里 <code>/path/to/local/mount/point</code> 应替换为你希望挂载 WebDAV 的本地路径。<code>--daemon</code> 参数表示后台运行该进程。</p>
-<ul>
-<li><code>--daemon</code> 参数使 rclone 在后台运行。</li>
-<li><code>--allow-other</code> 允许非启动用户的其他用户访问挂载点。</li>
-<li><code>--default-permissions</code> 尝试应用本地权限设置。</li>
-<li><code>--vfs-cache-mode writes</code> 开启写入缓存模式，有助于改善文件操作体验。</li>
-</ul>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
-<li><strong>权限问题</strong>：确保你有对挂载点目录的写权限。如果没有，可以使用 <code>sudo</code> 或者调整目录权限。</li>
-<li><strong>性能与缓存</strong>：对于频繁访问的情况，考虑添加缓存参数以提高性能，如 <code>--cache-dir=&quot;/path/to/cache/dir&quot;</code> 和 <code>--vfs-cache-mode writes</code>。</li>
-<li><strong>开机自动挂载</strong>：为了使挂载在系统重启后仍然有效，可以将上述命令加入到 <code>/etc/rc.local</code> 文件中，或者创建一个 systemd 服务单元文件来管理它。</li>
-</ul>
-<p>通过以上步骤，你应该能够在 Ubuntu 系统上成功地使用 <code>rclone</code> 挂载 WebDAV。如果遇到任何问题，请检查 <code>rclone</code> 日志或尝试增加 <code>-v</code> 参数以获取更详细的输出信息。</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>MetaTube插件中文件命名规范</title>
-    <url>/2025/05/06/MetaTube%E6%8F%92%E4%BB%B6%E4%B8%AD%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/</url>
-    <content><![CDATA[<h2 id="有码类"><a href="#有码类" class="headerlink" title="有码类"></a>有码类</h2><ul>
-<li><code>SSSS-001</code></li>
-<li><code>ABC-100</code></li>
-<li><code>PPPC-326</code></li>
-</ul>
-<h2 id="素人类"><a href="#素人类" class="headerlink" title="素人类"></a>素人类</h2><ul>
-<li><code>390JAC-132</code></li>
-<li><code>300MAAN-783</code></li>
-</ul>
-<h2 id="无码类"><a href="#无码类" class="headerlink" title="无码类"></a>无码类</h2><ul>
-<li><code>HEYZO-1234</code></li>
-<li><code>KIN8-1675</code></li>
-<li><code>123456_999</code></li>
-<li><code>543210-001</code></li>
-<li><code>587234-01</code></li>
-<li><code>xxx-av-1234</code></li>
-<li><code>heydouga-1234-321</code></li>
-<li><code>c0930-ki897634</code></li>
-<li><code>h4610-ori98321</code></li>
-</ul>
-<h2 id="其他类"><a href="#其他类" class="headerlink" title="其他类"></a>其他类</h2><ul>
-<li><code>FC2-1234567</code></li>
-<li><code>MYWIFE-1394</code></li>
-<li><code>GETCHU-3456789</code></li>
-<li><code>GCOLLE-9876554</code></li>
-<li><code>PCOLLE-6543210</code></li>
-</ul>
-<h2 id="字幕标签"><a href="#字幕标签" class="headerlink" title="字幕标签"></a>字幕标签</h2><p>对于硬编码的中文字幕视频，可以在末尾加入<code>-C</code>后缀，插件会自动为该影片加入<code>中文字幕</code>标签，例如：</p>
-<ul>
-<li><code>ABC-330-C.mp4</code></li>
-<li><code>HEYZO-1784-C.mp4</code></li>
-</ul>
-<h2 id="多碟影片"><a href="#多碟影片" class="headerlink" title="多碟影片"></a>多碟影片</h2><p>对于多碟影片，可以在末尾加入<code>-cd1</code>之类的后缀，例如：</p>
-<ul>
-<li><code>ABC-330-cd1.mp4</code></li>
-<li><code>ABC-330-cd2.mp4</code></li>
-<li><code>MCBD-25-C-cd1.mkv</code></li>
-<li><code>MCBD-25-C-cd2.mkv</code></li>
-</ul>
-<p>PS：大小写不敏感，但是注意不要混淆<code>-</code>与<code>_</code>符号。</p>
-<p>自动修改文件名称的脚本，仅适用于linux</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># 定义目标目录</span><br><span class="line">TARGET_DIR=&quot;/alist/jp/001&quot;</span><br><span class="line"></span><br><span class="line"># 检查目录是否存在</span><br><span class="line">if [[ ! -d &quot;$TARGET_DIR&quot; ]]; then</span><br><span class="line">    echo &quot;目录 $TARGET_DIR 不存在&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># 使用 find 命令递归查找所有带扩展名的文件</span><br><span class="line">find &quot;$TARGET_DIR&quot; -type f | while read -r file; do</span><br><span class="line">    # 提取文件名和扩展名</span><br><span class="line">    filename=$(basename &quot;$file&quot;)</span><br><span class="line">    name_only=&quot;$&#123;filename%.*&#125;&quot;</span><br><span class="line">    ext=&quot;$&#123;filename##*.&#125;&quot;</span><br><span class="line"></span><br><span class="line">    # 判断是否已经是标准格式，如 EBOD-912-cd2.mp4 或 DGCEMD-005-cd1.mp4</span><br><span class="line">    if [[ &quot;$name_only&quot; =~ ^([A-Za-z0-9-]+)(-cd[1-9])?$ ]]; then</span><br><span class="line">        echo &quot;Skipped (already in standard format): &#x27;$filename&#x27;&quot;</span><br><span class="line">        continue</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    # 尝试匹配 ID（字母+数字+-）</span><br><span class="line">    if [[ &quot;$name_only&quot; =~ ^([A-Za-z0-9-]+) ]]; then</span><br><span class="line">        base_name=&quot;$&#123;BASH_REMATCH[1]&#125;&quot;</span><br><span class="line"></span><br><span class="line">        # 获取最后一个点的位置</span><br><span class="line">        last_dot_pos=$(awk -F. &#x27;&#123;print length($0)-length($NF)-1&#125;&#x27; &lt;&lt;&lt; &quot;$filename&quot;)</span><br><span class="line"></span><br><span class="line">        # 获取最后一个点之前的那个字符</span><br><span class="line">        if (( last_dot_pos &gt; 0 )); then</span><br><span class="line">            last_char=&quot;$&#123;filename:last_dot_pos-1:1&#125;&quot;</span><br><span class="line"></span><br><span class="line">            # 检查这个字符是否为数字1-9</span><br><span class="line">            if [[ &quot;$last_char&quot; =~ [1-9] ]]; then</span><br><span class="line">                digits=&quot;$last_char&quot;</span><br><span class="line">                new_name=&quot;$&#123;base_name&#125;-cd$&#123;digits&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">            else</span><br><span class="line">                new_name=&quot;$&#123;base_name&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">            fi</span><br><span class="line">        else</span><br><span class="line">            new_name=&quot;$&#123;base_name&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 如果原文件名和目标文件名相同，跳过</span><br><span class="line">        if [[ &quot;$filename&quot; == &quot;$new_name&quot; ]]; then</span><br><span class="line">            echo &quot;Skipped (already named correctly): &#x27;$filename&#x27;&quot;</span><br><span class="line">            continue</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 使用 mv 命令重命名文件，并确保正确处理空格和特殊字符</span><br><span class="line">        mv -- &quot;$file&quot; &quot;$(dirname &quot;$file&quot;)/$new_name&quot;</span><br><span class="line">        echo &quot;Renamed &#x27;$filename&#x27; to &#x27;$new_name&#x27;&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;No match pattern for &#x27;$filename&#x27;&quot;</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-]]></content>
-  </entry>
-  <entry>
-    <title>使用AutoFilm加快emby扫描库</title>
-    <url>/2025/05/16/%E4%BD%BF%E7%94%A8AutoFilm%E5%8A%A0%E5%BF%ABemby%E6%89%AB%E6%8F%8F%E5%BA%93/</url>
-    <content><![CDATA[<h2 id="AutoFilm简介"><a href="#AutoFilm简介" class="headerlink" title="AutoFilm简介"></a>AutoFilm简介</h2><p>通过Alist提供的Webdav获取网盘视频播放链接并生成Strm文件，可被Jellyfin&#x2F;Emby等影音媒体服务器识别并直接播放</p>
-<h2 id="部署方式"><a href="#部署方式" class="headerlink" title="部署方式"></a>部署方式</h2><p>Docker部署（推荐）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --name autofilm  -v ./config:/config -v ./media:/media -v./logs:/logs akimio/autofilm</span><br></pre></td></tr></table></figure>
-
-<p>Python部署<br>安装Python，推荐版本Python3.12<br>克隆项目并进入项目目录：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/Akimio521/AutoFilm.git</span><br><span class="line">cd AutoFilm</span><br></pre></td></tr></table></figure>
-
-<p>安装依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
-
-<p>配置配置文件config.yaml<br>启动程序：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python app/main.py</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改配置文件-config-yml"><a href="#修改配置文件-config-yml" class="headerlink" title="修改配置文件 config.yml"></a>修改配置文件 config.yml</h2><p>参考下面的示例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Settings:</span><br><span class="line">  DEV: False                          # 开发者模式(可选，默认 False)</span><br><span class="line"></span><br><span class="line">Alist2StrmList:</span><br><span class="line"></span><br><span class="line">  - id: 动漫                          # 标识 ID</span><br><span class="line">    cron: 0 20 * * *                  # 后台定时任务 Crontable 表达式</span><br><span class="line">    url: https://alist.akimio.top     # Alist 服务器地址</span><br><span class="line">    username: admin                   # Alist 用户名</span><br><span class="line">    password: adminadmin              # Alist 密码</span><br><span class="line">    source_dir: /ani/                 # Alist 服务器上文件夹路径</span><br><span class="line">    target_dir: D:\media\             # 输出路径</span><br><span class="line">    flatten_mode: False               # 平铺模式，开启后 subtitle、image、nfo 强制关闭(可选，默认 False)</span><br><span class="line">    subtitle: False                   # 是否下载字幕文件（可选，默认 False）</span><br><span class="line">    image: False                      # 是否下载图片文件（可选，默认 False）</span><br><span class="line">    nfo: False                        # 是否下载 .nfo 文件（可选，默认 False）</span><br><span class="line">    raw_url: False                    # 是否使用原始地址替换 Alist 服务器下载地址（可选，默认 False）</span><br><span class="line">    overwrite: False                  # 覆盖模式，本地路径存在同名文件时是否重新生成/下载该文件（可选，默认 False）</span><br><span class="line">    other_ext:                        # 自定义下载后缀，使用西文半角逗号进行分割，（可选，默认为空）</span><br><span class="line">    max_workers: 5                    # 下载文件最大并发数（可选，默认 5）</span><br><span class="line"></span><br><span class="line">  - id: 电影</span><br><span class="line">    cron: 0 0 7 * *</span><br><span class="line">    url: http://alist.example2.com:5244</span><br><span class="line">    username: alist</span><br><span class="line">    password: alist</span><br><span class="line">    source_dir: /网盘/115/电影</span><br><span class="line">    target_dir: /media/my_video </span><br><span class="line">    flatten_mode: False </span><br><span class="line">    subtitle: False</span><br><span class="line">    image: False</span><br><span class="line">    nfo: False</span><br><span class="line">    raw_url: True</span><br><span class="line">    overwrite: False</span><br><span class="line">    other_ext: zip,md</span><br><span class="line">    max_workers: 5</span><br><span class="line"></span><br><span class="line">Ani2AlistList:</span><br><span class="line"></span><br><span class="line">  - id: 新番追更                           # 标识 ID</span><br><span class="line">    cron: 20 12 * * *                     # 后台定时任务 Crontable 表达式</span><br><span class="line">    url: https://127.0.0.1:5244           # Alist 服务器地址</span><br><span class="line">    username: admin                       # Alist 用户名（需管理员权限）</span><br><span class="line">    password: myalist                     # Alist 密码</span><br><span class="line">    target_dir: /视频/动漫/新番            # Alist 地址树存储器路径，若存储器不存在将自动创建（可选，默认/Anime）</span><br><span class="line">    rss_update: False                     # 使用 RSS 订阅更新最新番剧，启用后忽视传入的 year 和 month（可选，默认为 True）</span><br><span class="line">    year: 2024                            # 动漫季度-年份，仅支持 2019-1 及以后更新的番剧（可选，默认使用当前日期）</span><br><span class="line">    month: 7                              # 动漫季度-月份，仅支持 2019-1 及以后更新的番剧（可选，默认使用当前日期）</span><br><span class="line">    src_domain: aniopen.an-i.workers.dev  # ANI Open 项目域名（可选，默认为 aniopen.an-i.workers.dev）</span><br><span class="line">    rss_domain: api.ani.rip               # ANI Open 项目 RSS 订阅域名（可选，默认为 api.ani.rip） </span><br></pre></td></tr></table></figure>
-
-<h3 id="Alist2StrmList模块"><a href="#Alist2StrmList模块" class="headerlink" title="Alist2StrmList模块"></a>Alist2StrmList模块</h3><p>主要用于生成Strm文件，可配置是否下载图片、字幕、nfo等详细配置，也可以自定义需要下载的格式<br>主要参数：</p>
-<p>cron：用于后台定时任务，例如0 20 * * *为每天晚上8:00都会运行<br>source_dir：为存放需要转化为Strm文件的路径，程序会遍历其子路径（如果用户设置了base_path，已登入用户看到的路径为准，不需要手动补全base_path）<br>target_dir：本地Strm文件的存放目录，建议使用绝对路径，相对路径可能出现找不到文件的情况<br>flatten_mode：启用后只生成Strm文件，关闭图片、字幕等文件的下载，并且Strm文件会直接在target_dir目录中生成，并非在其子目录中生成<br>overwrite：覆写功能，默认关闭，多次运行的时候检测到本地文件已经存在，会跳过，开启后会先删除原文件再重新生成<br>raw_url：会请求上游云盘获取云盘的CDN下载链接替换Alist的下载链接（此链接一般有时效性）<br>备注：<br>用户开启签名（Sign）功能后，下载链接会额外多出查询参数，新版本（v1.2.2及以上）无需配置Token既可以获取正确下载链接，如果设置签名过期时间，可以配合cron后台任务和overwrite覆写功能一起使用</p>
-<h3 id="Ani2Alist模块"><a href="#Ani2Alist模块" class="headerlink" title="Ani2Alist模块"></a>Ani2Alist模块</h3><p>配合ANi Open (an-i.workers.dev)项目使用，将动漫挂载到Alist上，可以配合Alist2StrmList模块使用<br>主要参数：</p>
-<p>cron：用于后台定时任务，例如0 20 * * *为每天晚上8:00都会运行<br>target_dir：将视频挂载到Alist服务器上的父路径（所有视频都会在这个路径下）<br>rss_update：通过ANI Open项目的RSS订阅快速添加最近更新的15个番剧<br>year&#x2F;month：指定更新哪个季度的番剧，仅支持 2019-1 及以后更新的番剧</p>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>按照上面的要求部署好AutoFilm之后，修改配置文件中的对应参数，会生成.strm文件，保存.strm文件的文件夹最好为emby的媒体文件夹（如果不是，则需要手动复制生成好的.strm文件到emby的媒体文件夹中），这些.strm文件会被emby识别为对应的视频。</p>
-<p>AutoFilm下config.yml中的alist地址，必须为emby服务器可访问的地址，不然在emby服务器中使用.strm文件生成的视频播放时会报错</p>
-<p>修改好配置文件之后，可以只执行一次，但是配置文件中的定时任务需要在手动执行的时间之后，执行完成即可关闭程序</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>使用docker安装emby</title>
-    <url>/2025/05/16/%E4%BD%BF%E7%94%A8docker%E5%AE%89%E8%A3%85emby/</url>
-    <content><![CDATA[<h3 id="1-安装Docker"><a href="#1-安装Docker" class="headerlink" title="1. 安装Docker"></a>1. 安装Docker</h3><p>如果您还没有安装Docker，请访问<a href="https://www.docker.com/">Docker官网</a>根据您的操作系统下载并安装适合的版本。</p>
-<h3 id="2-拉取Emby-Docker镜像"><a href="#2-拉取Emby-Docker镜像" class="headerlink" title="2. 拉取Emby Docker镜像"></a>2. 拉取Emby Docker镜像</h3><p>打开终端或命令提示符，运行以下命令来拉取最新的Emby服务器Docker镜像：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull emby/embyserver</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-创建并运行Emby容器"><a href="#3-创建并运行Emby容器" class="headerlink" title="3. 创建并运行Emby容器"></a>3. 创建并运行Emby容器</h3><p>使用以下命令创建并启动一个Emby容器。这将把Emby服务器映射到主机上的端口8096（默认HTTP端口），您可以根据需要调整这些设置。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --name embyserver --restart unless-stopped -p 8096:8096 -v /data/emby/config:/config -v /data/emby/media:/media --network=&quot;host&quot; emby/embyserver</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><strong><code>docker run</code></strong>: 这是启动一个新的容器的命令。</li>
-<li><strong><code>-d</code></strong>: 表示以分离模式（后台）运行容器，即容器将在后台运行而不是占用当前终端。</li>
-<li><strong><code>--name embyserver</code></strong>: 给容器命名为 <code>embyserver</code>，这样可以通过这个名字来管理这个容器（如停止、重启等），而不需要使用容器ID。</li>
-<li><strong><code>--restart unless-stopped</code></strong>: 设置容器的重启策略为“除非手动停止”，这意味着如果容器因为任何原因意外退出了（例如系统重启），它将自动重新启动，除非它是被手动停止的。</li>
-<li><strong><code>-p 8096:8096</code></strong>: 将主机的 8096 端口映射到容器内的 8096 端口。这里指的是 HTTP 访问端口，允许外部访问 Emby 服务器提供的服务。</li>
-<li><strong><code>-v /data/emby/config:/config</code></strong>: 挂载主机上的 <code>/data/emby/config</code> 目录到容器内的 <code>/config</code> 目录。这通常用于持久化配置文件，使得即使容器被删除或重建，配置也不会丢失。</li>
-<li><strong><code>-v /data/emby/media:/media</code></strong>: 类似地，挂载主机上的 <code>/data/emby/media</code> 目录到容器内的 <code>/media</code> 目录。这是为了让 Emby 能够访问存放媒体文件的位置。</li>
-<li><strong><code>--network=&quot;host&quot;</code></strong>: 使用主机网络栈。这意味着容器不会获得自己的 IP 地址，而是直接使用主机的网络接口。这种方式可以让容器内部的服务直接监听主机的所有网络接口，并且可以从主机的任意IP地址访问这些服务，无需进行端口映射（虽然 <code>-p</code> 参数在这里仍然有效，但在 <code>host</code> 网络模式下并不必要）。</li>
-<li><strong><code>emby/embyserver</code></strong>: 这是要运行的 Docker 镜像名称，指定了基于 <code>emby/embyserver</code> 这个镜像来创建容器。</li>
-</ol>
-<h3 id="4-访问Emby服务器"><a href="#4-访问Emby服务器" class="headerlink" title="4. 访问Emby服务器"></a>4. 访问Emby服务器</h3><p>一旦容器开始运行，您就可以通过浏览器访问<code>http://localhost:8096</code>（如果是远程服务器，则替换localhost为主机的实际IP地址）来进行Emby服务器的初始设置。</p>
 ]]></content>
   </entry>
   <entry>
@@ -1035,5 +315,845 @@
 <li>使用 <code>pm2 kill</code> 彻底关闭 PM2 服务（谨慎使用）。</li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Linux批量查找与替换</title>
+    <url>/2023/09/21/Linux%E6%89%B9%E9%87%8F%E6%9F%A5%E6%89%BE%E4%B8%8E%E6%9B%BF%E6%8D%A2/</url>
+    <content><![CDATA[<p>经常要使用到 Linux 的批量查找与替换，这里我们为大家介绍使用 <strong>sed</strong> 命令来实现查找文件中的内容并替换。</p>
+<p><strong>语法格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/原字符串/新字符串/g&quot; `grep 原字符串 -rl 所在目录`</span><br></pre></td></tr></table></figure>
+
+<p><strong>实例</strong></p>
+<p>以下我们实现在当前目录下查找包含 baidu 的字符串，并将字符串 baidu 替换为 runoob，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/baidu/runoob/g&quot; `grep &quot;baidu&quot; -rl ./`</span><br></pre></td></tr></table></figure>
+
+<p>接下来使用一个更复杂实例，批量替换网址 libs.baidu.com 为 cdn.static.runoob.com：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/https:\/\/libs.baidu.com/https:\/\/cdn.static.runoob.com\/libs/g&quot; `grep -rl &quot;libs.baidu.com&quot; ./`</span><br></pre></td></tr></table></figure>
+
+<p>修改   href&#x3D;’<a href="http://www.hanweb.com/">http://www.hanweb.com</a>‘ style&#x3D;’display:none’&gt;Produced By 大汉网络 大汉版通发布系统  这个标签为    href&#x3D;’<a href="http://yjglj.beijing.gov.cn/">http://yjglj.beijing.gov.cn</a>‘ style&#x3D;’display:none’&gt;北京市应急管理局</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;/&lt;a href=&#x27;http:\/\/yjglj.beijing.gov.cn&#x27; style=&#x27;display:none&#x27;&gt;北京市应急管理局&lt;\/a&gt;/g&quot; `grep -rl &quot;&lt;a href=&#x27;http:\/\/www.hanweb.com&#x27; style=&#x27;display:none&#x27;&gt;Produced By 大汉网络 大汉版通发布系统&lt;\/a&gt;&quot; ./`</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RedisDesktop屏蔽更新</title>
+    <url>/2023/09/21/RedisDesktop%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>解压安装完成之后</p>
+<p>屏蔽更新</p>
+<p>在host文件中添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 rdm.dev</span><br><span class="line">127.0.0.1 redisdesktop.com</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MetaTube插件中文件命名规范</title>
+    <url>/2025/05/06/MetaTube%E6%8F%92%E4%BB%B6%E4%B8%AD%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/</url>
+    <content><![CDATA[<h2 id="有码类"><a href="#有码类" class="headerlink" title="有码类"></a>有码类</h2><ul>
+<li><code>SSSS-001</code></li>
+<li><code>ABC-100</code></li>
+<li><code>PPPC-326</code></li>
+</ul>
+<h2 id="素人类"><a href="#素人类" class="headerlink" title="素人类"></a>素人类</h2><ul>
+<li><code>390JAC-132</code></li>
+<li><code>300MAAN-783</code></li>
+</ul>
+<h2 id="无码类"><a href="#无码类" class="headerlink" title="无码类"></a>无码类</h2><ul>
+<li><code>HEYZO-1234</code></li>
+<li><code>KIN8-1675</code></li>
+<li><code>123456_999</code></li>
+<li><code>543210-001</code></li>
+<li><code>587234-01</code></li>
+<li><code>xxx-av-1234</code></li>
+<li><code>heydouga-1234-321</code></li>
+<li><code>c0930-ki897634</code></li>
+<li><code>h4610-ori98321</code></li>
+</ul>
+<h2 id="其他类"><a href="#其他类" class="headerlink" title="其他类"></a>其他类</h2><ul>
+<li><code>FC2-1234567</code></li>
+<li><code>MYWIFE-1394</code></li>
+<li><code>GETCHU-3456789</code></li>
+<li><code>GCOLLE-9876554</code></li>
+<li><code>PCOLLE-6543210</code></li>
+</ul>
+<h2 id="字幕标签"><a href="#字幕标签" class="headerlink" title="字幕标签"></a>字幕标签</h2><p>对于硬编码的中文字幕视频，可以在末尾加入<code>-C</code>后缀，插件会自动为该影片加入<code>中文字幕</code>标签，例如：</p>
+<ul>
+<li><code>ABC-330-C.mp4</code></li>
+<li><code>HEYZO-1784-C.mp4</code></li>
+</ul>
+<h2 id="多碟影片"><a href="#多碟影片" class="headerlink" title="多碟影片"></a>多碟影片</h2><p>对于多碟影片，可以在末尾加入<code>-cd1</code>之类的后缀，例如：</p>
+<ul>
+<li><code>ABC-330-cd1.mp4</code></li>
+<li><code>ABC-330-cd2.mp4</code></li>
+<li><code>MCBD-25-C-cd1.mkv</code></li>
+<li><code>MCBD-25-C-cd2.mkv</code></li>
+</ul>
+<p>PS：大小写不敏感，但是注意不要混淆<code>-</code>与<code>_</code>符号。</p>
+<p>自动修改文件名称的脚本，仅适用于linux</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># 定义目标目录</span><br><span class="line">TARGET_DIR=&quot;/alist/jp/001&quot;</span><br><span class="line"></span><br><span class="line"># 检查目录是否存在</span><br><span class="line">if [[ ! -d &quot;$TARGET_DIR&quot; ]]; then</span><br><span class="line">    echo &quot;目录 $TARGET_DIR 不存在&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># 使用 find 命令递归查找所有带扩展名的文件</span><br><span class="line">find &quot;$TARGET_DIR&quot; -type f | while read -r file; do</span><br><span class="line">    # 提取文件名和扩展名</span><br><span class="line">    filename=$(basename &quot;$file&quot;)</span><br><span class="line">    name_only=&quot;$&#123;filename%.*&#125;&quot;</span><br><span class="line">    ext=&quot;$&#123;filename##*.&#125;&quot;</span><br><span class="line"></span><br><span class="line">    # 判断是否已经是标准格式，如 EBOD-912-cd2.mp4 或 DGCEMD-005-cd1.mp4</span><br><span class="line">    if [[ &quot;$name_only&quot; =~ ^([A-Za-z0-9-]+)(-cd[1-9])?$ ]]; then</span><br><span class="line">        echo &quot;Skipped (already in standard format): &#x27;$filename&#x27;&quot;</span><br><span class="line">        continue</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    # 尝试匹配 ID（字母+数字+-）</span><br><span class="line">    if [[ &quot;$name_only&quot; =~ ^([A-Za-z0-9-]+) ]]; then</span><br><span class="line">        base_name=&quot;$&#123;BASH_REMATCH[1]&#125;&quot;</span><br><span class="line"></span><br><span class="line">        # 获取最后一个点的位置</span><br><span class="line">        last_dot_pos=$(awk -F. &#x27;&#123;print length($0)-length($NF)-1&#125;&#x27; &lt;&lt;&lt; &quot;$filename&quot;)</span><br><span class="line"></span><br><span class="line">        # 获取最后一个点之前的那个字符</span><br><span class="line">        if (( last_dot_pos &gt; 0 )); then</span><br><span class="line">            last_char=&quot;$&#123;filename:last_dot_pos-1:1&#125;&quot;</span><br><span class="line"></span><br><span class="line">            # 检查这个字符是否为数字1-9</span><br><span class="line">            if [[ &quot;$last_char&quot; =~ [1-9] ]]; then</span><br><span class="line">                digits=&quot;$last_char&quot;</span><br><span class="line">                new_name=&quot;$&#123;base_name&#125;-cd$&#123;digits&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">            else</span><br><span class="line">                new_name=&quot;$&#123;base_name&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">            fi</span><br><span class="line">        else</span><br><span class="line">            new_name=&quot;$&#123;base_name&#125;.$&#123;ext,,&#125;&quot;</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 如果原文件名和目标文件名相同，跳过</span><br><span class="line">        if [[ &quot;$filename&quot; == &quot;$new_name&quot; ]]; then</span><br><span class="line">            echo &quot;Skipped (already named correctly): &#x27;$filename&#x27;&quot;</span><br><span class="line">            continue</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 使用 mv 命令重命名文件，并确保正确处理空格和特殊字符</span><br><span class="line">        mv -- &quot;$file&quot; &quot;$(dirname &quot;$file&quot;)/$new_name&quot;</span><br><span class="line">        echo &quot;Renamed &#x27;$filename&#x27; to &#x27;$new_name&#x27;&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;No match pattern for &#x27;$filename&#x27;&quot;</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>Typora的免费激活操作</title>
+    <url>/2025/04/24/Typora%E7%9A%84%E5%85%8D%E8%B4%B9%E6%BF%80%E6%B4%BB%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>方法不唯一，亲测有效迅速<br>全程大概只花了3-5分钟就搞定了<br>几乎直接就是进行了CV<br>这里使用的是windows 11</p>
+<hr>
+<h2 id="一、首先下载Typora"><a href="#一、首先下载Typora" class="headerlink" title="一、首先下载Typora"></a>一、首先下载Typora</h2><p><a href="https://typora.io/">Typora 官网地址</a>：<a href="https://typora.io/">https://typora.io</a><br><a href="https://typoraio.cn/">Typora 中文官网地址</a>：<a href="https://typoraio.cn/">https://typoraio.cn</a><br>或者是直接使用亲测有效的版本：1.9.5及其以前的版本</p>
+<h2 id="二、工具下载"><a href="#二、工具下载" class="headerlink" title="二、工具下载"></a>二、工具下载</h2><p>链接: <a href="https://pan.baidu.com/s/19aw_tpVMkVVRpb9vtS1UEw?pwd=a1k3">https://pan.baidu.com/s/19aw_tpVMkVVRpb9vtS1UEw?pwd=a1k3</a> 提取码: a1k3 复制这段内容后打开百度网盘手机App，操作更方便哦</p>
+<h2 id="三、开始"><a href="#三、开始" class="headerlink" title="三、开始"></a>三、开始</h2><h3 id="1-安装的Typora"><a href="#1-安装的Typora" class="headerlink" title="1.安装的Typora"></a>1.安装的Typora</h3><p>这里就直接跳过，安装过程自定义，自由发挥想装在哪里就哪里，外婆桥都可e</p>
+<h3 id="2-将工具解压出来"><a href="#2-将工具解压出来" class="headerlink" title="2.将工具解压出来"></a>2.将工具解压出来</h3><p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMSaAnW7KoTn-baYt3buAxc5QoOq3QAApLLMRuTSkhUMbvymXq2eLABAAMCAAN5AAM2BA.png"></p>
+<h3 id="3-根据操作指南获得序列号"><a href="#3-根据操作指南获得序列号" class="headerlink" title="3.根据操作指南获得序列号"></a>3.根据操作指南获得序列号</h3><p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMTaAnXHmV_zhU7SV_o-ZpmvT6qv8oAApPLMRuTSkhU8Qv714tgFMIBAAMCAAN5AAM2BA.png"></p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>b站无人直播</title>
+    <url>/2023/10/24/b%E7%AB%99%E6%97%A0%E4%BA%BA%E7%9B%B4%E6%92%AD/</url>
+    <content><![CDATA[<p>1.先弄b站推流，类似ck：<a href="https://link.bilibili.com/p/center/index#/my-room/start-live">选分类，开播。复制→服务器地址+串流密钥</a><br>2.服务器一键拉库<br>curl -fsSL get.kplayer.net | bash<br>3.配置文件<a href="https://file.uhsea.com/2310/f8be897bd2c6818137d865da5c4d7a93RS.txt">config.yaml(点击下载)</a>，文件在服务器的root\kplayer，把推流代码放进去保存就行。<br>4.然后在服务器root\新建一个文件夹Downloads存放视频文件，上传文件xxx.mp4。<br>5.上面的B站点击开启直播，出现推流码后，然后服务器cd kplayer<br>.&#x2F;kplayer play start –daemon<br>返回刷新，查看B站直播间就行了。</p>
+]]></content>
+      <tags>
+        <tag>直播</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>centos 7 对用过yum更新的软件服务进行降级</title>
+    <url>/2023/09/21/centos-7-%E5%AF%B9%E7%94%A8%E8%BF%87yum%E6%9B%B4%E6%96%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E9%99%8D%E7%BA%A7/</url>
+    <content><![CDATA[<p>　　centos 7 执行 yum update 会对现有服务软件进行更新，但是如果把不该升级的软件升级，彼此软件不兼容，如何进行降级，比如：kibana 必须与 elasticsearch 大版本相同，否则服务不匹配（所以centos 中不是必要不要在已经运行的服务中yum update）<br>　　服务现安装 elasticsearch（5.5.3），但是因为执行 yum update，kibana 由 5.5.3 到 7.3.2</p>
+<ol>
+<li>查看机器上相近的版本，是否有可选的软件包</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum search --showduplicates kibana</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过查询出指定的软件全名，通过 downgrade 进行升级</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum downgrade kibana-5.5.3-1</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如果降级是大版本，可通过修改yum源配置进行大版本降级</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/kibana.repo</span><br><span class="line">[kibana-5.x]name=Kibana repository for5.x packagesbaseurl=https://artifacts.elastic.co/packages/5.x/yumgpgcheck=1gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearchenabled=1autorefresh=1type=rpm-md</span><br></pre></td></tr></table></figure>
+
+<p>  　　然后重新执行步骤1和步骤2</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Apache防止恶意指向</title>
+    <url>/2023/09/21/apache%E9%98%B2%E6%AD%A2%E6%81%B6%E6%84%8F%E6%8C%87%E5%90%91/</url>
+    <content><![CDATA[<blockquote>
+<p>项目中经常有同事提到很多域名恶意指向政府 ip， 导致随意访问哪个域名， 都能浏览政府网， 而那些恶意的域名指向可能会影响电信封掉政府 ip。</p>
+</blockquote>
+<blockquote>
+<p>还有客户发的漏洞报告中【域名访问限制不严格】漏洞，说明：Http请求的Hostname字段没有严格的域名限制，导致可以绕过一些防护措施。修改方法是配置WEB服务器，限制只能以域名形式访问服务器。</p>
+</blockquote>
+<h6 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h6><p>利用 apache 的跳转功能， 在 VirtualHost 区域添加配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx.gov.cn [NC]</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; !^(www).xxx1.gov.cn [NC]</span><br><span class="line">RewriteRule ^/(.*) /error.html [L]</span><br></pre></td></tr></table></figure>
+<p>说明：写在</VirtualHost>上即可</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>finalshell屏蔽更新</title>
+    <url>/2023/09/19/finalshell%E5%B1%8F%E8%94%BD%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<p>#禁止finalshell更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 www.youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 youtusoft.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.hostbuf.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 dkys.org</span><br><span class="line"></span><br><span class="line">127.0.0.1 tcpspeed.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 pwlt.wn1998.com</span><br><span class="line"></span><br><span class="line">127.0.0.1 backup.[www.hostbuf.com](http://www.hostbuf.com)</span><br></pre></td></tr></table></figure>
+
+<p>本机host添加以上配置即可</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo常用命令</title>
+    <url>/2023/09/19/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>常用命令</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo g     <span class="comment">//生成静态页面</span></span><br><span class="line">hexo clean <span class="comment">//清除一下缓存</span></span><br><span class="line">hexo s    <span class="comment">//启动本地服务器进行查看</span></span><br><span class="line">hexo d   <span class="comment">//查看后没有问题即可部署到github上</span></span><br></pre></td></tr></table></figure>
+
+<p>新增文章</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;new article&quot;</span></span><br><span class="line">hexo n 文章标题</span><br></pre></td></tr></table></figure>
+
+<p>新增完成之后，md文章路径</p>
+<p>E:\OneDrive - Twork\Bolg\blog\source_posts</p>
+<p>修改即可</p>
+<p><img src="https://image.allcx.eu.org/file/e6f101c6c16c4d1909a99.png"></p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo分类页规则</title>
+    <url>/2023/09/19/hexo%E5%88%86%E7%B1%BB%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>分类页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page categories</p>
+<p>你会找到 source&#x2F;categories&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “categories”</p>
+<hr>
+<p>title: 分类<br>date: 2018-01-05 00:00:00<br>type: “categories”</p>
+<hr>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo文章页头部配置</title>
+    <url>/2023/09/19/hexo%E6%96%87%E7%AB%A0%E9%A1%B5%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部文章页头部typora标签</p>
+<p>写法	解释<br>title	【必需】文章标题<br>date	【必需】文章创建日期<br>updated	【可选】文章更新日期<br>tags	【可选】文章标签<br>categories	【可选】文章分类<br>keywords	【可选】文章关键字<br>description	【可选】文章描述<br>top_img	【可选】文章顶部图片<br>cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)<br>comments	【可选】显示文章评论模块(默认 true)<br>toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br>toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br>toc_style_simple	【可选】显示 toc 简洁模式<br>copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br>copyright_author	【可选】文章版权模块的文章作者<br>copyright_author_href	【可选】文章版权模块的文章作者链接<br>copyright_url	【可选】文章版权模块的文章连结链接<br>copyright_info	【可选】文章版权模块的版权声明文字<br>mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br>katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br>aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中 highlight_shrink 的配置)<br>aside	【可选】显示侧边栏 (默认 true)</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo友情链接</title>
+    <url>/2023/09/19/hexo%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<p>友情链接</p>
+<p>创建友情链接页面<br>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page link</p>
+<p>你会找到 source&#x2F;link&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “link”</p>
+<hr>
+<p>title: 友情链接<br>date: 2018-06-07 22:17:49<br>type: “link”</p>
+<hr>
+<p>在Hexo博客目录中的 source&#x2F;_data（如果没有 _data 文件夹，请自行创建），创建一个文件 link.yml</p>
+<p>例：</p>
+<ul>
+<li><p><code>class_name: 友情链接</code><br><code>class_desc: 那些人，那些事</code><br><code>link_list:</code></p>
+<ul>
+<li><code>name: Hexo</code><br><code>link: https://hexo.io/zh-tw/</code><br><code>avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg</code><br><code>descr: 快速、简单且强大的网志框架</code></li>
+</ul>
+</li>
+<li><p><code>class_name: 网站</code><br><code>class_desc: 值得推荐的网站</code><br><code>link_list:</code></p>
+<ul>
+<li><code>name: Youtube</code><br><code>link: https://www.youtube.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png</code><br><code>descr: 视频网站</code></li>
+<li><code>name: Weibo</code><br><code>link: https://www.weibo.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png</code><br><code>descr: 中国最大社交分享平台</code></li>
+<li><code>name: Twitter</code><br><code>link: https://twitter.com/</code><br><code>avatar: https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png</code><br><code>descr: 社交分享平台</code></li>
+</ul>
+</li>
+</ul>
+<p>class_name 和 class_desc 支持 html 格式书写，如不需要，也可以留空。</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo标签页规则</title>
+    <url>/2023/09/19/hexo%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%A7%84%E5%88%99/</url>
+    <content><![CDATA[<p>标签页</p>
+<p>前往你的 Hexo 博客的根目录</p>
+<p>输入 hexo new page tags</p>
+<p>你会找到 source&#x2F;tags&#x2F;index.md 这个文件</p>
+<p>修改这个文件：</p>
+<p>记得添加 type: “tags”</p>
+<hr>
+<p>title: 标签<br>date: 2018-01-05 00:00:00<br>type: “tags”<br>orderby: random</p>
+<p>order:1</p>
+<hr>
+<p>参数	解释<br>type	【必须】页面类型，必须为 tags<br>orderby	【可选】排序方式 ：random&#x2F;name&#x2F;length<br>order	【可选】排序次序： 1, asc for ascending; -1, desc for descending</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo页面头部配置</title>
+    <url>/2023/09/19/hexo%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>全部页面头部typora标签</p>
+<p>写法	解释<br>title	【必需】页面标题<br>date	【必需】页面创建日期<br>type	【必需】标签、分类和友情链接三个页面需要配置<br>updated	【可选】页面更新日期<br>description	【可选】页面描述<br>keywords	【可选】页面关键字<br>comments	【可选】显示页面评论模块 (默认 true)<br>top_img	【可选】页面顶部图片<br>mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)<br>katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)<br>aside	【可选】显示侧边栏 (默认 true)<br>aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置<br>highlight_shrink	【可选】配置代码框是否展开 (true&#x2F;false) (默认为设置中highlight_shrink的配置)<br>random	【可选】配置友情链接是否随机排序（默认为 false)</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shell脚本中执行时提示没有那个文件或目录的解决办法</title>
+    <url>/2023/09/21/shell%E8%84%9A%E6%9C%AC%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%97%B6%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B8%AA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>出现bad interpreter:No such file or directory的原因，是文件格式的问题。这个文件是在Windows下编写的。换行的方式与Unix不一样，但是在vim下面如果不Set一下又完全看不出来。</p>
+<p>问题原因：</p>
+<p>因为操作系统是windows，在windows下编辑的脚本，所以有可能有不可见字符。脚本文件是DOS格式的</p>
+<p>即每一行的行尾以\r\n来标识, 其ASCII码分别是0x0D, 0x0A.</p>
+<p>解决方法：</p>
+<p>可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的</p>
+<p>（1） vim filename</p>
+<p>然后用命令 :set ff</p>
+<p>可看到dos或unix的字样，如果的确是dos格式的, 那么用set ff&#x3D;unix把它强制为unix格式的,，然后存盘退出后就可运行。</p>
+<p>转换不同平台的文本文件格式可以用</p>
+<ol>
+<li>unix2dos或dos2unix这两个小程序来做. 很简单. 在djgpp中这两个程序的名字叫dtou和utod, u代表unix, d代表dos</li>
+<li>也可以用sed 这样的工具来做:</li>
+</ol>
+<p>复制代码 代码如下:</p>
+<p>sed ‘s&#x2F;^M&#x2F;&#x2F;‘ filename &gt; tmp_filename</p>
+<p>mv -f tmp_filename filename</p>
+<p>特别说明：^M并不是按键shift + 6产生的^和字母M, 它是一个字符, 其ASCII是0x0D, 生成它的办法是先按CTRL+V, 然后再回车(或CTRL+M)</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ubuntu中 使用 rclone 挂载webdav</title>
+    <url>/2025/05/06/ubuntu%E4%B8%AD-%E4%BD%BF%E7%94%A8-rclone-%E6%8C%82%E8%BD%BDwebdav/</url>
+    <content><![CDATA[<p>在 Ubuntu 中使用 <code>rclone</code> 挂载 WebDAV 是一个相对直接的过程，但需要确保你已经正确安装了 <code>rclone</code> 并进行了相应的配置。以下是详细的步骤说明：</p>
+<h3 id="1-安装-rclone"><a href="#1-安装-rclone" class="headerlink" title="1. 安装 rclone"></a>1. 安装 rclone</h3><p>首先，如果你还没有安装 <code>rclone</code>，可以通过以下命令进行安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl https://rclone.org/install.sh | sudo bash</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，可以通过运行 <code>rclone --version</code> 来验证是否安装成功。</p>
+<h3 id="2-配置-rclone-使用-WebDAV"><a href="#2-配置-rclone-使用-WebDAV" class="headerlink" title="2. 配置 rclone 使用 WebDAV"></a>2. 配置 rclone 使用 WebDAV</h3><p>接下来，你需要配置 <code>rclone</code> 以连接到你的 WebDAV 服务。运行以下命令开始配置过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rclone config</span><br></pre></td></tr></table></figure>
+
+<p>按照提示操作：</p>
+<ul>
+<li>输入 <code>n</code> 创建一个新的远程连接。</li>
+<li>为你的远程连接命名（例如 <code>mywebdav</code>）。</li>
+<li>在选择类型时，找到并输入 WebDAV 对应的编号。</li>
+<li>根据提示填写 WebDAV 的 URL、用户名和密码等信息。对于一些 WebDAV 服务器，可能还需要提供供应商信息或其他特定选项。</li>
+<li>完成配置后，选择 <code>q</code> 退出配置模式。</li>
+</ul>
+<h3 id="3-挂载-WebDAV-到本地目录"><a href="#3-挂载-WebDAV-到本地目录" class="headerlink" title="3. 挂载 WebDAV 到本地目录"></a>3. 挂载 WebDAV 到本地目录</h3><p>假设你已经完成了上述配置，并将远程命名为 <code>mywebdav</code>，你可以使用以下命令将其挂载到本地的一个目录中：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir -p /path/to/local/mount/point</span><br><span class="line">rclone mount mywebdav: /path/to/local/mount/point --daemon --allow-other --default-permissions --vfs-cache-mode writes</span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>/path/to/local/mount/point</code> 应替换为你希望挂载 WebDAV 的本地路径。<code>--daemon</code> 参数表示后台运行该进程。</p>
+<ul>
+<li><code>--daemon</code> 参数使 rclone 在后台运行。</li>
+<li><code>--allow-other</code> 允许非启动用户的其他用户访问挂载点。</li>
+<li><code>--default-permissions</code> 尝试应用本地权限设置。</li>
+<li><code>--vfs-cache-mode writes</code> 开启写入缓存模式，有助于改善文件操作体验。</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><strong>权限问题</strong>：确保你有对挂载点目录的写权限。如果没有，可以使用 <code>sudo</code> 或者调整目录权限。</li>
+<li><strong>性能与缓存</strong>：对于频繁访问的情况，考虑添加缓存参数以提高性能，如 <code>--cache-dir=&quot;/path/to/cache/dir&quot;</code> 和 <code>--vfs-cache-mode writes</code>。</li>
+<li><strong>开机自动挂载</strong>：为了使挂载在系统重启后仍然有效，可以将上述命令加入到 <code>/etc/rc.local</code> 文件中，或者创建一个 systemd 服务单元文件来管理它。</li>
+</ul>
+<p>通过以上步骤，你应该能够在 Ubuntu 系统上成功地使用 <code>rclone</code> 挂载 WebDAV。如果遇到任何问题，请检查 <code>rclone</code> 日志或尝试增加 <code>-v</code> 参数以获取更详细的输出信息。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>vscode插件</title>
+    <url>/2023/09/19/vscode%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<p>链接原地址:<a href="https://www.cnblogs.com/vivaxiaonan/p/7380099.html">https://www.cnblogs.com/vivaxiaonan/p/7380099.html</a></p>
+<p> 格式化文档 shift+alt+f</p>
+<p>先按Ctrl+F打开搜索框，然后搜索要编辑的内容，接着按Ctrl+Shift+L就可以选中对应的所有内容了，然后可以全部编辑和替换了。按了Ctrl+shift+L之后把搜索框关闭就可以同时编辑多处了。</p>
+<p>自动换行设置</p>
+<p>File&gt;&gt;Preferences&gt;&gt;settings&gt;&gt;UserSettings&gt;&gt;CommonlyUsed&gt;&gt;找到Editor:WordWrap,将off修改为on即可</p>
+<p>vscode搜索多个文件，同时替换    ctrl+shift+h</p>
+<p>VScode现在已经越来越完善。性能远超Atom和webstorm,你有什么理由不用它?</p>
+<p>在这里，我会给你们推荐很多实用的插件，让你对 vscode 有更深刻的体会，渐渐地你就会知道它有多好用。</p>
+<p>走马观花前，请先将你的 vscode 更新到最新版本。</p>
+<p><strong>通用插件</strong></p>
+<p><strong>HTML Snippets</strong></p>
+<p>超级实用且初级的 H5代码片段以及提示</p>
+<p><strong>HTML CSS Support</strong></p>
+<p>让 html 标签上写class 智能提示当前项目所支持的样式</p>
+<p>新版已经支持scss文件检索</p>
+<p><strong>Debugger for Chrome</strong></p>
+<p>让 vscode 映射 chrome 的 debug功能，静态页面都可以用 vscode 来打断点调试，真666~ </p>
+<p>配置稍微复杂一些，哪天心情好我再另写教程吧~</p>
+<p><strong>jQuery Code Snippets</strong></p>
+<p>jquery 重度患者必须品，废话不多说，上图</p>
+<p><strong>vscode-icon</strong></p>
+<p>让 vscode 资源树目录加上图标，必备良品！</p>
+<p><strong>Path Intellisense</strong></p>
+<p>自动路劲补全，默认不带这个功能的，赶紧装</p>
+<p><strong>Npm Intellisense</strong></p>
+<p>require 时的包提示（最新版的vscode已经集成此功能）</p>
+<p><strong>Document this</strong></p>
+<p>js 的注释模板 （注意：最新版的vscode已经原生支持）</p>
+<p><strong>ESlint</strong></p>
+<p>ESlint 接管原生 js 提示，可以自定制提示规则。这个比较高玩，不会的就算了，我之前发过一篇文章 sublime 配置 <a href="https://segmentfault.com/a/1190000004818718">Atom js 语法校验</a>中有提到，他们的配置文件是通用的。</p>
+<p><strong>HTMLHint</strong></p>
+<p>html代码检测</p>
+<p><strong>Project Manager</strong></p>
+<p>在多个项目之前快速切换的工具</p>
+<p><strong>beautify</strong></p>
+<p>格式化代码的工具</p>
+<p><strong>Bootstrap 3 Sinnpet</strong></p>
+<p>常用 bootstrap 的可以下</p>
+<p><strong>Atuo Rename Tag</strong></p>
+<p>修改 html 标签，自动帮你完成尾部闭合标签的同步修改，不过有些bug。</p>
+<p><strong>GitLens</strong></p>
+<p>丰富的git日志插件</p>
+<p><strong>fileheader</strong></p>
+<p>顶部注释模板，可定义作者、时间等信息，并会自动更新最后修改时间</p>
+<p><strong>filesize</strong></p>
+<p>在底部状态栏显示当前文件大小，点击后还可以看到详细创建、修改时间</p>
+<p><strong>Bracket Pair Colorizer</strong></p>
+<p>让括号拥有独立的颜色，易于区分。可以配合任意主题使用。</p>
+<p><strong>Quokka</strong></p>
+<p><strong>使用</strong>：先shift+cmd+p （ctrl+shift+p）输入 quokka 选择 new javascript 就行了</p>
+<p>Quokka 是一个调试工具插件，能够根据你正在编写的代码提供实时反馈。它易于配置，并能够预览变量的函数和计算值结果。另外，在使用 JSX 或 TypeScript 项目中，它能够开箱即用。</p>
+<p>&#x2F;<em>?</em>&#x2F;在某个表达式之后（或&#x2F;&#x2F;?在语句之后）插入特殊注释将仅记录该表达式的值。</p>
+<p>例如，</p>
+<p>a.b()&#x2F;<em>?</em>&#x2F;.c().d()</p>
+<p>将输出a.b()表达式的结果，和</p>
+<p>a.b().c().d() &#x2F;<em>?</em>&#x2F;&#x2F;&#x2F; or justa.b().c().d() &#x2F;&#x2F;?</p>
+<p>将输出完整a.b().c().d()表达式的结果。</p>
+<p>&#x2F;<em>?.</em>&#x2F; 在任何表达式之后插入特殊注释将报告执行表达式所花费的时间。</p>
+<p>a() &#x2F;&#x2F;?. $    显示a()执行时间和结果。</p>
+<p>插件地址：<a href="https://quokkajs.com/">https://quokkajs.com/</a></p>
+<p><strong>CSS Peek</strong></p>
+<p>使用此插件，你可以追踪至样式表中 CSS 类和 ids 定义的地方。当你在 HTML 文件中右键单击选择器时，选择“ Go to Definition 和 Peek definition ”选项，它便会给你发送样式设置的 CSS 代码。</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek">https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek</a></p>
+<p><strong>HTML Boilerplate</strong></p>
+<p>通过使用 HTML 模版插件，你就摆脱了为 HTML 新文件重新编写头部和正文标签的苦恼。你只需在空文件中输入 html，并按 Tab 键，即可生成干净的文档结构。</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=sidthesloth.html5-boilerplate">https://marketplace.visualstudio.com/items?itemName=sidthesloth.html5-boilerplate</a></p>
+<p><strong>Prettier</strong></p>
+<p>Prettier 是目前 Web 开发中最受欢迎的代码格式化程序。安装了这个插件，它就能够自动应用 Prettier，并将整个 JS 和 CSS 文档快速格式化为统一的代码样式。如果你还想使用 ESLint，那么还有个 Prettier – Eslint 插件，你可不要错过咯！</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode</a></p>
+<p><strong>Color Info</strong></p>
+<p>这个便捷的插件，将为你提供你在 CSS 中使用颜色的相关信息。你只需在颜色上悬停光标，就可以预览色块中色彩模型的（HEX、 RGB、HSL 和 CMYK）相关信息了。</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=bierner.color-info">https://marketplace.visualstudio.com/items?itemName=bierner.color-info</a></p>
+<p><strong>Icon Fonts</strong></p>
+<p>这是一个能够在项目中添加图标字体的插件。该插件支持超过 20 个热门的图标集，包括了 Font Awesome、Ionicons、Glyphicons 和 Material Design Icons。</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=idleberg.icon-fonts">https://marketplace.visualstudio.com/items?itemName=idleberg.icon-fonts</a></p>
+<p><strong>Minify</strong></p>
+<p>这是一款用于压缩合并 JavaScript 和 CSS 文件的应用程序。它提供了大量自定义的设置，以及自动压缩保存并导出为.min文件的选项。它能够分别通过 uglify-js、clean-css 和 html-minifier，与 JavaScript、CSS 和 HTML 协同工作。</p>
+<p>使用<strong>F1</strong>运行文件缩小器Minify</p>
+<p>插件地址：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=HookyQR.minify">https://marketplace.visualstudio.com/items?itemName=HookyQR.minify</a></p>
+<p><strong>Vue插件</strong></p>
+<p>以下推荐vue框架所需的插件</p>
+<p><strong>vetur</strong></p>
+<p>语法高亮、智能感知、Emmet等</p>
+<p><strong>VueHelper</strong></p>
+<p>snippet代码片段</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建免费、无限空间的图床：Cloudflare Pages 和 Telegraph-Image</title>
+    <url>/2025/04/14/%E4%BD%BF%E7%94%A8-Cloudflare-%E6%90%AD%E5%BB%BA%E6%97%A0%E9%99%90%E7%A9%BA%E9%97%B4%E5%8F%8ACDN%E3%80%81%E6%94%AF%E6%8C%81%E5%AE%A1%E6%9F%A5%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/</url>
+    <content><![CDATA[<p><em>注：截至 2025 年 1 月，原有的 Telegraph API 接口被官方关闭，需要将上传渠道切换至 Telegram Channel，部署时需要设置 TG_Bot_Token 和 TG_Chat_ID，否则影响上传功能。</em></p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMIaAmvLn8DqrcYmdBlj7hdsZpQMP0AAvbKMRuTSkhUStlQMcxtnAsBAAMCAAN3AAM2BA.png"></p>
+<h1 id="1-在-GitHub-上-Fork-此项目"><a href="#1-在-GitHub-上-Fork-此项目" class="headerlink" title="1. 在 GitHub 上 Fork 此项目"></a>1. 在 GitHub 上 Fork 此项目</h1><p>转到项目仓库（<a href="https://github.com/cf-pages/Telegraph-Image%EF%BC%89%EF%BC%8C%E7%82%B9%E5%87%BB%E9%A1%B5%E9%9D%A2%E5%8F%B3%E4%B8%8A%E8%A7%92%E7%9A%84">https://github.com/cf-pages/Telegraph-Image），点击页面右上角的</a> <code>Fork</code>，创建新分支到你的仓库</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMQaAm0VCd8_UdX_z63QhJPS-M01vMAAhXLMRuTSkhUCDKvjDWM6VgBAAMCAAN3AAM2BA.png"></p>
+<p>创建分支完成后，就不用管了，继续下面的步骤。</p>
+<h1 id="2-创建一个-Telegram-Bot"><a href="#2-创建一个-Telegram-Bot" class="headerlink" title="2. 创建一个 Telegram Bot"></a>2. 创建一个 Telegram Bot</h1><p>项目的原理可理解为：利用 Telegram Bot 的 API 实现图片上传和查看。</p>
+<h3 id="2-1-用-BotFather-创建机器人"><a href="#2-1-用-BotFather-创建机器人" class="headerlink" title="2.1 用 BotFather 创建机器人"></a>2.1 用 BotFather 创建机器人</h3><p>登录 Telegram，向 <a href="https://t.me/BotFather">@BotFather</a> 发送命令 <code>/newbot</code> 。</p>
+<p>根据提示，依次输入您的 <code>机器人名称</code> 和 <code>用户名</code> 。</p>
+<p>成功创建机器人后，您将会收到一个 <code>BOT_TOKEN</code>，用于与 Telegram API 进行交互。</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMJaAmwkui9GzzFCY8RLxw3eETODaEAAvjKMRuTSkhUMg2AXC5eU2ABAAMCAAN5AAM2BA.png"></p>
+<h3 id="2-2-新建频道，并将机器人设置为管理员"><a href="#2-2-新建频道，并将机器人设置为管理员" class="headerlink" title="2.2 新建频道，并将机器人设置为管理员"></a>2.2 新建频道，并将机器人设置为管理员</h3><p>创建一个新的频道（Channel）。</p>
+<p>进入该频道后，选择频道设置，将刚刚创建的机器人添加为频道管理员。</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMKaAmwvuVjR1JtI9CzbFywwAI_r88AAvrKMRuTSkhU974kwSOSULMBAAMCAAN4AAM2BA.png"></p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMRaAm0ud0JU1x2h1QVFt-db1URpr8AAhbLMRuTSkhU31UjGAe4YkgBAAMCAAN4AAM2BA.png"></p>
+<h3 id="2-3-获取频道-ID"><a href="#2-3-获取频道-ID" class="headerlink" title="2.3 获取频道 ID"></a>2.3 获取频道 ID</h3><p>频道 ID 无法直接被查看，为此，我们需要利用一个第三方机器人来获取频道 ID。</p>
+<p>向机器人 <a href="https://t.me/VersaToolsBot">@VersaToolsBot</a> 发送消息，并按提示操作。</p>
+<p>你将得到一个 <code>CHAT_ID</code> ，此即频道的ID。</p>
+<h1 id="3-在-Cloudflare-部署-Pages-项目"><a href="#3-在-Cloudflare-部署-Pages-项目" class="headerlink" title="3. 在 Cloudflare 部署 Pages 项目"></a>3. 在 Cloudflare 部署 Pages 项目</h1><h3 id="3-1-创建-Pages-项目"><a href="#3-1-创建-Pages-项目" class="headerlink" title="3.1 创建 Pages 项目"></a>3.1 创建 Pages 项目</h3><p>登录到 <a href="https://dash.cloudflare.com/">Cloudflare 控制台</a>，在左侧边栏中选择 <code>Workers 和 Pages</code> 。</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMLaAmxH84PYWaDHn5FfFpIzPY9DXwAAvvKMRuTSkhU46WcAQPS1TsBAAMCAAN4AAM2BA.png"></p>
+<p>接下来选择 <code>连接到 Git</code> ，并在接下来的步骤中选中你刚刚 Fork 的那个仓库。</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMMaAmxYU-_-I5VTgp5tjUyCN5GbHIAAvzKMRuTSkhUvQPKj-BbgywBAAMCAAN5AAM2BA.png"></p>
+<p>构建设置部分，我们点击展开 <code>环境变量（高级）</code> 选项。</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMNaAmxkIM4gcT2VW3LAaidkj0dWpIAAv7KMRuTSkhU9ezlmw05QIEBAAMCAAN5AAM2BA.png"></p>
+<p>新建以下两条变量（将示例值改为你刚刚在 <code>第 2 步</code> 获取的数据）：</p>
+<table>
+<thead>
+<tr>
+<th align="center">环境变量</th>
+<th align="center">示例值</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">TG_Bot_Token</td>
+<td align="center">123468:AAxxxGKrn5</td>
+<td align="center">从 <a href="https://t.me/BotFather">@BotFather</a> 获取的 Telegram Bot Token</td>
+</tr>
+<tr>
+<td align="center">TG_Chat_ID</td>
+<td align="center">-1234567</td>
+<td align="center">频道的 ID，确保 TG Bot 是该频道或群组的管理员</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-绑定自己的域名"><a href="#3-2-绑定自己的域名" class="headerlink" title="3.2 绑定自己的域名"></a>3.2 绑定自己的域名</h3><p>回到项目列表，点击进入这个项目，然后点击 <code>自定义域</code> 选项。</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMOaAmx471c_A-FFDM6jX4JRSvOZ-oAAv_KMRuTSkhUFbkk8E_UPgEBAAMCAAN3AAM2BA.png"></p>
+<p>根据提示绑定自己的域名，并配置 CNAME 解析，稍后 Cloudflare 还会自动为你配置 SSL 证书。</p>
+<p>这一步骤大约需要 2 分钟生效，耐心等待片刻。</p>
+<h1 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h1><p>至此，一个无限空间的图床部署完成，尽情使用吧~</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMPaAmyHyW8i3ofZ5LbUOb3PEDF9JMAAgHLMRuTSkhUjxObK7MdnfgBAAMCAAN3AAM2BA.png"></p>
+<h1 id="进阶使用"><a href="#进阶使用" class="headerlink" title="进阶使用"></a>进阶使用</h1><p>Telegraph-Image 其实也支持了图片后台管理、以及通过第三方 API 实现的图片 AI 审核功能，需要手动开启。</p>
+<p>有关操作步骤，请参阅官方教程：<a href="https://github.com/cf-pages/Telegraph-Image">https://github.com/cf-pages/Telegraph-Image</a></p>
+<h1 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h1><ol>
+<li>图片文件实际上存储于 Telegram 的服务器，其对图片大小的限制为最大 <code>5MB</code></li>
+<li>毕竟使用了 Cloudflare 的网络，图片的加载速度在某些国家和地区可能较慢</li>
+<li>Cloudflare Function 免费版每日限制 <code>100,000</code> 个请求（即上传、加载图片的总次数不能超过 <code>100,000</code> 次）</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>cloudflare</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用docker安装emby</title>
+    <url>/2025/05/16/%E4%BD%BF%E7%94%A8docker%E5%AE%89%E8%A3%85emby/</url>
+    <content><![CDATA[<h3 id="1-安装Docker"><a href="#1-安装Docker" class="headerlink" title="1. 安装Docker"></a>1. 安装Docker</h3><p>如果您还没有安装Docker，请访问<a href="https://www.docker.com/">Docker官网</a>根据您的操作系统下载并安装适合的版本。</p>
+<h3 id="2-拉取Emby-Docker镜像"><a href="#2-拉取Emby-Docker镜像" class="headerlink" title="2. 拉取Emby Docker镜像"></a>2. 拉取Emby Docker镜像</h3><p>打开终端或命令提示符，运行以下命令来拉取最新的Emby服务器Docker镜像：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull emby/embyserver</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-创建并运行Emby容器"><a href="#3-创建并运行Emby容器" class="headerlink" title="3. 创建并运行Emby容器"></a>3. 创建并运行Emby容器</h3><p>使用以下命令创建并启动一个Emby容器。这将把Emby服务器映射到主机上的端口8096（默认HTTP端口），您可以根据需要调整这些设置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --name embyserver --restart unless-stopped -p 8096:8096 -v /data/emby/config:/config -v /data/emby/media:/media --network=&quot;host&quot; emby/embyserver</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong><code>docker run</code></strong>: 这是启动一个新的容器的命令。</li>
+<li><strong><code>-d</code></strong>: 表示以分离模式（后台）运行容器，即容器将在后台运行而不是占用当前终端。</li>
+<li><strong><code>--name embyserver</code></strong>: 给容器命名为 <code>embyserver</code>，这样可以通过这个名字来管理这个容器（如停止、重启等），而不需要使用容器ID。</li>
+<li><strong><code>--restart unless-stopped</code></strong>: 设置容器的重启策略为“除非手动停止”，这意味着如果容器因为任何原因意外退出了（例如系统重启），它将自动重新启动，除非它是被手动停止的。</li>
+<li><strong><code>-p 8096:8096</code></strong>: 将主机的 8096 端口映射到容器内的 8096 端口。这里指的是 HTTP 访问端口，允许外部访问 Emby 服务器提供的服务。</li>
+<li><strong><code>-v /data/emby/config:/config</code></strong>: 挂载主机上的 <code>/data/emby/config</code> 目录到容器内的 <code>/config</code> 目录。这通常用于持久化配置文件，使得即使容器被删除或重建，配置也不会丢失。</li>
+<li><strong><code>-v /data/emby/media:/media</code></strong>: 类似地，挂载主机上的 <code>/data/emby/media</code> 目录到容器内的 <code>/media</code> 目录。这是为了让 Emby 能够访问存放媒体文件的位置。</li>
+<li><strong><code>--network=&quot;host&quot;</code></strong>: 使用主机网络栈。这意味着容器不会获得自己的 IP 地址，而是直接使用主机的网络接口。这种方式可以让容器内部的服务直接监听主机的所有网络接口，并且可以从主机的任意IP地址访问这些服务，无需进行端口映射（虽然 <code>-p</code> 参数在这里仍然有效，但在 <code>host</code> 网络模式下并不必要）。</li>
+<li><strong><code>emby/embyserver</code></strong>: 这是要运行的 Docker 镜像名称，指定了基于 <code>emby/embyserver</code> 这个镜像来创建容器。</li>
+</ol>
+<h3 id="4-访问Emby服务器"><a href="#4-访问Emby服务器" class="headerlink" title="4. 访问Emby服务器"></a>4. 访问Emby服务器</h3><p>一旦容器开始运行，您就可以通过浏览器访问<code>http://localhost:8096</code>（如果是远程服务器，则替换localhost为主机的实际IP地址）来进行Emby服务器的初始设置。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>使用AutoFilm加快emby扫描库</title>
+    <url>/2025/05/16/%E4%BD%BF%E7%94%A8AutoFilm%E5%8A%A0%E5%BF%ABemby%E6%89%AB%E6%8F%8F%E5%BA%93/</url>
+    <content><![CDATA[<h2 id="AutoFilm简介"><a href="#AutoFilm简介" class="headerlink" title="AutoFilm简介"></a>AutoFilm简介</h2><p>通过Alist提供的Webdav获取网盘视频播放链接并生成Strm文件，可被Jellyfin&#x2F;Emby等影音媒体服务器识别并直接播放</p>
+<h2 id="部署方式"><a href="#部署方式" class="headerlink" title="部署方式"></a>部署方式</h2><p>Docker部署（推荐）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --name autofilm  -v ./config:/config -v ./media:/media -v./logs:/logs akimio/autofilm</span><br></pre></td></tr></table></figure>
+
+<p>Python部署<br>安装Python，推荐版本Python3.12<br>克隆项目并进入项目目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/Akimio521/AutoFilm.git</span><br><span class="line">cd AutoFilm</span><br></pre></td></tr></table></figure>
+
+<p>安装依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>配置配置文件config.yaml<br>启动程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python app/main.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改配置文件-config-yml"><a href="#修改配置文件-config-yml" class="headerlink" title="修改配置文件 config.yml"></a>修改配置文件 config.yml</h2><p>参考下面的示例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Settings:</span><br><span class="line">  DEV: False                          # 开发者模式(可选，默认 False)</span><br><span class="line"></span><br><span class="line">Alist2StrmList:</span><br><span class="line"></span><br><span class="line">  - id: 动漫                          # 标识 ID</span><br><span class="line">    cron: 0 20 * * *                  # 后台定时任务 Crontable 表达式</span><br><span class="line">    url: https://alist.akimio.top     # Alist 服务器地址</span><br><span class="line">    username: admin                   # Alist 用户名</span><br><span class="line">    password: adminadmin              # Alist 密码</span><br><span class="line">    source_dir: /ani/                 # Alist 服务器上文件夹路径</span><br><span class="line">    target_dir: D:\media\             # 输出路径</span><br><span class="line">    flatten_mode: False               # 平铺模式，开启后 subtitle、image、nfo 强制关闭(可选，默认 False)</span><br><span class="line">    subtitle: False                   # 是否下载字幕文件（可选，默认 False）</span><br><span class="line">    image: False                      # 是否下载图片文件（可选，默认 False）</span><br><span class="line">    nfo: False                        # 是否下载 .nfo 文件（可选，默认 False）</span><br><span class="line">    raw_url: False                    # 是否使用原始地址替换 Alist 服务器下载地址（可选，默认 False）</span><br><span class="line">    overwrite: False                  # 覆盖模式，本地路径存在同名文件时是否重新生成/下载该文件（可选，默认 False）</span><br><span class="line">    other_ext:                        # 自定义下载后缀，使用西文半角逗号进行分割，（可选，默认为空）</span><br><span class="line">    max_workers: 5                    # 下载文件最大并发数（可选，默认 5）</span><br><span class="line"></span><br><span class="line">  - id: 电影</span><br><span class="line">    cron: 0 0 7 * *</span><br><span class="line">    url: http://alist.example2.com:5244</span><br><span class="line">    username: alist</span><br><span class="line">    password: alist</span><br><span class="line">    source_dir: /网盘/115/电影</span><br><span class="line">    target_dir: /media/my_video </span><br><span class="line">    flatten_mode: False </span><br><span class="line">    subtitle: False</span><br><span class="line">    image: False</span><br><span class="line">    nfo: False</span><br><span class="line">    raw_url: True</span><br><span class="line">    overwrite: False</span><br><span class="line">    other_ext: zip,md</span><br><span class="line">    max_workers: 5</span><br><span class="line"></span><br><span class="line">Ani2AlistList:</span><br><span class="line"></span><br><span class="line">  - id: 新番追更                           # 标识 ID</span><br><span class="line">    cron: 20 12 * * *                     # 后台定时任务 Crontable 表达式</span><br><span class="line">    url: https://127.0.0.1:5244           # Alist 服务器地址</span><br><span class="line">    username: admin                       # Alist 用户名（需管理员权限）</span><br><span class="line">    password: myalist                     # Alist 密码</span><br><span class="line">    target_dir: /视频/动漫/新番            # Alist 地址树存储器路径，若存储器不存在将自动创建（可选，默认/Anime）</span><br><span class="line">    rss_update: False                     # 使用 RSS 订阅更新最新番剧，启用后忽视传入的 year 和 month（可选，默认为 True）</span><br><span class="line">    year: 2024                            # 动漫季度-年份，仅支持 2019-1 及以后更新的番剧（可选，默认使用当前日期）</span><br><span class="line">    month: 7                              # 动漫季度-月份，仅支持 2019-1 及以后更新的番剧（可选，默认使用当前日期）</span><br><span class="line">    src_domain: aniopen.an-i.workers.dev  # ANI Open 项目域名（可选，默认为 aniopen.an-i.workers.dev）</span><br><span class="line">    rss_domain: api.ani.rip               # ANI Open 项目 RSS 订阅域名（可选，默认为 api.ani.rip） </span><br></pre></td></tr></table></figure>
+
+<h3 id="Alist2StrmList模块"><a href="#Alist2StrmList模块" class="headerlink" title="Alist2StrmList模块"></a>Alist2StrmList模块</h3><p>主要用于生成Strm文件，可配置是否下载图片、字幕、nfo等详细配置，也可以自定义需要下载的格式<br>主要参数：</p>
+<p>cron：用于后台定时任务，例如0 20 * * *为每天晚上8:00都会运行<br>source_dir：为存放需要转化为Strm文件的路径，程序会遍历其子路径（如果用户设置了base_path，已登入用户看到的路径为准，不需要手动补全base_path）<br>target_dir：本地Strm文件的存放目录，建议使用绝对路径，相对路径可能出现找不到文件的情况<br>flatten_mode：启用后只生成Strm文件，关闭图片、字幕等文件的下载，并且Strm文件会直接在target_dir目录中生成，并非在其子目录中生成<br>overwrite：覆写功能，默认关闭，多次运行的时候检测到本地文件已经存在，会跳过，开启后会先删除原文件再重新生成<br>raw_url：会请求上游云盘获取云盘的CDN下载链接替换Alist的下载链接（此链接一般有时效性）<br>备注：<br>用户开启签名（Sign）功能后，下载链接会额外多出查询参数，新版本（v1.2.2及以上）无需配置Token既可以获取正确下载链接，如果设置签名过期时间，可以配合cron后台任务和overwrite覆写功能一起使用</p>
+<h3 id="Ani2Alist模块"><a href="#Ani2Alist模块" class="headerlink" title="Ani2Alist模块"></a>Ani2Alist模块</h3><p>配合ANi Open (an-i.workers.dev)项目使用，将动漫挂载到Alist上，可以配合Alist2StrmList模块使用<br>主要参数：</p>
+<p>cron：用于后台定时任务，例如0 20 * * *为每天晚上8:00都会运行<br>target_dir：将视频挂载到Alist服务器上的父路径（所有视频都会在这个路径下）<br>rss_update：通过ANI Open项目的RSS订阅快速添加最近更新的15个番剧<br>year&#x2F;month：指定更新哪个季度的番剧，仅支持 2019-1 及以后更新的番剧</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>按照上面的要求部署好AutoFilm之后，修改配置文件中的对应参数，会生成.strm文件，保存.strm文件的文件夹最好为emby的媒体文件夹（如果不是，则需要手动复制生成好的.strm文件到emby的媒体文件夹中），这些.strm文件会被emby识别为对应的视频。</p>
+<p>AutoFilm下config.yml中的alist地址，必须为emby服务器可访问的地址，不然在emby服务器中使用.strm文件生成的视频播放时会报错</p>
+<p>修改好配置文件之后，可以只执行一次，但是配置文件中的定时任务需要在手动执行的时间之后，执行完成即可关闭程序</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>添加 Swap 空间</title>
+    <url>/2025/06/16/%E6%B7%BB%E5%8A%A0-Swap-%E7%A9%BA%E9%97%B4/</url>
+    <content><![CDATA[<p>一、查看当前 Swap 使用情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo swapon --show</span><br></pre></td></tr></table></figure>
+
+<p>或使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">free -h</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           2.0Gi       1.5Gi       100Mi        50Mi       350Mi       200Mi</span><br><span class="line">Swap:          1.0Gi       500Mi       524Mi</span><br></pre></td></tr></table></figure>
+
+<p>这表示你当前有 1GB 的 Swap，其中已使用 500MB。</p>
+<p>🛠 二、增加 Swap 大小（以添加一个 2GB 的 Swap 文件为例）<br>✅ 步骤如下：</p>
+<ol>
+<li>关闭现有 Swap</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo swapoff -a</span><br></pre></td></tr></table></figure>
+
+<p>  ⚠️ 注意：如果你正在运行一些依赖 Swap 的程序，请确保它们不会因内存不足而崩溃。</p>
+<ol start="2">
+<li>删除旧 Swap 文件（可选）<br> 如果之前是用文件作为 Swap，比如 &#x2F;swapfile，可以删除它：</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo rm /swapfile</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>创建新的 Swap 文件（如 2GB）</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo fallocate -l 2G /swapfile</span><br></pre></td></tr></table></figure>
+
+<p>  如果你的系统不支持 fallocate，可以用 dd 替代：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo dd if=/dev/zero of=/swapfile bs=1M count=2048</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>设置合适的权限（防止被普通用户读写）</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo chmod 600 /swapfile</span><br></pre></td></tr></table></figure>
+
+
+<ol start="5">
+<li>格式化为 Swap 文件系统</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkswap /swapfile</span><br></pre></td></tr></table></figure>
+
+
+<ol start="6">
+<li>启用新 Swap</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo swapon /swapfile</span><br></pre></td></tr></table></figure>
+
+
+<ol start="7">
+<li>永久生效（写入 &#x2F;etc&#x2F;fstab）<br> 编辑 &#x2F;etc&#x2F;fstab 文件：</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>  添加一行：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/swapfile none swap sw 0 0</span><br></pre></td></tr></table></figure>
+
+<p>  保存并退出（Ctrl + O → Enter → Ctrl + X）。</p>
+<p>🔍 三、验证新 Swap 是否生效</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo swapon --show</span><br></pre></td></tr></table></figure>
+
+<p>你应该看到类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NAME      TYPE SIZE USED PRIO</span><br><span class="line">/swapfile file 2G   0B   -2</span><br></pre></td></tr></table></figure>
+
+<p>或者使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">free -h</span><br></pre></td></tr></table></figure>
+
+<p>确认 Swap 容量已经变为 2GB。</p>
+<p>⚙️ 四、调整 Swap 使用频率（swappiness）<br>Linux 控制 Swap 使用频率的参数叫 swappiness，值范围是 0~100：</p>
+<p>0 &#x3D; 尽可能少使用 Swap<br>100 &#x3D; 积极使用 Swap<br>默认值通常是 60。对于桌面或服务器环境，建议设置为 10~30。</p>
+<p>查看当前 swappiness 值：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/vm/swappiness</span><br></pre></td></tr></table></figure>
+
+<p>临时修改（重启后失效）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo sysctl vm.swappiness=10</span><br></pre></td></tr></table></figure>
+
+<p>永久修改：<br>编辑配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加或修改这一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vm.swappiness=10</span><br></pre></td></tr></table></figure>
+
+<p>保存并退出。</p>
+<p>📌 五、常见问题解答<br>❓ 我应该设置多大的 Swap？</p>
+<table>
+<thead>
+<tr>
+<th>物理内存 (RAM)</th>
+<th>推荐 Swap 大小</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>≤ 2GB</td>
+<td>≥ 2GB</td>
+</tr>
+<tr>
+<td>4GB</td>
+<td>1~2GB</td>
+</tr>
+<tr>
+<td>8GB+</td>
+<td>0~1GB 或关闭</td>
+</tr>
+</tbody></table>
+<p>如果你使用的是 SSD，Swap 性能还可以接受；如果是 HDD，尽量避免频繁使用 Swap。</p>
+<p>❓ 可以完全关闭 Swap 吗？<br>可以，但不推荐。关闭 Swap 可能导致系统在内存不足时直接崩溃（OOM Killer 杀掉进程）。如果你内存充足（如 ≥ 8GB），可以关闭 Swap：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo swapoff -a</span><br><span class="line">sudo sed -i &#x27;/swap/d&#x27; /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>✅ 六、完整脚本（一键操作）<br>你可以复制下面这个脚本，一键完成 Swap 扩展到 2GB：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># 关闭原有 Swap</span><br><span class="line"></span><br><span class="line">sudo swapoff -a</span><br><span class="line"></span><br><span class="line"># 删除旧 Swap 文件（如有）</span><br><span class="line"></span><br><span class="line">sudo rm -f /swapfile</span><br><span class="line"></span><br><span class="line"># 创建 2GB 新 Swap 文件</span><br><span class="line"></span><br><span class="line">sudo fallocate -l 2G /swapfile</span><br><span class="line"></span><br><span class="line"># 设置权限</span><br><span class="line"></span><br><span class="line">sudo chmod 600 /swapfile</span><br><span class="line"></span><br><span class="line"># 格式化为 Swap</span><br><span class="line"></span><br><span class="line">sudo mkswap /swapfile</span><br><span class="line"></span><br><span class="line"># 挂载启用</span><br><span class="line"></span><br><span class="line">sudo swapon /swapfile</span><br><span class="line"></span><br><span class="line"># 写入 fstab 实现开机自动挂载</span><br><span class="line"></span><br><span class="line">echo &#x27;/swapfile none swap sw 0 0&#x27; | sudo tee -a /etc/fstab</span><br><span class="line"></span><br><span class="line"># 设置 swappiness 为 10</span><br><span class="line"></span><br><span class="line">sudo sysctl vm.swappiness=10</span><br><span class="line">echo &#x27;vm.swappiness=10&#x27; | sudo tee -a /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line"># 显示结果</span><br><span class="line"></span><br><span class="line">echo &quot;✅ Swap 已更新为 2GB&quot;</span><br><span class="line">free -h</span><br></pre></td></tr></table></figure>
+
+
+<p>保存为 resize_swap.sh，然后运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chmod +x resize_swap.sh</span><br><span class="line">sudo ./resize_swap.sh</span><br></pre></td></tr></table></figure>
+
+<p>🧠 总结<br>操作	命令<br>查看 Swap	free -h 或 swapon –show<br>创建 Swap 文件	fallocate -l 2G &#x2F;swapfile<br>格式化 Swap	mkswap &#x2F;swapfile<br>启用 Swap	swapon &#x2F;swapfile<br>开机自动启用	添加 &#x2F;swapfile none swap sw 0 0 到 &#x2F;etc&#x2F;fstab<br>调整使用频率	sysctl vm.swappiness&#x3D;10</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>win10软链接</title>
+    <url>/2023/09/21/win10%E8%BD%AF%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mklink /J &quot;D:\finalshell\conn&quot; &quot;E:\OneDrive - hjblcx\documents\finalshell\conn&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在cmd窗口执行以上命令</p>
+<p>在 D:\finalshell 文件夹下创建一个conn的文件夹,这个文件夹为E:\OneDrive - hjblcx\documents\finalshell\conn 这个文件夹的软连接</p>
+<p>实现finalshell的多台电脑同步保存的连接信息,需要借助onedrive</p>
+<p>删除软链接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rmdir D:\Desktop\temp\ckx</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在Windows 11系统中将任意文件（如bat/log等）固定在开始菜单</title>
+    <url>/2025/04/14/%E5%9C%A8Windows-11%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%B0%86%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%EF%BC%88%E5%A6%82bat-log%E7%AD%89%EF%BC%89%E5%9B%BA%E5%AE%9A%E5%9C%A8%E5%BC%80%E5%A7%8B%E8%8F%9C%E5%8D%95/</url>
+    <content><![CDATA[<p>1.对任意文件右键创建快捷方式<br>2.打开%AppData%\Microsoft\Windows\Start Menu\Programs，把快捷方式放到这里<br>3.在开始菜单的列表（所有应用）中找到它，然后右键固定到开始屏幕</p>
+]]></content>
+      <tags>
+        <tag>win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用 Cloudflare Workers 免费反代任意网站</title>
+    <url>/2023/10/16/%E7%94%A8-Cloudflare-Workers-%E5%85%8D%E8%B4%B9%E5%8F%8D%E4%BB%A3%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99/</url>
+    <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>WorkersProxy 是一个轻量级的 Javascript 应用程序，可从其他服务器作为客户端检索资源。</p>
+<p>在 Cloudflare Workers 上进行部署时，您可以构建自定义的反向代理，而无需购买计算引擎和配置 Nginx 等 Web 服务器。</p>
+<p>此外，由于您的应用程序将通过 Cloudflare 遍布 90 多个国家 &#x2F; 地区的全球数据中心网络进行分发，因此将优化关键性能，例如延迟和可用性。</p>
+<p>通过配置地理位置和 IP 地址过滤器，您可以根据其特定规定在特定国家或地区直接暂停反向代理服务。利用移动重定向器，您可以根据用户的设备分发各种网页</p>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p>导航到 Cloudflare Workers，注册或登录您的 Cloudflare 帐户，并为 worker 设置自定义子域，然后创建一个新的 Worker。</p>
+<p>自定义 “index.js”，将代码粘贴到 Cloudflare 在线编辑器中以替换默认代码。</p>
+<p>更改工作人员的名称，保存并部署它，并检查其性能是否满足您的需求。</p>
+<h1 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h1><p>检查您的域当前是否处于 Cloudflare 的保护之下。</p>
+<p>导航到您的域的仪表板，选择 “工作人员” 页面，然后单击 “添加路线”。</p>
+<p>键入 [https:&#x2F;&#x2F;&lt;](https:&#x2F;&#x2F;;domain-name&gt;&#x2F;* 在 Route 选择之前创建的工人。</p>
+<p>为您的自定义域添加 CNAME DNS 记录。具体而言，在 “名称” 字段中输入子域（或在根目录中为 “ @”），在 “目标” 字段中输入工作人员的二级域，然后将 “代理状态” 设置为 “代理”。</p>
+<h1 id="自定义-index-js"><a href="#自定义-index-js" class="headerlink" title="自定义 index.js"></a>自定义 index.js</h1><p>显然，在主 Javascript 文件的顶部定义了一些常量。</p>
+<p>要自定义自己的 WorkersProxy 服务，您应根据自己的期望进行编辑。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// List of domains bind to your WorkersProxy.</span><br><span class="line">const domain_list = [&#x27;https://google.error.workers.dev&#x27;]</span><br><span class="line"></span><br><span class="line">// Website you intended to retrieve for users.</span><br><span class="line">const upstream = &#x27;https://www.google.com/&#x27;</span><br><span class="line"></span><br><span class="line">// Website you intended to retrieve for users using mobile devices.</span><br><span class="line">const upstream_mobile = &#x27;https://www.google.com/&#x27;</span><br><span class="line"></span><br><span class="line">// Countries and regions where you wish to suspend your service.</span><br><span class="line">const blocked_region = [&#x27;KP&#x27;, &#x27;SY&#x27;, &#x27;PK&#x27;, &#x27;CU&#x27;]</span><br><span class="line"></span><br><span class="line">// IP addresses which you wish to block from using your service.</span><br><span class="line">const blocked_ip_address = [&#x27;0.0.0.0&#x27;, &#x27;127.0.0.1&#x27;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">addEventListener(&#x27;fetch&#x27;, event =&gt; &#123;</span><br><span class="line">    event.respondWith(fetchAndApply(event.request));</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">async function fetchAndApply(request) &#123;</span><br><span class="line"></span><br><span class="line">    const region = request.headers.get(&#x27;cf-ipcountry&#x27;).toUpperCase();</span><br><span class="line">    const ip_address = request.headers.get(&#x27;cf-connecting-ip&#x27;);</span><br><span class="line">    const user_agent = request.headers.get(&#x27;user-agent&#x27;);</span><br><span class="line">    const http = &quot;http://&quot;;</span><br><span class="line">    const https = &quot;https://&quot;;</span><br><span class="line">    </span><br><span class="line">    let response = null;</span><br><span class="line">    let url = request.url;</span><br><span class="line"></span><br><span class="line">    if (url.startsWith(http)) &#123;</span><br><span class="line">        url = url.replace(http, https);</span><br><span class="line">        response = Response.redirect(url);</span><br><span class="line">        return response;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (await device_status(user_agent)) &#123;</span><br><span class="line">        upstream_domain = upstream</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        upstream_domain = upstream_mobile</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(let domain of domain_list) &#123;</span><br><span class="line">        url = url.replace(domain, upstream_domain)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    if (blocked_region.includes(region)) &#123;</span><br><span class="line">        response = new Response(&#x27;Access denied: WorkersProxy is not available in your region yet.&#x27;, &#123;</span><br><span class="line">            status: 403</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else if(blocked_ip_address.includes(ip_address))&#123;</span><br><span class="line">        response = new Response(&#x27;Access denied: Your IP address is blocked by WorkersProxy.&#x27;, &#123;</span><br><span class="line">            status: 403</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else&#123;</span><br><span class="line">        let method = request.method;</span><br><span class="line">        let request_headers = request.headers;</span><br><span class="line">        let new_request_headers = new Headers(request_headers)</span><br><span class="line">        let host_name = upstream_domain.replace(http, &#x27;&#x27;)</span><br><span class="line">        host_name = upstream_domain.replace(https, &#x27;&#x27;)</span><br><span class="line">        host_name = upstream_domain.replace(&#x27;/&#x27;, &#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">        new_request_headers.set(&#x27;Host&#x27;, host_name)</span><br><span class="line">        new_request_headers.set(&#x27;Referer&#x27;, upstream_domain)</span><br><span class="line"></span><br><span class="line">        origin_response = await fetch(url, &#123;</span><br><span class="line">            method: method,</span><br><span class="line">            headers: new_request_headers</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">        let response_body = origin_response.body</span><br><span class="line">        let response_headers = origin_response.headers</span><br><span class="line">        let new_response_headers = new Headers(response_headers)</span><br><span class="line">        let status = origin_response.status</span><br><span class="line">        </span><br><span class="line">        new_response_headers.set(&#x27;access-control-allow-origin&#x27;, &#x27;*&#x27;);</span><br><span class="line">        new_response_headers.set(&#x27;access-control-allow-credentials&#x27;, true);</span><br><span class="line">        new_response_headers.delete(&#x27;content-security-policy&#x27;);</span><br><span class="line">        new_response_headers.delete(&#x27;content-security-policy-report-only&#x27;);</span><br><span class="line">        new_response_headers.delete(&#x27;clear-site-data&#x27;);</span><br><span class="line"></span><br><span class="line">        response = new Response(response_body, &#123;</span><br><span class="line">            status,</span><br><span class="line">            headers: response_headers</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    return response;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">async function device_status (userAgentInfo) &#123;</span><br><span class="line">    var Agents = [&quot;Android&quot;, &quot;iPhone&quot;, &quot;SymbianOS&quot;, &quot;Windows Phone&quot;, &quot;iPad&quot;, &quot;iPod&quot;];</span><br><span class="line">    var flag = true;</span><br><span class="line">    for (var v = 0; v &lt; Agents.length; v++) &#123;</span><br><span class="line">        if (userAgentInfo.indexOf(Agents[v]) &gt; 0) &#123;</span><br><span class="line">            flag = false;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return flag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>domain_list：主域名，可以是自己的域名，记得做好解析</p>
+<p>upstream、upstream_mobile：反代的网址，两者保持一致即可除非该网站有移动端的域名</p>
+<p>blocked_region：禁止访问的地区，记得去除’CN’</p>
+]]></content>
+      <tags>
+        <tag>cloudflare</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>砍价36计</title>
+    <url>/2023/10/23/%E7%A0%8D%E4%BB%B7/</url>
+    <content><![CDATA[<p><strong>砍价36计</strong></p>
+<p><strong>第01计:瞒天过海</strong></p>
+<p>　　不要表露对目标商品有好感，让商家不知道你的意图，无法争取主动</p>
+<p><strong>第02计:围魏救赵</strong></p>
+<p>告知自己钱刚刚花了很多在别的东西上，想买，但希望<a href="http://www.lawtime.cn/info/piaoju/fukuan/">付款</a>条件或售价能更优惠些;“老板，太不巧了，现在月末&#x2F;月初，我刚好没钱，这两天又买了XX，花了很多钱，你要是能优惠点就好了，要不真的买不了，我生活费都得靠自己，已经透支到下个月了”（有时候实在砍不下价可以让老板送店里的东西</p>
+<p>​      第<strong>03****计:借刀杀人</strong></p>
+<p>　　与其他店家的价格作比较，要求对方再降价</p>
+<p>　  <strong>第04计:以逸待劳</strong></p>
+<p>　　如果实在离自己心理价位比较远，那就参加团购搭乘顺风车，收获的不只价格优惠，更有利于约束产品品质;（如果没有团购 就淘宝搜 根据评价的细节图最终锁定目标商品，淘宝价本来就低但是也别忘了砍价）</p>
+<p><strong>第05计:趁火打劫</strong></p>
+<p>　一般的商品反季购买或者趁着打折促销价格要美丽很多（买房也是这样，一般滞销或者尾盘期也会发现保留的好房且折扣甚低）;</p>
+<p><strong>第06计:声东击西</strong></p>
+<p>　　找多位不同的卖家，试探最低价;（这个能做到心中有数</p>
+<p>　　<strong>第07计:无中生有</strong></p>
+<p>　　告知准备一次性付款，要求最优惠的价;（老板爽快点，最低多少。如果老板不够爽快就再加把火，老板我们都是爽快人，何必为这点钱墨迹，我拿你当朋友，诚信觉得你家东西好，正好我朋友都需要，我买回去就是给他们看看的，我们可能大批量购买的，你直接给我XX这个最低价，赚一群回头客，多好，就这样说定了，正好我包里就剩这么多了，老板给你钱）</p>
+<p><strong>第08计:暗渡陈仓</strong></p>
+<p>　　察言观色，有些发展商明言涨价，其实暗中给折扣。</p>
+<p><strong>第09计:隔岸观火</strong></p>
+<p>　　如果砍价过分顺利时，就要冷静地想想为什么。如销售员很爽快地答应了自己的折扣要求，要想一下他是否还有更低的底价没有透露?还是这件东西有其他问题，销售员急于脱手;（仔细检查商品是否有问题，如果自己忍受不了就立马走，如果觉得没事就把它放大，趁机再把价格拉低）</p>
+<p>　　<strong>第10计:笑里藏刀</strong></p>
+<p>　　与卖家或销售人员成为朋友，凭交情争取拿到该商品的最优惠的价格;（先套近乎最好说点你以前就是搞这个的，后来不搞了，争取共同话题，并适当争取对方的崇拜，如果争取不到就争取同情吧，然后再砍价，慢悠悠就像朋友唠嗑，僵局的时候就加个微信或者留个联系方式，表示你真的把他当朋友，“老板，东西虽然很喜欢，但价格太贵了，虽然买不了，但是交个朋友是很好的，感觉老板很会做生意，性格很好…”多点夸奖，让他觉得很不好意思，但是这个夸奖必须是基于你们沟通过程中表现出来的，不要盲目夸奖会惹人反感）</p>
+<p><strong>第11计:李代桃僵</strong></p>
+<p>　表示自己很满意，但家里人或朋友有其他的想法，如果便宜则可以解决问题;（老板，我挺喜欢的，但是我的东西一般都不是我买的，我刚才问我妈 ，她说在其他家也见过比这个优惠，但是我不想再跑回去买了，你直接给我便宜点，要不我妈又该骂我了）</p>
+<p><strong>第12计:顺手牵羊</strong></p>
+<p>“老板，算了，说这么久，您都不少，真的很不够意思，我也不说少什么了，你送我点小东西吧。你看你这里XX送我好了，也不值什么钱”（可以提前看上两件左右的东西，但是就这一件砍价，最后说算了，两件一起肯定会更便宜吧，让两件都是那个折扣，然后价钱加起来掐尾凑整，这样又能优惠点）</p>
+<p>　　<strong>第13计:打草惊蛇</strong></p>
+<p>　　告知自己有不少朋友也会跟着自己买，只有最优惠的价格才能带来更多买家;而且刚才有家好像和这家差不多，或者说网上也便宜些，要是老板不能再少点，就实在很抱歉</p>
+<p>　<strong>第14计:借尸还魂</strong></p>
+<p>　　要求给不送东西或者单件的价，同意后再要求送附加东西（比如买房，让开发商按毛胚房给你价，然后再让其提供装修或者提供送2年物业管理费）;</p>
+<p><strong>第15计:调虎离山</strong></p>
+<p>　　告知对方已看中其他家，看是否愿意开出更有吸引力的价格;（老板，刚刚看了一家也差不多，价格也和你一样，但是感觉老板你人特别好，而且我不想再跑回去了，您再价格低点，我就在你家买了）</p>
+<p><strong>第16计:欲擒故纵</strong></p>
+<p>告知卖家更看好其他，如果不降价就走; </p>
+<p><strong>第17计:抛砖引玉</strong></p>
+<p>带着钱 说只要售价合适就马上决定购买;</p>
+<p><strong>第18计:擒贼擒王</strong></p>
+<p>谈到一定程度销售人员就无让价余地，但只要抓住产品的实质问题和缺点，往往能寻到底价;</p>
+<p>　　<strong>第19计:釜底抽薪</strong></p>
+<p>　　不停地找的各种缺点，要求降价;（语气和态度要注意，千万不要惹怒卖家，否则一句话，那你别买了，你就呆了）</p>
+<p><strong>第20计:混水摸鱼</strong></p>
+<p>告知自己买此商品主要想用于XX，但因自己XX，借此提出是否能提供帮助，顺便送些东西</p>
+<p>​       <strong>第21计:金蝉脱壳</strong></p>
+<p>先选一个比较次一些的把价格谈好，再要求以同样的价格买更好的;</p>
+<p><strong>第22计:关门捉贼</strong></p>
+<p>　　不看样品看购买物质量毛病，逼迫其降价;（实体店就多看，多挑，淘宝直接看差评，或者看细节图  找毛病你不会呀）</p>
+<p><strong>第23计:远交近攻</strong></p>
+<p>　如果是网店，通过成交记录，了解过去的成交价，并与自己意欲购买的比较。如果比自己买的低就好说，如果比现在买的高，你就说他们家价格好大，趁机降价。</p>
+<p><strong>第24计:假道伐虢</strong></p>
+<p>告知从朋友处已知有多少优惠，要求同样的<a href="http://www.lawtime.cn/info/laodong/gongzi/">待遇</a>;或者谎称自己朋友买过好多次他们家的东西，每次都少好多，这次一定也要给自己少。</p>
+<p>　    <strong>第25计:偷梁换柱</strong></p>
+<p>　　抓住一件其他比目标东西价格高的东西砍价，看到一定程度夸夸老板，然后又说，没钱买那么贵的，买这个吧（锁定目标），“老板，那件那么贵，您都那么便宜，这件你就给我同样的优惠好啦，我这次没带那么多钱，下次我把那件也买了”，老板就晕了，趁着他脑子发蒙争取更优惠的付款条件;</p>
+<p>　<strong>第26计:指桑骂槐</strong></p>
+<p>　　列举其他家高价不让价销售不动的恶劣影响;</p>
+<p><strong>第27计:假痴不癫</strong></p>
+<p>多听、多看、多提问;</p>
+<p><strong>第28计:上屋抽梯</strong></p>
+<p>告知他你已经要买了，但要等XX才能买，因此要求卖方在付款方法上再优惠些;（比如老板 ，好了，不说那么多了，你算下多少钱，一般算出来都不是整的，你可以让抹零）或者说，老板我没带够钱，支付宝行么，或者威信支付行么。支付的时候，说老板抹个零好吧，我现在就打钱给您</p>
+<p>　<strong>第29计:树上开花</strong></p>
+<p>　　有经验的销售一般喜欢充分了解买家的需求，知己知彼后加以引导，这样我们往往比较被动，所以我们要尽量保持沉默，让销售多讲话、多介绍，这样可以始终处于比较有利的位置;</p>
+<p><strong>第30计:反客为主</strong></p>
+<p>　　比我们时间更宝贵的是卖家的时间，故意拖延时间，慢慢磨，主动权在自己手上，每次都要求更便宜的价格;（如果期间有别人要买东西，你可以帮顾客介绍，或者趁机夸下这家店。等顾客走了，老板对你的印象好，趁机再讲价）</p>
+<p><strong>第31计:美人计</strong></p>
+<p>　　这个看卖家是男是女，还要看自己是男是女。（主要就是说软话）</p>
+<p><strong>第32计:空城计</strong></p>
+<p>　　先去下厕所或者试衣间或者卖家看不到的地方，把自己的钱分散，按照自己心理价位留出这么多在钱包里，另外稍微多点零钱分散在身上或包里，其他的藏起来。老板，我就这么多钱，怎么办。老板实在不同意，你就使劲在身上找。一次摸出一点零钱，摸出一点卖下可怜，或者说，老板实在抱歉，我还是买不起，算了。基本上两次老板就受不了了，直接说好啦好啦，就这样吧。</p>
+<p>　<strong>第33计:反间计</strong></p>
+<p>　　告知对方已看中其他并已付定金，但亦喜欢这个，是否能再便宜点以补偿已付出不能退还的定金;</p>
+<p>　　<strong>第34计:苦肉计</strong></p>
+<p>　告知能力有限买不起，要求再便宜一点</p>
+<p>　第35<strong>计:连环计</strong></p>
+<p>　　除了自己参与砍价外，再让家人或同伴一起参与，在不同时间分别和不同的销售谈，分别前往;（我们宿舍就是，一人一台电脑或手机，旺旺轮番轰炸，使用不同的语气和计策，只要有一个最低价，其他几个就一起买）</p>
+<p>　<strong>第36计:走为上</strong></p>
+<p>实在谈不下去，抬腿就走。（拦你的话就有戏，不拦你的话，你心里掂量下到底喜欢么<br>再问我）</p>
+<p>其实好多总结起来有异曲同工之妙，可能你看不出区别，但是当你真正砍过很多价的时候，融会贯通，其实也没有区别，因为要促成交易成功，有时候都是混着来的，不必区分那么清楚，结果是最总要的——物美价廉</p>
+]]></content>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>统计文件中某个字符串出现的次数</title>
+    <url>/2023/09/19/%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<p>一、grep+wc</p>
+<p>1、单个字符串</p>
+<p>grep -o targetStr filename | wc -l</p>
+<p>例  grep -o 推送检索库成功 推送信息至检索库日志.txt | wc -l</p>
+<p>备注：单个字符串可以不加引号</p>
+<p>2、多个字符串</p>
+<p>grep -o targetStr_1|targetStr_2|targetStr_3…… filename | wc -l</p>
+<p>备注：必须加引号（单、双都可以）</p>
+<p>如果不加引号，结果是不正确的</p>
+<p>grep -o 一条数据里面有多个相同，会统计相同的次数</p>
+<p>grep 一条数据里面有多个相同，会统计一次次数</p>
+<p>二、awk</p>
+<p>awk -v RS&#x3D;”@#$j” ‘{print gsub(&#x2F;targetStr&#x2F;,”&amp;”)}’ filename</p>
+<p>1</p>
+<p>awk  ‘{s+&#x3D;gsub(&#x2F;targetStr&#x2F;,”&amp;”)}END{print s}’ filename</p>
+<p>1</p>
+<p>小文件第一种方法最快0.003s，awk最快0.002s，一般都是比前者快</p>
+<p>当文件大的时候awk优势会更加明显。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解压缩报错tar  Error is not recoverable  exiting now</title>
+    <url>/2023/09/21/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%8A%A5%E9%94%99tar-Error-is-not-recoverable-exiting-now/</url>
+    <content><![CDATA[<p>[root@Gris-11140 FMIS2600bak]# tar -zxvf &#x2F;home&#x2F;oradata&#x2F;FMIS2600DMP.tar.gz</p>
+<p>gzip: stdin: not in gzip format</p>
+<p>tar: Child returned status 1</p>
+<p>tar: Error is not recoverable: exiting now</p>
+<p><strong>解决方法：</strong></p>
+<p><strong>去掉z参数，使用 tar -xvf 解压正常</strong></p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
 </search>
