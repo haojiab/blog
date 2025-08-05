@@ -1156,4 +1156,27 @@
         <tag>linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>emby添加神医助手插件</title>
+    <url>/2025/08/05/emby%E6%B7%BB%E5%8A%A0%E7%A5%9E%E5%8C%BB%E5%8A%A9%E6%89%8B%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="为什么要使用神医插件"><a href="#为什么要使用神医插件" class="headerlink" title="为什么要使用神医插件"></a>为什么要使用神医插件</h2><p>很多用户在 Strm 文件入库后，播放的时候，发现<strong>起播非常的慢</strong>，常常需要 10s-30s 才能开始播放，或者播放后<strong>没有播放记录</strong>，主要原因就是 Emby 在 Strm 文件入库的时候，没有去扫描文件的<strong>视频信息（如下图）</strong>，如时长，分辨率，视频信息，音频信息，因此在播放的时候，Emby 发现没有这些信息，就会实时开始去扫描这些信息，因此造成了起播放慢的&#x2F;没有播放记录的问题。</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMZaJGghMpuwyt5t9_fUjy61i3TuTsAAnvDMRswTolUkfkY_cb92RYBAAMCAAN5AAM2BA.png"></p>
+<p>而神医插件可以让 Emby 在 Strm 文件入库的时候，去扫描视频信息，加快起播速度</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="下载插件"><a href="#下载插件" class="headerlink" title="下载插件"></a>下载插件</h3><p>前往 <a href="https://github.com/sjtuross/StrmAssistant/releases">https://github.com/sjtuross/StrmAssistant/releases</a> 下载插件</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMaaJGgwwrBv0iKhSQlwB0FOh_lzmEAAn3DMRswTolUE98njeSClIUBAAMCAAN5AAM2BA.png"></p>
+<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>打开 Emby 的 Config 文件夹，将插件放入<strong>plugins</strong>文件夹中，然后重启 Emby</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMbaJGg6QeUAdqGcVwmGhbVGEHahW0AAn_DMRswTolUWmHewcCdSgsBAAMCAAN5AAM2BA.png"></p>
+<p>重启 Emby 后，在设置中看到出现<strong>神医助手</strong>的选项说明安装成功</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMbaJGg6QeUAdqGcVwmGhbVGEHahW0AAn_DMRswTolUWmHewcCdSgsBAAMCAAN5AAM2BA.png"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="常用设置"><a href="#常用设置" class="headerlink" title="常用设置"></a>常用设置</h4><p>如下图设置即可</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMcaJGhUSLBScq1rgPvXi7MGfxScUsAAoLDMRswTolUFFyhqGE-V0kBAAMCAAN5AAM2BA.png"></p>
+<h4 id="提取视频信息"><a href="#提取视频信息" class="headerlink" title="提取视频信息"></a>提取视频信息</h4><p>如下图设置即可</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMdaJGhd53SZi0V1alR1bdRkkDCy3gAAoTDMRswTolUXTKrbDxZ7nUBAAMCAAN3AAM2BA.png"></p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMeaJGhtZFTmQZN1eHggkBxLouOPGgAAoXDMRswTolUFhaRf67EZsYBAAMCAAN3AAM2BA.png"></p>
+<p>在计划任务中，给图中的两个任务添加一个触发器，这样 Emby 会每天运行一次这两个任务,也可以手动运行，</p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMfaJGh2yYNblWw2Rsf2r_WtnnbrhUAAofDMRswTolUdOBsKU1YIiwBAAMCAAN5AAM2BA.png"></p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMgaJGiCH93faNi7K1ElPubfjFHis8AAo_DMRswTolUgku9-8hID6YBAAMCAAN5AAM2BA.png"></p>
+<p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMhaJGiIftQsqP-MrG31Dl_3sJcY0kAApDDMRswTolUKW7PpUqsfNkBAAMCAAN5AAM2BA.png"></p>
+]]></content>
+  </entry>
 </search>
