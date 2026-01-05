@@ -1179,4 +1179,10 @@
 <p><img src="https://img.230455.xyz/file/AgACAgUAAyEGAASfH26aAAMhaJGiIftQsqP-MrG31Dl_3sJcY0kAApDDMRswTolUKW7PpUqsfNkBAAMCAAN5AAM2BA.png"></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>MetaTube不显示问题处理</title>
+    <url>/2026/01/05/MetaTube%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86/</url>
+    <content><![CDATA[<p>在emby中，MetaTube插件安装之后不显示的情况，<br>需要使用旧版本MetaTube，建议使用<a href="mailto:&#69;&#109;&#x62;&#121;&#x2e;&#77;&#101;&#116;&#x61;&#x54;&#x75;&#x62;&#101;&#x40;&#118;&#x32;&#48;&#x32;&#x35;&#x2e;&#x34;&#x31;&#48;&#46;&#49;&#x31;&#x30;&#x2e;&#48;">&#69;&#109;&#x62;&#121;&#x2e;&#77;&#101;&#116;&#x61;&#x54;&#x75;&#x62;&#101;&#x40;&#118;&#x32;&#48;&#x32;&#x35;&#x2e;&#x34;&#x31;&#48;&#46;&#49;&#x31;&#x30;&#x2e;&#48;</a>这个版本，覆盖掉新版本的插件，然后重启emby即可，<br>然后去定时任务中把metatube插件的自动更新给关闭即可</p>
+]]></content>
+  </entry>
 </search>
