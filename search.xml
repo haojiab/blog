@@ -1185,4 +1185,186 @@
     <content><![CDATA[<p>在emby中，MetaTube插件安装之后不显示的情况，<br>需要使用旧版本MetaTube，建议使用<a href="mailto:&#69;&#109;&#x62;&#121;&#x2e;&#77;&#101;&#116;&#x61;&#x54;&#x75;&#x62;&#101;&#x40;&#118;&#x32;&#48;&#x32;&#x35;&#x2e;&#x34;&#x31;&#48;&#46;&#49;&#x31;&#x30;&#x2e;&#48;">&#69;&#109;&#x62;&#121;&#x2e;&#77;&#101;&#116;&#x61;&#x54;&#x75;&#x62;&#101;&#x40;&#118;&#x32;&#48;&#x32;&#x35;&#x2e;&#x34;&#x31;&#48;&#46;&#49;&#x31;&#x30;&#x2e;&#48;</a>这个版本，覆盖掉新版本的插件，然后重启emby即可，<br>然后去定时任务中把metatube插件的自动更新给关闭即可</p>
 ]]></content>
   </entry>
+  <entry>
+    <title></title>
+    <url>/2026/01/07/MissAV-%E5%85%A8%E8%87%AA%E5%8A%A8%E9%87%87%E9%9B%86%E4%B8%8E%E8%BD%AC%E5%AD%98%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="MissAV-全自动采集与转存系统部署教程"><a href="#MissAV-全自动采集与转存系统部署教程" class="headerlink" title="MissAV 全自动采集与转存系统部署教程"></a>MissAV 全自动采集与转存系统部署教程</h2><p><strong>系统功能：</strong></p>
+<ol>
+<li><strong>全自动监控</strong>：监控指定的分类&#x2F;厂商&#x2F;女优页面。</li>
+<li><strong>智能过盾</strong>：使用 Flaresolverr + Python 混合双打，自动绕过 Cloudflare。</li>
+<li><strong>自动翻页</strong>：采集完第一页后，自动寻找下一页继续采集。</li>
+<li><strong>去重下载</strong>：自动比对历史记录，跳过已下载视频。</li>
+<li><strong>速度限制</strong>：支持限制下载和上传带宽，防止跑满服务器流量。</li>
+<li><strong>自动上传</strong>：下载完成后自动上传至 OneDrive 并清理本地文件。</li>
+</ol>
+<hr>
+<h2 id="第一步：基础环境安装"><a href="#第一步：基础环境安装" class="headerlink" title="第一步：基础环境安装"></a>第一步：基础环境安装</h2><p>请以 <code>root</code> 用户登录您的 Ubuntu 服务器。</p>
+<h3 id="1-更新系统并安装基础工具"><a href="#1-更新系统并安装基础工具" class="headerlink" title="1. 更新系统并安装基础工具"></a>1. 更新系统并安装基础工具</h3><p>我们需要 FFmpeg (用于视频合并) 和 Python 环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br><span class="line">apt install python3 python3-pip python3-venv ffmpeg git curl -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-安装-Rclone-用于上传-OneDrive"><a href="#2-安装-Rclone-用于上传-OneDrive" class="headerlink" title="2. 安装 Rclone (用于上传 OneDrive)"></a>2. 安装 Rclone (用于上传 OneDrive)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装脚本</span><br><span class="line">sudo -v ; curl https://rclone.org/install.sh | sudo bash</span><br><span class="line"></span><br><span class="line"># 配置 Rclone (如果您之前没配置过)</span><br><span class="line"># 请按照提示新建一个 remote，命名为 &quot;onedrive&quot; (或者修改脚本里的名称)</span><br><span class="line">rclone config</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-安装-Docker-用于运行-Flaresolverr"><a href="#3-安装-Docker-用于运行-Flaresolverr" class="headerlink" title="3. 安装 Docker (用于运行 Flaresolverr)"></a>3. 安装 Docker (用于运行 Flaresolverr)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com | bash</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第二步：部署过盾服务-Flaresolverr"><a href="#第二步：部署过盾服务-Flaresolverr" class="headerlink" title="第二步：部署过盾服务 (Flaresolverr)"></a>第二步：部署过盾服务 (Flaresolverr)</h2><p>这是一个专门用来欺骗 Cloudflare 的代理服务，必须常驻后台运行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 拉取并启动容器 (映射端口 8191)</span><br><span class="line">docker run -d \</span><br><span class="line">  --name=flaresolverr \</span><br><span class="line">  -p 8191:8191 \</span><br><span class="line">  -e LOG_LEVEL=info \</span><br><span class="line">  --restart unless-stopped \</span><br><span class="line">  ghcr.io/flaresolverr/flaresolverr:latest</span><br><span class="line"></span><br><span class="line"># 检查是否运行成功 (状态应为 Up)</span><br><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第三步：配置-Python-虚拟环境"><a href="#第三步：配置-Python-虚拟环境" class="headerlink" title="第三步：配置 Python 虚拟环境"></a>第三步：配置 Python 虚拟环境</h2><p>为了防止环境冲突，我们将所有依赖安装在一个独立的虚拟环境中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 1. 创建虚拟环境目录</span><br><span class="line">python3 -m venv /root/dl_env</span><br><span class="line"></span><br><span class="line"># 2. 激活环境</span><br><span class="line">source /root/dl_env/bin/activate</span><br><span class="line"></span><br><span class="line"># 3. 安装必要的 Python 库</span><br><span class="line"># requests: 发送请求</span><br><span class="line"># jsbeautifier: 解密混淆代码 (关键)</span><br><span class="line"># yt-dlp: 下载视频 (比 apt 安装的版本更新更好用)</span><br><span class="line">pip install requests jsbeautifier yt-dlp</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第四步：部署核心监控脚本"><a href="#第四步：部署核心监控脚本" class="headerlink" title="第四步：部署核心监控脚本"></a>第四步：部署核心监控脚本</h2><p>这是系统的核心大脑。请创建文件 <code>/root/monitor_flare.py</code>。</p>
+<p><strong>功能亮点：</strong> 包含自动翻页、JS解密、速度限制。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nano /root/monitor_flare.py</span><br></pre></td></tr></table></figure>
+
+<p>**⚠️ 请将以下代码粘贴进去，并根据顶部的“配置区域”修改您的目标网址：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line">import re</span><br><span class="line">import sys</span><br><span class="line">import subprocess</span><br><span class="line">import os</span><br><span class="line">import urllib.parse</span><br><span class="line">import jsbeautifier</span><br><span class="line">import time</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"># ================= ⚙️ 配置区域 =================</span><br><span class="line"># 1. 目标页面 (起始页，脚本会从这一页开始自动往后翻)</span><br><span class="line"># 示例: &quot;https://missav.ws/zh/genres/uncensored-leak&quot; 或 &quot;https://missav.ws/dm143/genres/潮吹&quot;</span><br><span class="line">TARGET_PAGE = &quot;https://missav.ws/dm143/genres/潮吹&quot; </span><br><span class="line"></span><br><span class="line"># 2. 速度限制 (设置为 &quot;0&quot; 则不限制)</span><br><span class="line"># 下载限速 (例如: &quot;10M&quot; = 10MB/s, &quot;500K&quot; = 500KB/s)</span><br><span class="line">DOWNLOAD_LIMIT = &quot;10M&quot;</span><br><span class="line"># 上传限速 (例如: &quot;5M&quot;)</span><br><span class="line">UPLOAD_LIMIT = &quot;0&quot;</span><br><span class="line"></span><br><span class="line"># 3. Rclone 配置 (需与 rclone config 中的 Name 一致)</span><br><span class="line">RCLONE_REMOTE = &quot;onedrive&quot;</span><br><span class="line">REMOTE_DIR = &quot;Videos/MissAV&quot;</span><br><span class="line"></span><br><span class="line"># 4. 翻页限制 (0 表示无限翻页，直到最后一页)</span><br><span class="line">MAX_PAGES = 0 </span><br><span class="line"></span><br><span class="line"># 5. 路径配置 (通常无需修改)</span><br><span class="line">WORK_DIR = &quot;/root&quot;</span><br><span class="line">ARCHIVE_FILE = f&quot;&#123;WORK_DIR&#125;/downloaded_history.txt&quot;</span><br><span class="line">YTDLP_PATH = &quot;/root/dl_env/bin/yt-dlp&quot;</span><br><span class="line">FLARESOLVERR_URL = &quot;http://localhost:8191/v1&quot;</span><br><span class="line"># ===============================================</span><br><span class="line"></span><br><span class="line">def get_page_via_flaresolverr(url):</span><br><span class="line">    print(f&quot;&gt;&gt;&gt; [监控] 正在扫描页面: &#123;url&#125;&quot;)</span><br><span class="line">    headers = &#123;&quot;Content-Type&quot;: &quot;application/json&quot;&#125;</span><br><span class="line">    payload = &#123;</span><br><span class="line">        &quot;cmd&quot;: &quot;request.get&quot;,</span><br><span class="line">        &quot;url&quot;: url,</span><br><span class="line">        &quot;maxTimeout&quot;: 60000</span><br><span class="line">    &#125;</span><br><span class="line">    try:</span><br><span class="line">        response = requests.post(FLARESOLVERR_URL, json=payload, headers=headers)</span><br><span class="line">        data = response.json()</span><br><span class="line">        if data.get(&quot;status&quot;) == &quot;ok&quot;:</span><br><span class="line">            return data[&quot;solution&quot;]</span><br><span class="line">        else:</span><br><span class="line">            print(f&quot;&gt;&gt;&gt; Flaresolverr 报错: &#123;data.get(&#x27;message&#x27;)&#125;&quot;)</span><br><span class="line">            return None</span><br><span class="line">    except Exception as e:</span><br><span class="line">        print(f&quot;&gt;&gt;&gt; 连接 Flaresolverr 失败: &#123;e&#125;&quot;)</span><br><span class="line">        return None</span><br><span class="line"></span><br><span class="line">def extract_next_page(html_source):</span><br><span class="line">    &quot;&quot;&quot;提取下一页链接&quot;&quot;&quot;</span><br><span class="line">    match = re.search(r&#x27;&lt;a[^&gt;]+href=&quot;([^&quot;]+)&quot;[^&gt;]*rel=&quot;next&quot;&#x27;, html_source)</span><br><span class="line">    if not match:</span><br><span class="line">        match = re.search(r&#x27;&lt;a[^&gt;]+rel=&quot;next&quot;[^&gt;]*href=&quot;([^&quot;]+)&quot;&#x27;, html_source)</span><br><span class="line">    </span><br><span class="line">    if match:</span><br><span class="line">        next_url = match.group(1)</span><br><span class="line">        if not next_url.startswith(&quot;http&quot;):</span><br><span class="line">            if next_url.startswith(&quot;/&quot;):</span><br><span class="line">                return f&quot;https://missav.ws&#123;next_url&#125;&quot;</span><br><span class="line">            else:</span><br><span class="line">                return f&quot;https://missav.ws/&#123;next_url&#125;&quot;</span><br><span class="line">        return next_url</span><br><span class="line">    return None</span><br><span class="line"></span><br><span class="line">def extract_video_links(html_source):</span><br><span class="line">    &quot;&quot;&quot;提取视频链接&quot;&quot;&quot;</span><br><span class="line">    links = set()</span><br><span class="line">    pattern = r&#x27;href=&quot;([^&quot;]*?\/[\w]+-[\d]+)&quot;&#x27;</span><br><span class="line">    matches = re.findall(pattern, html_source)</span><br><span class="line">    </span><br><span class="line">    for link in matches:</span><br><span class="line">        if not link.startswith(&quot;http&quot;):</span><br><span class="line">            full_link = f&quot;https://missav.ws&#123;link&#125;&quot; if link.startswith(&quot;/&quot;) else f&quot;https://missav.ws/&#123;link&#125;&quot;</span><br><span class="line">        else:</span><br><span class="line">            full_link = link</span><br><span class="line">        if any(x in full_link for x in [&quot;/genres/&quot;, &quot;/makers/&quot;, &quot;/actresses/&quot;, &quot;/search&quot;, &quot;/login&quot;, &quot;label&quot;, &quot;series&quot;]):</span><br><span class="line">            continue</span><br><span class="line">        links.add(full_link)</span><br><span class="line">    return list(links)</span><br><span class="line"></span><br><span class="line">def is_downloaded(url):</span><br><span class="line">    if not os.path.exists(ARCHIVE_FILE): return False</span><br><span class="line">    video_id = url.rstrip(&#x27;/&#x27;).split(&quot;/&quot;)[-1]</span><br><span class="line">    with open(ARCHIVE_FILE, &#x27;r&#x27;) as f:</span><br><span class="line">        content = f.read()</span><br><span class="line">        if video_id in content: return True</span><br><span class="line">    return False</span><br><span class="line"></span><br><span class="line">def mark_as_downloaded(url):</span><br><span class="line">    video_id = url.rstrip(&#x27;/&#x27;).split(&quot;/&quot;)[-1]</span><br><span class="line">    with open(ARCHIVE_FILE, &#x27;a&#x27;) as f:</span><br><span class="line">        f.write(f&quot;&#123;video_id&#125;\n&quot;)</span><br><span class="line"></span><br><span class="line">def clean_url(raw_url):</span><br><span class="line">    url = raw_url.replace(r&#x27;\/&#x27;, &#x27;/&#x27;).replace(&#x27;%3A&#x27;, &#x27;:&#x27;).replace(&#x27;%2F&#x27;, &#x27;/&#x27;)</span><br><span class="line">    return urllib.parse.unquote(url).replace(&#x27;\\&#x27;, &#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">def extract_m3u8(html_source):</span><br><span class="line">    &quot;&quot;&quot;解密并提取 M3U8&quot;&quot;&quot;</span><br><span class="line">    scripts = re.findall(r&#x27;&lt;script[^&gt;]*&gt;(.*?)&lt;/script&gt;&#x27;, html_source, re.DOTALL | re.IGNORECASE)</span><br><span class="line">    for script in scripts:</span><br><span class="line">        if &quot;eval(function(p,a,c,k,e,d)&quot; in script:</span><br><span class="line">            try:</span><br><span class="line">                unpacked = jsbeautifier.beautify(script)</span><br><span class="line">                match = re.search(r&#x27;(https?:\/\/[^&quot;\&#x27;;\s]+\.m3u8[^&quot;\&#x27;;\s]*)&#x27;, unpacked)</span><br><span class="line">                if match: return clean_url(match.group(1))</span><br><span class="line">                match = re.search(r&#x27;(https?:\/\/[^&quot;\&#x27;;\s]*surrit\.com[^&quot;\&#x27;;\s]*)&#x27;, unpacked)</span><br><span class="line">                if match: return clean_url(match.group(1))</span><br><span class="line">            except: pass</span><br><span class="line">    </span><br><span class="line">    match = re.search(r&#x27;(https?:\/\/[^\s&quot;\&#x27;&lt;&gt;]*(?:surrit\.com|sixyik\.com|missav)[^\s&quot;\&#x27;&lt;&gt;]*)&#x27;, html_source)</span><br><span class="line">    if match and &quot;m3u8&quot; in match.group(1):</span><br><span class="line">        return clean_url(match.group(1))</span><br><span class="line">    return None</span><br><span class="line"></span><br><span class="line">def save_cookies(cookies):</span><br><span class="line">    cookie_file = &quot;monitor_cookies.txt&quot;</span><br><span class="line">    with open(cookie_file, &#x27;w&#x27;) as f:</span><br><span class="line">        f.write(&quot;# Netscape HTTP Cookie File\n&quot;)</span><br><span class="line">        for cookie in cookies:</span><br><span class="line">            domain = cookie.get(&#x27;domain&#x27;, &#x27;&#x27;)</span><br><span class="line">            if not domain.startswith(&#x27;.&#x27;) and re.search(r&#x27;[a-zA-Z]&#x27;, domain): domain = &#x27;.&#x27; + domain</span><br><span class="line">            f.write(f&quot;&#123;domain&#125;\tTRUE\t&#123;cookie.get(&#x27;path&#x27;,&#x27;/&#x27;)&#125;\t&#123;&#x27;TRUE&#x27; if cookie.get(&#x27;secure&#x27;) else &#x27;FALSE&#x27;&#125;\t&#123;cookie.get(&#x27;expiry&#x27;,0)&#125;\t&#123;cookie.get(&#x27;name&#x27;,&#x27;&#x27;)&#125;\t&#123;cookie.get(&#x27;value&#x27;,&#x27;&#x27;)&#125;\n&quot;)</span><br><span class="line">    return cookie_file</span><br><span class="line"></span><br><span class="line">def process_video(url):</span><br><span class="line">    print(f&quot;\n&gt;&gt;&gt; [处理中] &#123;url&#125;&quot;)</span><br><span class="line">    solution = get_page_via_flaresolverr(url)</span><br><span class="line">    if not solution: return</span><br><span class="line">    </span><br><span class="line">    m3u8_url = extract_m3u8(solution[&quot;response&quot;])</span><br><span class="line">    if not m3u8_url:</span><br><span class="line">        print(f&quot;&gt;&gt;&gt; ❌ 跳过：无法提取 M3U8&quot;)</span><br><span class="line">        return</span><br><span class="line"></span><br><span class="line">    video_id = url.rstrip(&#x27;/&#x27;).split(&quot;/&quot;)[-1]</span><br><span class="line">    filename = f&quot;&#123;video_id&#125;.mp4&quot;</span><br><span class="line">    cookie_file = save_cookies(solution[&quot;cookies&quot;])</span><br><span class="line">    </span><br><span class="line">    cmd = [</span><br><span class="line">        YTDLP_PATH,</span><br><span class="line">        m3u8_url,</span><br><span class="line">        &quot;--output&quot;, filename,</span><br><span class="line">        &quot;--no-part&quot;,</span><br><span class="line">        &quot;--user-agent&quot;, solution[&quot;userAgent&quot;],</span><br><span class="line">        &quot;--cookies&quot;, cookie_file</span><br><span class="line">    ]</span><br><span class="line">    </span><br><span class="line">    if DOWNLOAD_LIMIT != &quot;0&quot;:</span><br><span class="line">        cmd.extend([&quot;--limit-rate&quot;, DOWNLOAD_LIMIT])</span><br><span class="line">    </span><br><span class="line">    print(f&quot;&gt;&gt;&gt; 🚀 开始下载 (限速: &#123;DOWNLOAD_LIMIT&#125;): &#123;filename&#125;&quot;)</span><br><span class="line">    try:</span><br><span class="line">        subprocess.run(cmd, check=True)</span><br><span class="line">        print(&quot;&gt;&gt;&gt; ✅ 下载完成，上传 OneDrive...&quot;)</span><br><span class="line">        </span><br><span class="line">        rclone_cmd = [&quot;rclone&quot;, &quot;move&quot;, filename, f&quot;&#123;RCLONE_REMOTE&#125;:&#123;REMOTE_DIR&#125;&quot;, &quot;--progress&quot;]</span><br><span class="line">        if UPLOAD_LIMIT != &quot;0&quot;:</span><br><span class="line">            rclone_cmd.extend([&quot;--bwlimit&quot;, UPLOAD_LIMIT])</span><br><span class="line">            </span><br><span class="line">        subprocess.run(rclone_cmd, check=True)</span><br><span class="line">        mark_as_downloaded(url)</span><br><span class="line">        print(&quot;&gt;&gt;&gt; ✨ 处理完成！&quot;)</span><br><span class="line">    except subprocess.CalledProcessError:</span><br><span class="line">        print(&quot;&gt;&gt;&gt; ❌ 下载或上传失败&quot;)</span><br><span class="line">    finally:</span><br><span class="line">        if os.path.exists(cookie_file): os.remove(cookie_file)</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    current_url = TARGET_PAGE</span><br><span class="line">    page_count = 0</span><br><span class="line">    </span><br><span class="line">    while current_url:</span><br><span class="line">        page_count += 1</span><br><span class="line">        print(f&quot;\n&#123;&#x27;=&#x27;*20&#125; 正在处理第 &#123;page_count&#125; 页 &#123;&#x27;=&#x27;*20&#125;&quot;)</span><br><span class="line">        </span><br><span class="line">        page_solution = get_page_via_flaresolverr(current_url)</span><br><span class="line">        if not page_solution:</span><br><span class="line">            print(&quot;&gt;&gt;&gt; 页面获取失败，停止翻页。&quot;)</span><br><span class="line">            break</span><br><span class="line">            </span><br><span class="line">        html = page_solution[&quot;response&quot;]</span><br><span class="line">        video_links = extract_video_links(html)</span><br><span class="line">        print(f&quot;&gt;&gt;&gt; 本页发现 &#123;len(video_links)&#125; 个视频&quot;)</span><br><span class="line">        </span><br><span class="line">        new_downloads = 0</span><br><span class="line">        for link in video_links:</span><br><span class="line">            if is_downloaded(link):</span><br><span class="line">                print(f&quot;&gt;&gt;&gt; [已跳过] 历史已下载: &#123;link&#125;&quot;)</span><br><span class="line">                continue</span><br><span class="line">            </span><br><span class="line">            process_video(link)</span><br><span class="line">            new_downloads += 1</span><br><span class="line">            time.sleep(5)</span><br><span class="line">            </span><br><span class="line">        print(f&quot;&gt;&gt;&gt; 第 &#123;page_count&#125; 页处理完成，共下载 &#123;new_downloads&#125; 个新视频。&quot;)</span><br><span class="line">        </span><br><span class="line">        if MAX_PAGES &gt; 0 and page_count &gt;= MAX_PAGES:</span><br><span class="line">            print(f&quot;&gt;&gt;&gt; 达到最大翻页限制 (&#123;MAX_PAGES&#125;)，任务结束。&quot;)</span><br><span class="line">            break</span><br><span class="line">            </span><br><span class="line">        next_page = extract_next_page(html)</span><br><span class="line">        if next_page:</span><br><span class="line">            print(f&quot;&gt;&gt;&gt; 🔎 发现下一页: &#123;next_page&#125;&quot;)</span><br><span class="line">            current_url = next_page</span><br><span class="line">            wait_time = random.randint(10, 20)</span><br><span class="line">            print(f&quot;&gt;&gt;&gt; 休息 &#123;wait_time&#125; 秒后继续...&quot;)</span><br><span class="line">            time.sleep(wait_time)</span><br><span class="line">        else:</span><br><span class="line">            print(&quot;&gt;&gt;&gt; ✅ 没有发现下一页，所有页面采集完毕！&quot;)</span><br><span class="line">            current_url = None</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第五步：运行与自动化"><a href="#第五步：运行与自动化" class="headerlink" title="第五步：运行与自动化"></a>第五步：运行与自动化</h2><h3 id="1-手动测试运行"><a href="#1-手动测试运行" class="headerlink" title="1. 手动测试运行"></a>1. 手动测试运行</h3><p>建议先手动跑一下，看是否能正常下载第一个视频。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 激活环境</span><br><span class="line">source /root/dl_env/bin/activate</span><br><span class="line"># 运行</span><br><span class="line">python3 /root/monitor_flare.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-后台长期运行-推荐"><a href="#2-后台长期运行-推荐" class="headerlink" title="2. 后台长期运行 (推荐)"></a>2. 后台长期运行 (推荐)</h3><p>使用 <code>nohup</code> 让脚本在后台默默工作，即使断开 SSH 也不受影响。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nohup /root/dl_env/bin/python3 /root/monitor_flare.py &gt; /root/monitor.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>查看进度命令</strong>：<code>tail -f /root/monitor.log</code></li>
+<li><strong>停止运行命令</strong>：<code>pkill -f monitor_flare.py</code></li>
+</ul>
+<h3 id="3-设置定时任务-可选"><a href="#3-设置定时任务-可选" class="headerlink" title="3. 设置定时任务 (可选)"></a>3. 设置定时任务 (可选)</h3><p>如果您希望脚本挂了能自动重启，或者每天定时检查更新：</p>
+<ol>
+<li><p>输入 <code>crontab -e</code></p>
+</li>
+<li><p>添加以下内容（例如每 12 小时检查一次）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0 */12 * * * /root/dl_env/bin/python3 /root/monitor_flare.py &gt;&gt; /root/monitor.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="💡-常见问题排查"><a href="#💡-常见问题排查" class="headerlink" title="💡 常见问题排查"></a>💡 常见问题排查</h2><ol>
+<li><strong>Flaresolverr 报错</strong>：<ul>
+<li>检查 Docker 容器是否活着：<code>docker ps</code>。</li>
+<li>如果挂了，用 <code>docker restart flaresolverr</code> 重启。</li>
+</ul>
+</li>
+<li><strong>找不到 m3u8 链接</strong>：<ul>
+<li>通常是网站改版了，或者 Cloudflare 盾升级了。请检查 <code>monitor.log</code> 中的报错。</li>
+</ul>
+</li>
+<li><strong>下载速度慢</strong>：<ul>
+<li>检查脚本里的 <code>DOWNLOAD_LIMIT</code> 是否设置得太低。</li>
+<li>也可能是 MissAV 免费用户的服务器本身就慢，多线程也救不了。</li>
+</ul>
+</li>
+<li><strong>空间不足</strong>：<ul>
+<li>脚本设定是下载完一个删除一个，正常不会占满硬盘。</li>
+<li>如果中断了任务，运行 <code>rm *.part *.mp4</code> 清理残留文件。</li>
+</ul>
+</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title>Ubuntu Server 实现 OneDrive 视频自动下载、转码与回传教程</title>
+    <url>/2026/01/07/Ubuntu-Server-%E5%AE%9E%E7%8E%B0-OneDrive-%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E3%80%81%E8%BD%AC%E7%A0%81%E4%B8%8E%E5%9B%9E%E4%BC%A0%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="1-项目目标"><a href="#1-项目目标" class="headerlink" title="1. 项目目标"></a>1. 项目目标</h2><p>在 Ubuntu 24.04 服务器上实现自动化流程：</p>
+<ol>
+<li><strong>扫描</strong>：递归扫描 OneDrive 指定目录及其子目录下的 <code>.ts</code> 视频文件。</li>
+<li><strong>下载</strong>：将文件下载到服务器临时目录。</li>
+<li><strong>转码</strong>：使用 FFmpeg 将 <code>.ts</code> 转换为 <code>.mp4</code>（不改变画质，仅封装或转码音频）。</li>
+<li><strong>回传</strong>：将生成的 <code>.mp4</code> 上传回 OneDrive 原本所在的子目录。</li>
+<li><strong>清理</strong>：上传成功后，删除 OneDrive 上的原 <code>.ts</code> 文件，并清理服务器本地临时文件。</li>
+</ol>
+<hr>
+<h2 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2. 准备工作"></a>2. 准备工作</h2><ul>
+<li>一台连接互联网的 Ubuntu 24.04 服务器（已通过 SSH 连接）。</li>
+<li>一台本地电脑（Windows&#x2F;Mac），用于获取 OneDrive 授权 Token。</li>
+<li>一个有效的 OneDrive 账号（确保未冻结、空间充足）。</li>
+</ul>
+<hr>
+<h2 id="3-环境安装"><a href="#3-环境安装" class="headerlink" title="3. 环境安装"></a>3. 环境安装</h2><p>在服务器终端执行以下命令，更新系统并安装核心工具：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 更新软件源</span><br><span class="line">sudo apt update</span><br><span class="line"></span><br><span class="line"># 安装 FFmpeg (用于视频转码)</span><br><span class="line">sudo apt install ffmpeg -y</span><br><span class="line"></span><br><span class="line"># 安装 Rclone (用于连接 OneDrive)</span><br><span class="line">sudo -v ; curl https://rclone.org/install.sh | sudo bash</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-配置-OneDrive-连接-Rclone"><a href="#4-配置-OneDrive-连接-Rclone" class="headerlink" title="4. 配置 OneDrive 连接 (Rclone)"></a>4. 配置 OneDrive 连接 (Rclone)</h2><p>这是最关键的一步。由于服务器没有浏览器，需要配合本地电脑完成授权。</p>
+<ol>
+<li><p><strong>在服务器上启动配置向导</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rclone config</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>按照以下交互进行选择</strong>：</p>
+<ul>
+<li><code>n</code> (New remote) -&gt; 回车。</li>
+<li><strong>name</strong>: 输入 <code>onedrive</code> -&gt; 回车。</li>
+<li><strong>Storage</strong>: 输入 <code>Microsoft OneDrive</code> 对应的数字（通常在列表里找，输入数字后回车）。</li>
+<li><strong>client_id</strong>: 直接回车（跳过）。</li>
+<li><strong>client_secret</strong>: 直接回车（跳过）。</li>
+<li><strong>Edit advanced config?</strong>: 输入 <code>n</code> (No)。</li>
+<li><strong>Use web browser to automatically authenticate?</strong>: <strong>输入 <code>n</code> (No)</strong> (非常重要！)。</li>
+</ul>
+</li>
+<li><p><strong>在本地电脑获取授权 Token</strong>：</p>
+<ul>
+<li>服务器此时会显示一条命令：<code>rclone authorize &quot;onedrive&quot;</code>。</li>
+<li>在你<strong>本地电脑</strong>下载 Rclone (官网下载)，解压后在命令行运行上述命令。</li>
+<li>浏览器弹出登录 OneDrive 并授权。</li>
+<li>复制本地命令行中生成的长串 Token（以 <code>&#123;&quot;access_token&quot;:...</code> 开头）。</li>
+</ul>
+</li>
+<li><p><strong>回到服务器填入 Token</strong>：</p>
+<ul>
+<li>在 <code>config_token&gt;</code> 提示符后粘贴刚才复制的代码 -&gt; 回车。</li>
+<li><strong>Type of connection</strong>: 输入 <code>1</code> (OneDrive Personal or Business)。</li>
+<li><strong>Chose drive to use</strong>: 输入 <code>0</code> (或者你想要挂载的那个盘的序号)。</li>
+<li><strong>Is that okay?</strong>: 输入 <code>y</code>。</li>
+<li><strong>Quit</strong>: 输入 <code>q</code> 退出。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="5-部署自动化脚本"><a href="#5-部署自动化脚本" class="headerlink" title="5. 部署自动化脚本"></a>5. 部署自动化脚本</h2><h3 id="5-1-创建脚本文件"><a href="#5-1-创建脚本文件" class="headerlink" title="5.1 创建脚本文件"></a>5.1 创建脚本文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nano convert_ts.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-写入脚本内容"><a href="#5-2-写入脚本内容" class="headerlink" title="5.2 写入脚本内容"></a>5.2 写入脚本内容</h3><p>将以下代码粘贴进去。**请务必根据注释修改 <code>REMOTE_PATH</code> 为你的实际路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># ================= 配置区域 =================</span><br><span class="line"></span><br><span class="line"># 1. Rclone 配置名称 (刚才设置的 name)</span><br><span class="line">REMOTE_NAME=&quot;onedrive&quot;</span><br><span class="line"></span><br><span class="line"># 2. OneDrive 根扫描路径</span><br><span class="line"># 脚本会扫描这个路径以及它下面的所有子文件夹</span><br><span class="line"># 请修改为你实际存放 ts 文件的文件夹，例如 &quot;/Movies&quot;</span><br><span class="line">REMOTE_PATH=&quot;/Videos/Download&quot;</span><br><span class="line"></span><br><span class="line"># 3. 服务器本地临时目录</span><br><span class="line">LOCAL_WORK_DIR=&quot;/tmp/video_convert_workdir&quot;</span><br><span class="line"></span><br><span class="line"># ===========================================</span><br><span class="line"></span><br><span class="line"># 创建本地工作目录</span><br><span class="line">mkdir -p &quot;$LOCAL_WORK_DIR&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;=========================================================&quot;</span><br><span class="line">echo &quot;正在递归扫描 [$REMOTE_PATH] 下的所有 .ts 文件...&quot;</span><br><span class="line"></span><br><span class="line"># 递归获取文件列表</span><br><span class="line">FILE_LIST=$(rclone lsf &quot;$REMOTE_NAME:$REMOTE_PATH&quot; -R --files-only --include &quot;*.ts&quot;)</span><br><span class="line"></span><br><span class="line">if [ -z &quot;$FILE_LIST&quot; ]; then</span><br><span class="line">    echo &quot;未发现 .ts 文件。&quot;</span><br><span class="line">    rm -rf &quot;$LOCAL_WORK_DIR&quot;</span><br><span class="line">    exit 0</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># 解决文件名空格问题</span><br><span class="line">IFS=$&#x27;\n&#x27;</span><br><span class="line"></span><br><span class="line">for REL_PATH in $FILE_LIST; do</span><br><span class="line">    echo &quot;------------------------------------------------------&quot;</span><br><span class="line">    echo &quot;发现文件: $REL_PATH&quot;</span><br><span class="line"></span><br><span class="line">    DIR_NAME=$(dirname &quot;$REL_PATH&quot;)</span><br><span class="line">    FILE_NAME=$(basename &quot;$REL_PATH&quot;)</span><br><span class="line">    BASE_NAME=&quot;$&#123;FILE_NAME%.*&#125;&quot;</span><br><span class="line"></span><br><span class="line">    LOCAL_TS=&quot;$LOCAL_WORK_DIR/source_temp.ts&quot;</span><br><span class="line">    LOCAL_MP4=&quot;$LOCAL_WORK_DIR/output_temp.mp4&quot;</span><br><span class="line"></span><br><span class="line">    # 清理旧缓存</span><br><span class="line">    rm -f &quot;$LOCAL_TS&quot; &quot;$LOCAL_MP4&quot;</span><br><span class="line"></span><br><span class="line">    # 1. 下载</span><br><span class="line">    echo &quot;Step 1: 下载中...&quot;</span><br><span class="line">    rclone copyto &quot;$REMOTE_NAME:$REMOTE_PATH/$REL_PATH&quot; &quot;$LOCAL_TS&quot;</span><br><span class="line"></span><br><span class="line">    if [ ! -f &quot;$LOCAL_TS&quot; ]; then</span><br><span class="line">        echo &quot;错误: 下载失败，跳过。&quot;</span><br><span class="line">        continue</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    # 2. 转码 (ts -&gt; mp4)</span><br><span class="line">    echo &quot;Step 2: 转码中...&quot;</span><br><span class="line">    # -c:v copy 表示视频流直接复制不重新编码(速度快)</span><br><span class="line">    # -c:a aac 表示音频转为AAC以保证兼容性</span><br><span class="line">    ffmpeg -i &quot;$LOCAL_TS&quot; -c:v copy -c:a aac -strict experimental &quot;$LOCAL_MP4&quot; -y -hide_banner -loglevel error</span><br><span class="line"></span><br><span class="line">    if [ $? -eq 0 ] &amp;&amp; [ -f &quot;$LOCAL_MP4&quot; ]; then</span><br><span class="line">        # 计算上传路径</span><br><span class="line">        if [ &quot;$DIR_NAME&quot; == &quot;.&quot; ]; then</span><br><span class="line">             REMOTE_UPLOAD_PATH=&quot;$REMOTE_NAME:$REMOTE_PATH/$BASE_NAME.mp4&quot;</span><br><span class="line">        else</span><br><span class="line">             REMOTE_UPLOAD_PATH=&quot;$REMOTE_NAME:$REMOTE_PATH/$DIR_NAME/$BASE_NAME.mp4&quot;</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 3. 上传</span><br><span class="line">        echo &quot;Step 3: 上传至 [$REMOTE_UPLOAD_PATH]...&quot;</span><br><span class="line">        rclone copyto &quot;$LOCAL_MP4&quot; &quot;$REMOTE_UPLOAD_PATH&quot;</span><br><span class="line"></span><br><span class="line">        if [ $? -eq 0 ]; then</span><br><span class="line">            # 4. 删除远程源文件</span><br><span class="line">            echo &quot;Step 4: 删除远程源文件...&quot;</span><br><span class="line">            rclone deletefile &quot;$REMOTE_NAME:$REMOTE_PATH/$REL_PATH&quot;</span><br><span class="line">            echo &quot;完成。&quot;</span><br><span class="line">        else</span><br><span class="line">            echo &quot;错误: 上传失败 (可能是 403 权限问题)，保留源文件。&quot;</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo &quot;错误: FFmpeg 转码失败。&quot;</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># 清理</span><br><span class="line">rm -rf &quot;$LOCAL_WORK_DIR&quot;</span><br><span class="line">unset IFS</span><br><span class="line">echo &quot;所有任务结束。&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-保存与权限设置"><a href="#5-3-保存与权限设置" class="headerlink" title="5.3 保存与权限设置"></a>5.3 保存与权限设置</h3><ol>
+<li><p>按 <code>Ctrl+X</code>，输入 <code>y</code>，按 <code>Enter</code> 保存退出。</p>
+</li>
+<li><p><strong>修复换行符（防止从 Windows 复制导致的报错）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i &#x27;s/\r$//&#x27; convert_ts.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>赋予执行权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chmod +x convert_ts.sh</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="6-测试与运行"><a href="#6-测试与运行" class="headerlink" title="6. 测试与运行"></a>6. 测试与运行</h2><h3 id="手动测试"><a href="#手动测试" class="headerlink" title="手动测试"></a>手动测试</h3><p>运行脚本查看输出日志：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./convert_ts.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>成功标志</strong>：显示 Step 1 下载 -&gt; Step 2 转码 -&gt; Step 3 上传 -&gt; Step 4 删除，全程无 Error。</li>
+<li><strong>常见错误</strong>：<ul>
+<li><code>required file not found</code>：请重新运行上面的 <code>sed -i</code> 命令。</li>
+<li><code>Database Is Read Only</code>：OneDrive 空间满了或账号被冻结，需登录网页版 OneDrive 处理。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="7-设置定时任务-自动运行"><a href="#7-设置定时任务-自动运行" class="headerlink" title="7. 设置定时任务 (自动运行)"></a>7. 设置定时任务 (自动运行)</h2><p>如果你希望服务器每天（例如凌晨 2 点）自动处理：</p>
+<ol>
+<li><p>打开定时任务配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在文件末尾添加一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0 2 * * * /bin/bash /root/convert_ts.sh &gt;&gt; /root/convert_log.txt 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p><em>(假设脚本在 &#x2F;root 目录下，如果不是请修改路径)</em></p>
+</li>
+</ol>
+<hr>
+<h2 id="8-维护与排错"><a href="#8-维护与排错" class="headerlink" title="8. 维护与排错"></a>8. 维护与排错</h2><ul>
+<li><strong>查看日志</strong>：如果设置了定时任务，可以通过 <code>cat /root/convert_log.txt</code> 查看运行情况。</li>
+<li><strong>调整转码质量</strong>：如果转换后的视频无法播放，请修改脚本中的 <code>ffmpeg</code> 命令，将 <code>-c:v copy</code> 改为 <code>-c:v libx264</code>（会显著增加 CPU 占用和转换时间，但兼容性最好）。</li>
+<li><strong>空间管理</strong>：定期检查服务器 <code>/tmp</code> 目录，虽然脚本会清理，但以防万一。</li>
+</ul>
+]]></content>
+  </entry>
 </search>

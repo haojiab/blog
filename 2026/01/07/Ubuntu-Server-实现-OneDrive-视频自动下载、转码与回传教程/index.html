@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Ubuntu Server 实现 OneDrive 视频自动下载、转码与回传教程 | 小破站</title><meta name="author" content="圈圈"><meta name="copyright" content="圈圈"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 项目目标在 Ubuntu 24.04 服务器上实现自动化流程：  扫描：递归扫描 OneDrive 指定目录及其子目录下的 .ts 视频文件。 下载：将文件下载到服务器临时目录。 转码：使用 FFmpeg 将 .ts 转换为 .mp4（不改变画质，仅封装或转码音频）。 回传：将生成的 .mp4 上传回 OneDrive 原本所在的子目录。 清理：上传成功后，删除 OneDrive 上的原 .">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu Server 实现 OneDrive 视频自动下载、转码与回传教程">
+<meta property="og:url" content="https://www.230455.xyz/2026/01/07/Ubuntu-Server-%E5%AE%9E%E7%8E%B0-OneDrive-%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E3%80%81%E8%BD%AC%E7%A0%81%E4%B8%8E%E5%9B%9E%E4%BC%A0%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="小破站">
+<meta property="og:description" content="1. 项目目标在 Ubuntu 24.04 服务器上实现自动化流程：  扫描：递归扫描 OneDrive 指定目录及其子目录下的 .ts 视频文件。 下载：将文件下载到服务器临时目录。 转码：使用 FFmpeg 将 .ts 转换为 .mp4（不改变画质，仅封装或转码音频）。 回传：将生成的 .mp4 上传回 OneDrive 原本所在的子目录。 清理：上传成功后，删除 OneDrive 上的原 .">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.230455.xyz/img/1695114299870.png">
+<meta property="article:published_time" content="2026-01-07T06:31:18.000Z">
+<meta property="article:modified_time" content="2026-01-07T06:32:44.801Z">
+<meta property="article:author" content="圈圈">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.230455.xyz/img/1695114299870.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.230455.xyz/2026/01/07/Ubuntu-Server-%E5%AE%9E%E7%8E%B0-OneDrive-%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E3%80%81%E8%BD%AC%E7%A0%81%E4%B8%8E%E5%9B%9E%E4%BC%A0%E6%95%99%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Ubuntu Server 实现 OneDrive 视频自动下载、转码与回传教程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-01-07 14:32:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/1695114299870.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="小破站"><span class="site-name">小破站</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Ubuntu Server 实现 OneDrive 视频自动下载、转码与回传教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-07T06:31:18.000Z" title="发表于 2026-01-07 14:31:18">2026-01-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-07T06:32:44.801Z" title="更新于 2026-01-07 14:32:44">2026-01-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Ubuntu Server 实现 OneDrive 视频自动下载、转码与回传教程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="1-项目目标"><a href="#1-项目目标" class="headerlink" title="1. 项目目标"></a>1. 项目目标</h2><p>在 Ubuntu 24.04 服务器上实现自动化流程：</p>
+<ol>
+<li><strong>扫描</strong>：递归扫描 OneDrive 指定目录及其子目录下的 <code>.ts</code> 视频文件。</li>
+<li><strong>下载</strong>：将文件下载到服务器临时目录。</li>
+<li><strong>转码</strong>：使用 FFmpeg 将 <code>.ts</code> 转换为 <code>.mp4</code>（不改变画质，仅封装或转码音频）。</li>
+<li><strong>回传</strong>：将生成的 <code>.mp4</code> 上传回 OneDrive 原本所在的子目录。</li>
+<li><strong>清理</strong>：上传成功后，删除 OneDrive 上的原 <code>.ts</code> 文件，并清理服务器本地临时文件。</li>
+</ol>
+<hr>
+<h2 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2. 准备工作"></a>2. 准备工作</h2><ul>
+<li>一台连接互联网的 Ubuntu 24.04 服务器（已通过 SSH 连接）。</li>
+<li>一台本地电脑（Windows&#x2F;Mac），用于获取 OneDrive 授权 Token。</li>
+<li>一个有效的 OneDrive 账号（确保未冻结、空间充足）。</li>
+</ul>
+<hr>
+<h2 id="3-环境安装"><a href="#3-环境安装" class="headerlink" title="3. 环境安装"></a>3. 环境安装</h2><p>在服务器终端执行以下命令，更新系统并安装核心工具：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 更新软件源</span><br><span class="line">sudo apt update</span><br><span class="line"></span><br><span class="line"># 安装 FFmpeg (用于视频转码)</span><br><span class="line">sudo apt install ffmpeg -y</span><br><span class="line"></span><br><span class="line"># 安装 Rclone (用于连接 OneDrive)</span><br><span class="line">sudo -v ; curl https://rclone.org/install.sh | sudo bash</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-配置-OneDrive-连接-Rclone"><a href="#4-配置-OneDrive-连接-Rclone" class="headerlink" title="4. 配置 OneDrive 连接 (Rclone)"></a>4. 配置 OneDrive 连接 (Rclone)</h2><p>这是最关键的一步。由于服务器没有浏览器，需要配合本地电脑完成授权。</p>
+<ol>
+<li><p><strong>在服务器上启动配置向导</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone config</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>按照以下交互进行选择</strong>：</p>
+<ul>
+<li><code>n</code> (New remote) -&gt; 回车。</li>
+<li><strong>name</strong>: 输入 <code>onedrive</code> -&gt; 回车。</li>
+<li><strong>Storage</strong>: 输入 <code>Microsoft OneDrive</code> 对应的数字（通常在列表里找，输入数字后回车）。</li>
+<li><strong>client_id</strong>: 直接回车（跳过）。</li>
+<li><strong>client_secret</strong>: 直接回车（跳过）。</li>
+<li><strong>Edit advanced config?</strong>: 输入 <code>n</code> (No)。</li>
+<li><strong>Use web browser to automatically authenticate?</strong>: <strong>输入 <code>n</code> (No)</strong> (非常重要！)。</li>
+</ul>
+</li>
+<li><p><strong>在本地电脑获取授权 Token</strong>：</p>
+<ul>
+<li>服务器此时会显示一条命令：<code>rclone authorize &quot;onedrive&quot;</code>。</li>
+<li>在你<strong>本地电脑</strong>下载 Rclone (官网下载)，解压后在命令行运行上述命令。</li>
+<li>浏览器弹出登录 OneDrive 并授权。</li>
+<li>复制本地命令行中生成的长串 Token（以 <code>&#123;&quot;access_token&quot;:...</code> 开头）。</li>
+</ul>
+</li>
+<li><p><strong>回到服务器填入 Token</strong>：</p>
+<ul>
+<li>在 <code>config_token&gt;</code> 提示符后粘贴刚才复制的代码 -&gt; 回车。</li>
+<li><strong>Type of connection</strong>: 输入 <code>1</code> (OneDrive Personal or Business)。</li>
+<li><strong>Chose drive to use</strong>: 输入 <code>0</code> (或者你想要挂载的那个盘的序号)。</li>
+<li><strong>Is that okay?</strong>: 输入 <code>y</code>。</li>
+<li><strong>Quit</strong>: 输入 <code>q</code> 退出。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="5-部署自动化脚本"><a href="#5-部署自动化脚本" class="headerlink" title="5. 部署自动化脚本"></a>5. 部署自动化脚本</h2><h3 id="5-1-创建脚本文件"><a href="#5-1-创建脚本文件" class="headerlink" title="5.1 创建脚本文件"></a>5.1 创建脚本文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano convert_ts.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-写入脚本内容"><a href="#5-2-写入脚本内容" class="headerlink" title="5.2 写入脚本内容"></a>5.2 写入脚本内容</h3><p>将以下代码粘贴进去。**请务必根据注释修改 <code>REMOTE_PATH</code> 为你的实际路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># ================= 配置区域 =================</span><br><span class="line"></span><br><span class="line"># 1. Rclone 配置名称 (刚才设置的 name)</span><br><span class="line">REMOTE_NAME=&quot;onedrive&quot;</span><br><span class="line"></span><br><span class="line"># 2. OneDrive 根扫描路径</span><br><span class="line"># 脚本会扫描这个路径以及它下面的所有子文件夹</span><br><span class="line"># 请修改为你实际存放 ts 文件的文件夹，例如 &quot;/Movies&quot;</span><br><span class="line">REMOTE_PATH=&quot;/Videos/Download&quot;</span><br><span class="line"></span><br><span class="line"># 3. 服务器本地临时目录</span><br><span class="line">LOCAL_WORK_DIR=&quot;/tmp/video_convert_workdir&quot;</span><br><span class="line"></span><br><span class="line"># ===========================================</span><br><span class="line"></span><br><span class="line"># 创建本地工作目录</span><br><span class="line">mkdir -p &quot;$LOCAL_WORK_DIR&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;=========================================================&quot;</span><br><span class="line">echo &quot;正在递归扫描 [$REMOTE_PATH] 下的所有 .ts 文件...&quot;</span><br><span class="line"></span><br><span class="line"># 递归获取文件列表</span><br><span class="line">FILE_LIST=$(rclone lsf &quot;$REMOTE_NAME:$REMOTE_PATH&quot; -R --files-only --include &quot;*.ts&quot;)</span><br><span class="line"></span><br><span class="line">if [ -z &quot;$FILE_LIST&quot; ]; then</span><br><span class="line">    echo &quot;未发现 .ts 文件。&quot;</span><br><span class="line">    rm -rf &quot;$LOCAL_WORK_DIR&quot;</span><br><span class="line">    exit 0</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># 解决文件名空格问题</span><br><span class="line">IFS=$&#x27;\n&#x27;</span><br><span class="line"></span><br><span class="line">for REL_PATH in $FILE_LIST; do</span><br><span class="line">    echo &quot;------------------------------------------------------&quot;</span><br><span class="line">    echo &quot;发现文件: $REL_PATH&quot;</span><br><span class="line"></span><br><span class="line">    DIR_NAME=$(dirname &quot;$REL_PATH&quot;)</span><br><span class="line">    FILE_NAME=$(basename &quot;$REL_PATH&quot;)</span><br><span class="line">    BASE_NAME=&quot;$&#123;FILE_NAME%.*&#125;&quot;</span><br><span class="line"></span><br><span class="line">    LOCAL_TS=&quot;$LOCAL_WORK_DIR/source_temp.ts&quot;</span><br><span class="line">    LOCAL_MP4=&quot;$LOCAL_WORK_DIR/output_temp.mp4&quot;</span><br><span class="line"></span><br><span class="line">    # 清理旧缓存</span><br><span class="line">    rm -f &quot;$LOCAL_TS&quot; &quot;$LOCAL_MP4&quot;</span><br><span class="line"></span><br><span class="line">    # 1. 下载</span><br><span class="line">    echo &quot;Step 1: 下载中...&quot;</span><br><span class="line">    rclone copyto &quot;$REMOTE_NAME:$REMOTE_PATH/$REL_PATH&quot; &quot;$LOCAL_TS&quot;</span><br><span class="line"></span><br><span class="line">    if [ ! -f &quot;$LOCAL_TS&quot; ]; then</span><br><span class="line">        echo &quot;错误: 下载失败，跳过。&quot;</span><br><span class="line">        continue</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    # 2. 转码 (ts -&gt; mp4)</span><br><span class="line">    echo &quot;Step 2: 转码中...&quot;</span><br><span class="line">    # -c:v copy 表示视频流直接复制不重新编码(速度快)</span><br><span class="line">    # -c:a aac 表示音频转为AAC以保证兼容性</span><br><span class="line">    ffmpeg -i &quot;$LOCAL_TS&quot; -c:v copy -c:a aac -strict experimental &quot;$LOCAL_MP4&quot; -y -hide_banner -loglevel error</span><br><span class="line"></span><br><span class="line">    if [ $? -eq 0 ] &amp;&amp; [ -f &quot;$LOCAL_MP4&quot; ]; then</span><br><span class="line">        # 计算上传路径</span><br><span class="line">        if [ &quot;$DIR_NAME&quot; == &quot;.&quot; ]; then</span><br><span class="line">             REMOTE_UPLOAD_PATH=&quot;$REMOTE_NAME:$REMOTE_PATH/$BASE_NAME.mp4&quot;</span><br><span class="line">        else</span><br><span class="line">             REMOTE_UPLOAD_PATH=&quot;$REMOTE_NAME:$REMOTE_PATH/$DIR_NAME/$BASE_NAME.mp4&quot;</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        # 3. 上传</span><br><span class="line">        echo &quot;Step 3: 上传至 [$REMOTE_UPLOAD_PATH]...&quot;</span><br><span class="line">        rclone copyto &quot;$LOCAL_MP4&quot; &quot;$REMOTE_UPLOAD_PATH&quot;</span><br><span class="line"></span><br><span class="line">        if [ $? -eq 0 ]; then</span><br><span class="line">            # 4. 删除远程源文件</span><br><span class="line">            echo &quot;Step 4: 删除远程源文件...&quot;</span><br><span class="line">            rclone deletefile &quot;$REMOTE_NAME:$REMOTE_PATH/$REL_PATH&quot;</span><br><span class="line">            echo &quot;完成。&quot;</span><br><span class="line">        else</span><br><span class="line">            echo &quot;错误: 上传失败 (可能是 403 权限问题)，保留源文件。&quot;</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo &quot;错误: FFmpeg 转码失败。&quot;</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># 清理</span><br><span class="line">rm -rf &quot;$LOCAL_WORK_DIR&quot;</span><br><span class="line">unset IFS</span><br><span class="line">echo &quot;所有任务结束。&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-保存与权限设置"><a href="#5-3-保存与权限设置" class="headerlink" title="5.3 保存与权限设置"></a>5.3 保存与权限设置</h3><ol>
+<li><p>按 <code>Ctrl+X</code>，输入 <code>y</code>，按 <code>Enter</code> 保存退出。</p>
+</li>
+<li><p><strong>修复换行符（防止从 Windows 复制导致的报错）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &#x27;s/\r$//&#x27; convert_ts.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>赋予执行权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x convert_ts.sh</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="6-测试与运行"><a href="#6-测试与运行" class="headerlink" title="6. 测试与运行"></a>6. 测试与运行</h2><h3 id="手动测试"><a href="#手动测试" class="headerlink" title="手动测试"></a>手动测试</h3><p>运行脚本查看输出日志：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./convert_ts.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>成功标志</strong>：显示 Step 1 下载 -&gt; Step 2 转码 -&gt; Step 3 上传 -&gt; Step 4 删除，全程无 Error。</li>
+<li><strong>常见错误</strong>：<ul>
+<li><code>required file not found</code>：请重新运行上面的 <code>sed -i</code> 命令。</li>
+<li><code>Database Is Read Only</code>：OneDrive 空间满了或账号被冻结，需登录网页版 OneDrive 处理。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="7-设置定时任务-自动运行"><a href="#7-设置定时任务-自动运行" class="headerlink" title="7. 设置定时任务 (自动运行)"></a>7. 设置定时任务 (自动运行)</h2><p>如果你希望服务器每天（例如凌晨 2 点）自动处理：</p>
+<ol>
+<li><p>打开定时任务配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在文件末尾添加一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 2 * * * /bin/bash /root/convert_ts.sh &gt;&gt; /root/convert_log.txt 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p><em>(假设脚本在 &#x2F;root 目录下，如果不是请修改路径)</em></p>
+</li>
+</ol>
+<hr>
+<h2 id="8-维护与排错"><a href="#8-维护与排错" class="headerlink" title="8. 维护与排错"></a>8. 维护与排错</h2><ul>
+<li><strong>查看日志</strong>：如果设置了定时任务，可以通过 <code>cat /root/convert_log.txt</code> 查看运行情况。</li>
+<li><strong>调整转码质量</strong>：如果转换后的视频无法播放，请修改脚本中的 <code>ffmpeg</code> 命令，将 <code>-c:v copy</code> 改为 <code>-c:v libx264</code>（会显著增加 CPU 占用和转换时间，但兼容性最好）。</li>
+<li><strong>空间管理</strong>：定期检查服务器 <code>/tmp</code> 目录，虽然脚本会清理，但以防万一。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.230455.xyz">圈圈</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.230455.xyz/2026/01/07/Ubuntu-Server-%E5%AE%9E%E7%8E%B0-OneDrive-%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E3%80%81%E8%BD%AC%E7%A0%81%E4%B8%8E%E5%9B%9E%E4%BC%A0%E6%95%99%E7%A8%8B/">https://www.230455.xyz/2026/01/07/Ubuntu-Server-%E5%AE%9E%E7%8E%B0-OneDrive-%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E3%80%81%E8%BD%AC%E7%A0%81%E4%B8%8E%E5%9B%9E%E4%BC%A0%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.230455.xyz" target="_blank">小破站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/1695114299870.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/01/07/MissAV-%E5%85%A8%E8%87%AA%E5%8A%A8%E9%87%87%E9%9B%86%E4%B8%8E%E8%BD%AC%E5%AD%98%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/1695114299870.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">圈圈</div><div class="author-info__description">偶尔维护的小破站</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%A1%B9%E7%9B%AE%E7%9B%AE%E6%A0%87"><span class="toc-number">1.</span> <span class="toc-text">1. 项目目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">2. 准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">3. 环境安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE-OneDrive-%E8%BF%9E%E6%8E%A5-Rclone"><span class="toc-number">4.</span> <span class="toc-text">4. 配置 OneDrive 连接 (Rclone)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%83%A8%E7%BD%B2%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC"><span class="toc-number">5.</span> <span class="toc-text">5. 部署自动化脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%88%9B%E5%BB%BA%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 创建脚本文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%86%99%E5%85%A5%E8%84%9A%E6%9C%AC%E5%86%85%E5%AE%B9"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 写入脚本内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E4%BF%9D%E5%AD%98%E4%B8%8E%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 保存与权限设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="toc-number">6.</span> <span class="toc-text">6. 测试与运行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E6%B5%8B%E8%AF%95"><span class="toc-number">6.1.</span> <span class="toc-text">手动测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1-%E8%87%AA%E5%8A%A8%E8%BF%90%E8%A1%8C"><span class="toc-number">7.</span> <span class="toc-text">7. 设置定时任务 (自动运行)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%8E%92%E9%94%99"><span class="toc-number">8.</span> <span class="toc-text">8. 维护与排错</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 圈圈</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="/pluginsSrc/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
