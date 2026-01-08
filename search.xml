@@ -1309,7 +1309,7 @@
 <tbody><tr>
 <td><strong>暴力重启</strong></td>
 <td><code>pm2 restart &lt;id&gt;</code></td>
-<td>杀死进程 $\rightarrow$ 重新启动</td>
+<td>杀死进程 –&gt; 重新启动</td>
 <td>开发环境 &#x2F; 单实例应用</td>
 </tr>
 <tr>
