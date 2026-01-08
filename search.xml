@@ -1285,4 +1285,98 @@
 </ol>
 ]]></content>
   </entry>
+  <entry>
+    <title>PM2 缓存机制与更新策略指南</title>
+    <url>/2026/01/08/PM2-%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6%E4%B8%8E%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h2 id="1-核心结论"><a href="#1-核心结论" class="headerlink" title="1. 核心结论"></a>1. 核心结论</h2><p>PM2 本身<strong>不缓存源代码文件</strong>，但它会将应用程序<strong>加载到内存</strong>中运行。因此，磁盘上文件的修改不会自动反映在正在运行的进程中。</p>
+<p>所谓的“缓存问题”，通常由以下三个机制引起：</p>
+<ol>
+<li><strong>内存常驻</strong>：代码加载后长期存在于 RAM 中。</li>
+<li><strong>环境变量快照</strong>：启动时抓取并锁定了环境变量。</li>
+<li><strong>Dump 快照</strong>：<code>pm2 save</code> 生成的进程列表快照。</li>
+</ol>
+<hr>
+<h2 id="2-常见“缓存”现象与解决方案"><a href="#2-常见“缓存”现象与解决方案" class="headerlink" title="2. 常见“缓存”现象与解决方案"></a>2. 常见“缓存”现象与解决方案</h2><h3 id="2-1-现象一：修改代码后，运行的还是旧逻辑"><a href="#2-1-现象一：修改代码后，运行的还是旧逻辑" class="headerlink" title="2.1 现象一：修改代码后，运行的还是旧逻辑"></a>2.1 现象一：修改代码后，运行的还是旧逻辑</h3><p><strong>原因</strong>：Node.js (或 Python 等) 解释器将代码加载到内存后，除非进程重启，否则不会重新读取磁盘上的文件。</p>
+<table>
+<thead>
+<tr>
+<th><strong>更新方式</strong></th>
+<th><strong>命令</strong></th>
+<th><strong>特点</strong></th>
+<th><strong>适用场景</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>暴力重启</strong></td>
+<td><code>pm2 restart &lt;id&gt;</code></td>
+<td>杀死进程 $\rightarrow$ 重新启动</td>
+<td>开发环境 &#x2F; 单实例应用</td>
+</tr>
+<tr>
+<td><strong>平滑重载</strong></td>
+<td><code>pm2 reload &lt;id&gt;</code></td>
+<td>逐步重启集群中的实例 (Cluster Mode)</td>
+<td><strong>生产环境</strong> (实现 0 秒停机)</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-现象二：修改环境变量或配置文件后无效"><a href="#2-2-现象二：修改环境变量或配置文件后无效" class="headerlink" title="2.2 现象二：修改环境变量或配置文件后无效"></a>2.2 现象二：修改环境变量或配置文件后无效</h3><p><strong>原因</strong>：PM2 在应用<strong>首次启动</strong>时，会通过 <code>process.env</code> 读取当前系统的环境变量并将其<strong>持久化</strong>在 PM2 的内部配置中。后续单纯的 <code>restart</code> 只会复用这套旧的变量。</p>
+<p><strong>解决方案</strong>：必须强制更新环境上下文。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 核心参数是 --update-env</span><br><span class="line">pm2 restart &lt;id|name&gt; --update-env</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-现象三：服务器重启后，旧配置“复活”"><a href="#2-3-现象三：服务器重启后，旧配置“复活”" class="headerlink" title="2.3 现象三：服务器重启后，旧配置“复活”"></a>2.3 现象三：服务器重启后，旧配置“复活”</h3><p><strong>原因</strong>：服务器重启自动恢复时，PM2 读取的是 <code>~/.pm2/dump.pm2</code> 文件，而不是你当前的运行状态。如果你新增了进程但没保存，重启后就会丢失；如果你删除了进程没保存，重启后它会复活。</p>
+<p><strong>解决方案</strong>：每次变更进程状态（新增、删除、改参数）后，务必保存。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将当前运行列表保存为 dump 文件</span><br><span class="line">pm2 save</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-进阶配置：监听模式-Watch-Mode"><a href="#3-进阶配置：监听模式-Watch-Mode" class="headerlink" title="3. 进阶配置：监听模式 (Watch Mode)"></a>3. 进阶配置：监听模式 (Watch Mode)</h2><p>如果希望修改文件后自动清除“缓存”并重启，可以使用 Watch 模式（建议仅在开发环境使用）。</p>
+<p><strong>命令行启动：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pm2 start app.js --watch</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置文件 (<code>ecosystem.config.js</code>)：</strong></p>
+<p>JavaScript</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  apps: [&#123;</span><br><span class="line">    name: &quot;my-app&quot;,</span><br><span class="line">    script: &quot;./app.js&quot;,</span><br><span class="line">    watch: true,</span><br><span class="line">    // 建议忽略并不需要重启的文件夹（如日志、静态资源）</span><br><span class="line">    ignore_watch: [&quot;node_modules&quot;, &quot;logs&quot;, &quot;static&quot;],</span><br><span class="line">    watch_delay: 1000 // 延迟 1 秒重启，避免频繁触发</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-故障排查速查表-Cheat-Sheet"><a href="#4-故障排查速查表-Cheat-Sheet" class="headerlink" title="4. 故障排查速查表 (Cheat Sheet)"></a>4. 故障排查速查表 (Cheat Sheet)</h2><p>遇到“修改不生效”时，请按以下顺序操作：</p>
+<table>
+<thead>
+<tr>
+<th><strong>场景</strong></th>
+<th><strong>操作命令</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>常规代码更新</strong></td>
+<td><code>pm2 reload all</code></td>
+<td>生产环境首选，保持服务在线</td>
+</tr>
+<tr>
+<td><strong>安装了新 npm 包</strong></td>
+<td><code>pm2 restart all</code></td>
+<td><code>node_modules</code> 变更通常需要硬重启</td>
+</tr>
+<tr>
+<td><strong>修改环境变量</strong></td>
+<td><code>pm2 restart &lt;id&gt; --update-env</code></td>
+<td><strong>最容易被遗忘的操作</strong></td>
+</tr>
+<tr>
+<td><strong>修改 ecosystem 配置</strong></td>
+<td><code>pm2 start ecosystem.config.js</code></td>
+<td>重新应用整个配置文件的变更</td>
+</tr>
+<tr>
+<td><strong>彻底清理重置</strong></td>
+<td><code>pm2 delete all</code>  –&gt; <code>pm2 start ...</code></td>
+<td>解决不明原因的缓存幽灵</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-常见误区提示"><a href="#5-常见误区提示" class="headerlink" title="5. 常见误区提示"></a>5. 常见误区提示</h2><blockquote>
+<p>Warning</p>
+<p>不要手动修改 ~&#x2F;.pm2&#x2F; 下的文件：PM2 的内部状态管理很复杂，手动修改 dump 文件通常会导致数据损坏。请始终使用 pm2 save 和 pm2 update 命令。</p>
+</blockquote>
+]]></content>
+  </entry>
 </search>
