@@ -1379,4 +1379,637 @@
 </blockquote>
 ]]></content>
   </entry>
+  <entry>
+    <title>免流混淆域名大全</title>
+    <url>/2026/10/19/%E5%85%8D%E6%B5%81%E6%B7%B7%E6%B7%86%E5%9F%9F%E5%90%8D%E5%A4%A7%E5%85%A8/</url>
+    <content><![CDATA[<h2 id="一、电信专用（广东星卡-百度大圣卡）"><a href="#一、电信专用（广东星卡-百度大圣卡）" class="headerlink" title="一、电信专用（广东星卡&#x2F;百度大圣卡）"></a>一、电信专用（广东星卡&#x2F;百度大圣卡）</h2><h3 id="百度系"><a href="#百度系" class="headerlink" title="百度系"></a>百度系</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">pic.rmb.bdstatic.com</td>
+<td align="left">百度图片 CDN 混淆</td>
+</tr>
+<tr>
+<td align="left">vd3.bdstatic.com</td>
+<td align="left">百度视频 CDN 混淆</td>
+</tr>
+<tr>
+<td align="left">dx-baiducdnct.inter.iqiyi.com</td>
+<td align="left">电信百度大圣卡专用混淆</td>
+</tr>
+<tr>
+<td align="left">hpd.baidu.com</td>
+<td align="left">好看视频资源混淆</td>
+</tr>
+<tr>
+<td align="left">sv.baidu.com</td>
+<td align="left">好看视频接口混淆</td>
+</tr>
+<tr>
+<td align="left">zhidao.baidu.com</td>
+<td align="left">百度知道混淆</td>
+</tr>
+<tr>
+<td align="left">tbcdn.hiphotos.baidu.com</td>
+<td align="left">百度图库混淆</td>
+</tr>
+</tbody></table>
+<h3 id="头条抖音系"><a href="#头条抖音系" class="headerlink" title="头条抖音系"></a>头条抖音系</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">dm.toutiao.com</td>
+<td align="left">头条通用混淆（电信星卡可用）</td>
+</tr>
+<tr>
+<td align="left">v9-dy.ixigua.com</td>
+<td align="left">抖音视频资源混淆</td>
+</tr>
+<tr>
+<td align="left">v1-dy.ixigua.com</td>
+<td align="left">抖音短视频 CDN 混淆</td>
+</tr>
+<tr>
+<td align="left">v11-xg.ixigua.com</td>
+<td align="left">西瓜视频混淆</td>
+</tr>
+<tr>
+<td align="left">log.snssdk.com</td>
+<td align="left">头条埋点混淆</td>
+</tr>
+<tr>
+<td align="left">api.huoshan.com</td>
+<td align="left">火山西瓜接口混淆</td>
+</tr>
+</tbody></table>
+<h3 id="电信自有正规业务"><a href="#电信自有正规业务" class="headerlink" title="电信自有正规业务"></a>电信自有正规业务</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">h5.nty.tv189.cn</td>
+<td align="left">天翼视讯网页混淆</td>
+</tr>
+<tr>
+<td align="left">vod3.nty.tv189.cn</td>
+<td align="left">天翼视讯视频混淆</td>
+</tr>
+<tr>
+<td align="left">dy3.nty.tv189.cn</td>
+<td align="left">天翼视频节点混淆</td>
+</tr>
+<tr>
+<td align="left">open.4g.play.cn</td>
+<td align="left">爱玩 4G 混淆</td>
+</tr>
+<tr>
+<td align="left">ltetp.tv189.cn</td>
+<td align="left">爱看 4G 混淆</td>
+</tr>
+<tr>
+<td align="left">ltevod.tv189.cn</td>
+<td align="left">爱看 4G 视频节点混淆</td>
+</tr>
+<tr>
+<td align="left">ltewap.tv189.cn</td>
+<td align="left">天翼流量门户混淆</td>
+</tr>
+<tr>
+<td align="left">tp.nty.tv189.cn</td>
+<td align="left">天翼门户节点混淆</td>
+</tr>
+<tr>
+<td align="left">api.cloud.189.cn</td>
+<td align="left">天翼云盘混淆</td>
+</tr>
+<tr>
+<td align="left">hb.10000shequ.com</td>
+<td align="left">湖北电信门户混淆</td>
+</tr>
+<tr>
+<td align="left">hb.10000shequ.com&lt;8081&gt;</td>
+<td align="left">湖北电信备用门户混淆</td>
+</tr>
+<tr>
+<td align="left">dl.music.189.cn</td>
+<td align="left">电信爱听音乐混淆</td>
+</tr>
+</tbody></table>
+<h2 id="二、联通专用（大王卡-小歪卡-米粉卡-沃系列）"><a href="#二、联通专用（大王卡-小歪卡-米粉卡-沃系列）" class="headerlink" title="二、联通专用（大王卡&#x2F;小歪卡&#x2F;米粉卡&#x2F;沃系列）"></a>二、联通专用（大王卡&#x2F;小歪卡&#x2F;米粉卡&#x2F;沃系列）</h2><h3 id="联通手厅直播混淆（可过-40G）"><a href="#联通手厅直播混淆（可过-40G）" class="headerlink" title="联通手厅直播混淆（可过 40G）"></a>联通手厅直播混淆（可过 40G）</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">shoutingtoutiao1.10010.com</td>
+<td align="left">联通手厅直播 1 号节点</td>
+</tr>
+<tr>
+<td align="left">shoutingtoutiao2.10010.com</td>
+<td align="left">联通手厅直播 2 号节点</td>
+</tr>
+<tr>
+<td align="left">shoutingtoutiao3.10010.com</td>
+<td align="left">联通手厅直播 3 号通用节点</td>
+</tr>
+<tr>
+<td align="left">shoutingtoutiao4.10010.com</td>
+<td align="left">联通手厅直播 4 号广东 5G SA 节点</td>
+</tr>
+<tr>
+<td align="left">pull.free.video.10010.com</td>
+<td align="left">联通老手厅直播通用节点（可过 40G）</td>
+</tr>
+<tr>
+<td align="left">cqing.10010.com</td>
+<td align="left">重庆联通专用混淆</td>
+</tr>
+</tbody></table>
+<h3 id="沃系列业务"><a href="#沃系列业务" class="headerlink" title="沃系列业务"></a>沃系列业务</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">imageout.wotv.17wo.cn</td>
+<td align="left">沃视频图片混淆</td>
+</tr>
+<tr>
+<td align="left">wotv.17wo.cn</td>
+<td align="left">联通沃视频主域名混淆</td>
+</tr>
+<tr>
+<td align="left">listen.10155.com</td>
+<td align="left">沃音乐混淆</td>
+</tr>
+<tr>
+<td align="left">woif.10155.com</td>
+<td align="left">沃音乐备用混淆</td>
+</tr>
+<tr>
+<td align="left">m.iread.wo.com.cn</td>
+<td align="left">沃阅读混淆</td>
+</tr>
+<tr>
+<td align="left">ysj.iread.wo.com.cn</td>
+<td align="left">沃视界混淆</td>
+</tr>
+<tr>
+<td align="left">partner.iread.wo.com.cn</td>
+<td align="left">沃阅读高级混淆</td>
+</tr>
+<tr>
+<td align="left">edu.10155.com</td>
+<td align="left">沃学习混淆</td>
+</tr>
+<tr>
+<td align="left">game.hxll.wostore.cn</td>
+<td align="left">沃商店游戏混淆</td>
+</tr>
+<tr>
+<td align="left">music.hxll.wostore.cn</td>
+<td align="left">沃商店音乐混淆</td>
+</tr>
+<tr>
+<td align="left">box.10155.com</td>
+<td align="left">联通通用接口（小天神卡专用）</td>
+</tr>
+</tbody></table>
+<h3 id="联通地区专属"><a href="#联通地区专属" class="headerlink" title="联通地区专属"></a>联通地区专属</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">m.t.17186.cn</td>
+<td align="left">山东联通专用混淆</td>
+</tr>
+<tr>
+<td align="left">w.zj165.com</td>
+<td align="left">浙江联通 WO+ 门户混淆</td>
+</tr>
+<tr>
+<td align="left">114.255.201.163</td>
+<td align="left">联通 114 圣子全国通用混淆</td>
+</tr>
+<tr>
+<td align="left">liveiptv.7k7k.cf&lt;6610&gt;</td>
+<td align="left">联通电视直播混淆</td>
+</tr>
+</tbody></table>
+<h3 id="联通套餐专用"><a href="#联通套餐专用" class="headerlink" title="联通套餐专用"></a>联通套餐专用</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">dm.toutiao.com</td>
+<td align="left">新联通小歪卡稳定头条混淆</td>
+</tr>
+<tr>
+<td align="left">api.ad.xiaomi.com</td>
+<td align="left">米粉卡专用混淆</td>
+</tr>
+<tr>
+<td align="left">imhdfs.icbc.com</td>
+<td align="left">工商梦想 e 卡混淆</td>
+</tr>
+<tr>
+<td align="left">v.icbc.com.cn</td>
+<td align="left">工商梦想 e 卡福建可用混淆</td>
+</tr>
+</tbody></table>
+<h2 id="三、移动专用（抖音-头条定向卡）"><a href="#三、移动专用（抖音-头条定向卡）" class="headerlink" title="三、移动专用（抖音&#x2F;头条定向卡）"></a>三、移动专用（抖音&#x2F;头条定向卡）</h2><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">dm.toutiao.com</td>
+<td align="left">移动头条卡通用混淆</td>
+</tr>
+<tr>
+<td align="left">v9-dy.ixigua.com</td>
+<td align="left">移动抖音卡视频混淆</td>
+</tr>
+</tbody></table>
+<h2 id="四、三网通用视频流媒体"><a href="#四、三网通用视频流媒体" class="headerlink" title="四、三网通用视频流媒体"></a>四、三网通用视频流媒体</h2><h3 id="腾讯系"><a href="#腾讯系" class="headerlink" title="腾讯系"></a>腾讯系</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">livep.l.qq.com</td>
+<td align="left">腾讯视频直播混淆</td>
+</tr>
+<tr>
+<td align="left">pgdt.gtimg.cn</td>
+<td align="left">腾讯视频资源混淆</td>
+</tr>
+<tr>
+<td align="left">tx.flv.huya.com</td>
+<td align="left">大王卡虎牙直播混淆</td>
+</tr>
+<tr>
+<td align="left">short.weixin.qq.com</td>
+<td align="left">微信短视频混淆</td>
+</tr>
+<tr>
+<td align="left">szextshort.weixin.qq.com</td>
+<td align="left">微信短链接混淆</td>
+</tr>
+<tr>
+<td align="left">szminorshort.weixin.qq.com</td>
+<td align="left">微信高级短链混淆</td>
+</tr>
+<tr>
+<td align="left">mmbiz.qpic.cn</td>
+<td align="left">微信公众号图片混淆</td>
+</tr>
+<tr>
+<td align="left">shmmsns.qpic.cn</td>
+<td align="left">微信素材图片混淆</td>
+</tr>
+<tr>
+<td align="left">r.vip.qq.com</td>
+<td align="left">QQ 图片资源混淆</td>
+</tr>
+<tr>
+<td align="left">m.qpic.cn</td>
+<td align="left">QQ 空间图片混淆</td>
+</tr>
+<tr>
+<td align="left">dl.stream.qqmusic.qq.com</td>
+<td align="left">QQ 音乐下载混淆</td>
+</tr>
+<tr>
+<td align="left">down-update.qq.com</td>
+<td align="left">王者荣耀更新混淆</td>
+</tr>
+<tr>
+<td align="left">wx.qlogo.cn</td>
+<td align="left">微信头像资源混淆</td>
+</tr>
+</tbody></table>
+<h3 id="爱奇艺"><a href="#爱奇艺" class="headerlink" title="爱奇艺"></a>爱奇艺</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">data.video.qiyi.com</td>
+<td align="left">爱奇艺视频资源混淆</td>
+</tr>
+<tr>
+<td align="left">t7z.cupid.iqiyi.com</td>
+<td align="left">爱奇艺缓存节点混淆</td>
+</tr>
+<tr>
+<td align="left">vali-dns.cp31.ott.cibntv.net</td>
+<td align="left">爱奇艺通用 CDN 混淆</td>
+</tr>
+</tbody></table>
+<h3 id="优酷"><a href="#优酷" class="headerlink" title="优酷"></a>优酷</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><a href="http://www.youku.com/">www.youku.com</a></td>
+<td align="left">优酷主站混淆</td>
+</tr>
+<tr>
+<td align="left">api.mobile.youku.com</td>
+<td align="left">优酷 APP 接口混淆</td>
+</tr>
+<tr>
+<td align="left">push.m.youku.com</td>
+<td align="left">优酷推送资源混淆</td>
+</tr>
+</tbody></table>
+<h3 id="头条西瓜资源"><a href="#头条西瓜资源" class="headerlink" title="头条西瓜资源"></a>头条西瓜资源</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">sf1-ttcdn-tos.pstatp.com</td>
+<td align="left">头条图文图片混淆</td>
+</tr>
+</tbody></table>
+<h3 id="快手"><a href="#快手" class="headerlink" title="快手"></a>快手</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">api.gifshow.com</td>
+<td align="left">快手基础接口混淆</td>
+</tr>
+<tr>
+<td align="left">ali2.a.yximgs.com</td>
+<td align="left">快手视频 CDN 混淆</td>
+</tr>
+<tr>
+<td align="left">api.ksapisrv.com</td>
+<td align="left">快手服务端接口混淆</td>
+</tr>
+</tbody></table>
+<h3 id="芒果-TV-央视影音"><a href="#芒果-TV-央视影音" class="headerlink" title="芒果 TV &amp; 央视影音"></a>芒果 TV &amp; 央视影音</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">pcvideows.titan.mgtv.com</td>
+<td align="left">芒果 TV 视频混淆</td>
+</tr>
+<tr>
+<td align="left">asp.cntv.myalicdn.com</td>
+<td align="left">央视影音流媒体混淆</td>
+</tr>
+</tbody></table>
+<h2 id="五、社交工具类通用混淆"><a href="#五、社交工具类通用混淆" class="headerlink" title="五、社交工具类通用混淆"></a>五、社交工具类通用混淆</h2><h3 id="微博-新浪"><a href="#微博-新浪" class="headerlink" title="微博 &amp; 新浪"></a>微博 &amp; 新浪</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">tobe.vip.weibo.com</td>
+<td align="left">微博 VIP 接口混淆</td>
+</tr>
+<tr>
+<td align="left">new.vip.weibo.cn</td>
+<td align="left">微博新版 VIP 域名混淆</td>
+</tr>
+<tr>
+<td align="left">simg.s.weibo.com</td>
+<td align="left">微博图片 CDN 混淆</td>
+</tr>
+<tr>
+<td align="left">mjs.sinaimg.cn</td>
+<td align="left">新浪图库混淆</td>
+</tr>
+</tbody></table>
+<h3 id="B-站"><a href="#B-站" class="headerlink" title="B 站"></a>B 站</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">i0.hdslb.com</td>
+<td align="left">B 站图片资源混淆</td>
+</tr>
+<tr>
+<td align="left">i1.hdslb.com</td>
+<td align="left">B 站视频分片混淆</td>
+</tr>
+</tbody></table>
+<h3 id="钉钉全量"><a href="#钉钉全量" class="headerlink" title="钉钉全量"></a>钉钉全量</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">tms.dingtalk.com</td>
+<td align="left">钉钉通讯接口混淆</td>
+</tr>
+<tr>
+<td align="left">alidocs.dingtalk.com</td>
+<td align="left">钉钉文档混淆</td>
+</tr>
+<tr>
+<td align="left">file.dingtalk.com</td>
+<td align="left">钉钉文件存储混淆</td>
+</tr>
+<tr>
+<td align="left">collab.dingtalk.com</td>
+<td align="left">钉钉协作服务混淆</td>
+</tr>
+<tr>
+<td align="left">collab-ws.dingtalk.com</td>
+<td align="left">钉钉实时通讯混淆</td>
+</tr>
+<tr>
+<td align="left">csp.dingtalk.com</td>
+<td align="left">钉钉安全服务混淆</td>
+</tr>
+<tr>
+<td align="left">app.dingtalk.com</td>
+<td align="left">钉钉主站接口混淆</td>
+</tr>
+<tr>
+<td align="left">industry-fab.dingtalk.com</td>
+<td align="left">钉钉行业应用混淆</td>
+</tr>
+<tr>
+<td align="left">package.dingtalk.com</td>
+<td align="left">钉钉安装包下载混淆</td>
+</tr>
+<tr>
+<td align="left">minipkg.dingtalk.com</td>
+<td align="left">钉钉插件包混淆</td>
+</tr>
+<tr>
+<td align="left">h5.dingtalk.com</td>
+<td align="left">钉钉网页端混淆</td>
+</tr>
+<tr>
+<td align="left">shanhui.dingtalk.com</td>
+<td align="left">钉钉工作台混淆</td>
+</tr>
+<tr>
+<td align="left">static.dingtalk.com</td>
+<td align="left">钉钉静态资源混淆</td>
+</tr>
+<tr>
+<td align="left">aliyun-mail.dingtalk.com</td>
+<td align="left">钉钉邮箱混淆</td>
+</tr>
+<tr>
+<td align="left">down-cdn.dingtalk.com</td>
+<td align="left">钉钉 CDN 下载混淆</td>
+</tr>
+<tr>
+<td align="left">preview.dingtalk.com</td>
+<td align="left">钉钉文件预览混淆</td>
+</tr>
+</tbody></table>
+<h3 id="网易云音乐"><a href="#网易云音乐" class="headerlink" title="网易云音乐"></a>网易云音乐</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">s3.music.126.net</td>
+<td align="left">网易云音乐音频混淆</td>
+</tr>
+</tbody></table>
+<h3 id="阿里系"><a href="#阿里系" class="headerlink" title="阿里系"></a>阿里系</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">gw.alicdn.com</td>
+<td align="left">阿里通用静态 CDN 混淆</td>
+</tr>
+<tr>
+<td align="left">mdap.alipay.com</td>
+<td align="left">支付宝接口混淆</td>
+</tr>
+<tr>
+<td align="left">mps.amap.com</td>
+<td align="left">高德地图资源混淆</td>
+</tr>
+<tr>
+<td align="left">adashbc.m.taobao.com</td>
+<td align="left">淘宝广告资源混淆</td>
+</tr>
+</tbody></table>
+<h3 id="小说-网盘-浏览器"><a href="#小说-网盘-浏览器" class="headerlink" title="小说&#x2F;网盘&#x2F;浏览器"></a>小说&#x2F;网盘&#x2F;浏览器</h3><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">spend1.shuqireader.com</td>
+<td align="left">书旗付费接口混淆</td>
+</tr>
+<tr>
+<td align="left">c1.shuqireader.com</td>
+<td align="left">书旗书籍资源混淆</td>
+</tr>
+<tr>
+<td align="left">sz-download.weiyun.com</td>
+<td align="left">微云文件下载混淆</td>
+</tr>
+<tr>
+<td align="left">serverfile.ac.uc.cn</td>
+<td align="left">UC 浏览器资源混淆</td>
+</tr>
+</tbody></table>
+<h2 id="六、小众专项混淆"><a href="#六、小众专项混淆" class="headerlink" title="六、小众专项混淆"></a>六、小众专项混淆</h2><table>
+<thead>
+<tr>
+<th align="left">域名</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">fzapph5.gjfzpt.cn</td>
+<td align="left">反诈中心网页混淆（山西可用）</td>
+</tr>
+<tr>
+<td align="left">fzapp.chanct.cn</td>
+<td align="left">反诈中心 APP 混淆</td>
+</tr>
+<tr>
+<td align="left">oss.gjfzpt.cn</td>
+<td align="left">反诈中心文件存储混淆</td>
+</tr>
+<tr>
+<td align="left">ump.ems.com.cn</td>
+<td align="left">邮政业务混淆（重庆测试可用）</td>
+</tr>
+<tr>
+<td align="left">pic.yx007.com</td>
+<td align="left">联通营业厅游戏节点（可过 40G）</td>
+</tr>
+</tbody></table>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这份清单主要价值在于<strong>分类梳理</strong>——同一运营商下的免流域名往往跟着套餐走（比如电信星卡抓百度系、联通大王卡抓腾讯系），按图索骥找起来方便。</p>
+<p>但也要清醒认识：免流混淆是「短命生意」，运营商一旦检测到异常流量就会更换白名单，这些域名随时可能失效。如果真要折腾，建议：</p>
+<ol>
+<li><strong>小流量测试</strong>，别一上来就大文件下载</li>
+<li><strong>多个域名轮换</strong>，单域名长时间高流量最容易被盯上</li>
+<li>时刻关注<strong>出账账单</strong>，发现异常立即停止</li>
+</ol>
+<p>以上内容仅供技术研究，请勿用于任何违反运营商协议的行为。</p>
+]]></content>
+  </entry>
 </search>
